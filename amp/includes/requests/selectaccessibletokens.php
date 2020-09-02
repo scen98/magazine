@@ -9,26 +9,27 @@ if(!isset($_SESSION["permissions"][0])){
     exit();
 }
 
-if($_SESSION["permissions"][0] === "normal"){
+if($_SESSION["permissions"][0]->level === "normal"){
     http_response_code(403);
     echo json_encode(["msg"=> "Hozzáférés megtagadva."]);
     exit();
 }
 
 $database = new MSQDB;
-if($_SESSION["permissions"][0] === "superadmin"){
-    $token_array = Token::selectTokens($database);
-    http_response_code(200);
-    echo json_encode(["tokens"=> $token_array]);
-    exit();
-}
+$token_array = $token_array = Token::selectTokens($database);
 
-if($_SESSION["permissions"][0] == "cml"){
-    mergeTokens();
+if($_SESSION["permissions"][0]->level === "cml"){
+    $token_array = array_filter($token_array, "isAccessible");
 }
+http_response_code(200);
+echo json_encode(["tokens"=> $token_array]);
+exit();
 
-function mergeTokens(){
+function isAccessible($token){
     foreach($_SESSION["permissions"] as $perm){
-        $token_array = array_merge($token_array, Token::selectTokensByColumn($mysqlidb, $perm->columnId));
+        if($perm->columnId == $token->columnId){
+            return true;
+        }
     }
+    return false;
 }

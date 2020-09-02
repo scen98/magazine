@@ -74,9 +74,6 @@ class Token{
         $result = mysqli_stmt_get_result($stmt);
         while($row = mysqli_fetch_assoc($result)){
             $newToken = new Token($row["id"], $row["name"], $row["status"], $row["columnId"]);
-            if(is_null($newToken->columnId)){
-                $newToken->columnId = 0;
-            }
             array_push($token_array, $newToken);
         }
         return $token_array;

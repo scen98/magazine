@@ -14,6 +14,7 @@ export function selectAccessibleTokens(func, args){
     let xhttp = new XMLHttpRequest();
     xhttp.onload = function() {
         try{
+            console.log(this.responseText);
             func(constrFromJSON(this.responseText), args);
         }catch(err) {
             console.log(err.message);
