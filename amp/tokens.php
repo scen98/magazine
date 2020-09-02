@@ -18,7 +18,7 @@
         </select>
         <button class="commandBtn shine" type="button">Létrehozás</button>
     </div>
-    <div class="token-table">
+    <div id="token-table">
         <div class="tokenContainer">
             <p class="tokenName">Tokennév</p>
             <select class="tokenSelect"><option>Aktív</option></select>

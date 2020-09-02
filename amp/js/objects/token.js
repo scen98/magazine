@@ -15,10 +15,10 @@ export function selectAccessibleTokens(func, args){
     xhttp.onload = function() {
         try{
             func(constrFromJSON(this.responseText), args);
-        }catch {
+        }catch(err) {
+            console.log(err.message);
             console.log(this.responseText);
         }
-        
     };    
     xhttp.open("GET", "../amp/includes/requests/selectaccessibletokens.php", true);
     xhttp.send();
@@ -30,5 +30,5 @@ function constrFromJSON(json){
     for (let t of data) {
         tokenArray.push(new Token(t.id, t.name, t.status, t.columnId));
     }
-    return columnArray;
+    return tokenArray;
 }
