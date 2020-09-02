@@ -5,6 +5,7 @@
         exit();
     }
     ?>
+    <script type="module" src="js/tokensController.js"></script>
  <div class="container">
     <div class="addBar">
         <input id="new-token-name" class="searchInput" placeholder="Token név">
@@ -14,7 +15,6 @@
             <option value="mandatory">Kötelező</option>
         </select>
         <select class="columnselect" id="column-select">
-            <option value="0">Minden rovat</option>
         </select>
         <button class="commandBtn shine" type="button">Létrehozás</button>
     </div>

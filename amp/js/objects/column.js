@@ -10,12 +10,24 @@ export function getColumns(func, args){
     xhttp.onload = function() {
         try{
             func(constrFromJSON(this.responseText), args);
-        }catch {
-            console.log(this.responseText);
+        }catch(err) {
+            console.log(err.message);
         }
-        
     };    
     xhttp.open("GET", "../amp/includes/requests/getcolumns.php", true);
+    xhttp.send();    
+}
+
+export function selectAcccessibleColumns(func, args){
+    let xhttp = new XMLHttpRequest();
+    xhttp.onload = function() {
+        try{
+            func(constrFromJSON(this.responseText), args);
+        }catch(err) {
+            console.log(err.message);
+        }
+    };    
+    xhttp.open("GET", "../amp/includes/requests/selectaccessiblecolumns.php", true);
     xhttp.send();    
 }
 

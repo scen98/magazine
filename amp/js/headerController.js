@@ -2,6 +2,7 @@ let createUser = document.getElementById("create-user");
 let header =  document.getElementById("main-header");
 let sticky = header.offsetTop;
 let tokens = document.getElementById("tokens");
+window.permissions = [];
 init();
 function init(){    
     let xhttp = new XMLHttpRequest();
@@ -28,15 +29,28 @@ window.logOut = function(){
     return false;
 }
 
-function displayContent(permissions){   
-    if(permissions.permissions[0].level !== "superadmin"){
-        hideNonSAElements();
+function displayContent(permissionData){
+    permissions = permissionData.permissions;
+    if(permissionData.permissions[0].level === "normal"){
+        hideNonNormal();
+    } else if(permissionData.permissions[0].level === "cml"){
+        hideFromCml();
+    } else if(permissionData.permissions[0].level !== "superadmin"){
+        hideFromAdmin();
     }
 }
 
-function hideNonSAElements(){
-    createUser.style.display = "none";
+function hideFromNormal(){
     tokens.style.display = "none";
+    createUser.style.display = "none";
+}
+
+function hideFromCml(){
+    createUser.style.display = "none";
+}
+
+function hideFromAdmin(){
+    createUser.style.display = "none";
 }
 
 window.onscroll = function() {
@@ -50,3 +64,4 @@ function headerHandler() {
     header.classList.remove("sticky");
   }
 }
+

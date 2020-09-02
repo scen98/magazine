@@ -60,13 +60,14 @@ class Token{
         return $token_array;
     }
 
-    public static function selectTokensByColumn($mysqlidb){ //TODO
+    public static function selectTokensByColumn($mysqlidb, $columnId){ //TODO
         $token_array = array();
-        $sql = "SELECT * from tokens;";
+        $sql = "SELECT * from tokens WHERE columnId = ?;";
         $stmt = mysqli_stmt_init($mysqlidb->conn);
         if(!mysqli_stmt_preapre($stmt, $sql)){
             return null;
         }
+        mysqli_stmt_bind_params($stmt, "i", $columnId);
         if(!mysqli_stmt_execute($stmt)){
             return null;
         }
