@@ -23,18 +23,15 @@ if($_SESSION["permissions"][0] >= 20 && $_SESSION["permissions"][0] < 40){
     }
 }
 
-if($data->columnId === 0){
-    $data->columnId = null;
-}
 $database = new MSQDB;
-$newId = Token::insert($database, $data);
-if(is_null($newId)){
-    http_response_code(400);
-    echo json_encode(["msg"=> "SQL hiba."]);
+$result = Token::delete($database, $data->id);
+if($result === true){
+    http_response_code(200);
+    echo json_encode(["msg"=> "success"]);
     exit();
 } else {
-    http_response_code(200);
-    echo json_encode(["newId"=> $newId]);
+    http_response_code(400);
+    echo json_encode(["msg"=> "SQL hiba."]);
     exit();
 }
 

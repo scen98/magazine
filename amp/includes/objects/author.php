@@ -2,8 +2,9 @@
 class Author{
     public $id;
     public $userName;
-    public $name;
+    public $uniqName;
     public $password;
+    public $level;
     function __construct($id, $userName, $name, $password){
         $this->id = $id;
         $this->uniqName = $userName;
@@ -11,8 +12,8 @@ class Author{
         $this->password = $password;
     }
 
-    public static function createAuthor($mysqlidb, $uniqName, $userName, $userPassword, $userPasswordRepeat, $adminPassword){ //TODO classként mer azé na
-        Author::checkFields($userName, $userPassword, $userPasswordRepeat, $adminPassword);
+    public static function createAuthor($mysqlidb, $uniqName, $userName, $userPassword, $userPasswordRepeat){ //TODO classként mer azé na
+        Author::checkFields($userName, $userPassword, $userPasswordRepeat);
         Author::checkPasswords($userPassword, $userPasswordRepeat);
         $sql = "INSERT INTO authors (userName, name, password) VALUES (?, ?, ?)";
         $stmt = mysqli_stmt_init($mysqlidb->conn);
@@ -55,8 +56,7 @@ class Author{
         $sql = "SELECT id, userName, name, password FROM authors WHERE userName = ?;";
         $stmt = mysqli_stmt_init($mysqlidb->conn);
         if(!mysqli_stmt_prepare($stmt, $sql)){
-            header("Location: ../index.php?error=sql");
-            exit();
+            return null;
         }
         mysqli_stmt_bind_param($stmt, "s", $userName);
         mysqli_stmt_execute($stmt);
@@ -67,7 +67,26 @@ class Author{
         return $author;
     }
 
-    static function checkFields($userName, $userPassword, $userPasswordRepeat, $adminPassword){
+    public static function selectAuthors($mysqlidb){
+        $sql = "SELECT DISTINCT authors.id, authors.name, authors.userName, permissions.level FROM authors INNER JOIN permissions on permissions.authorId = authors.id ORDER BY authors.name;";
+        $stmt = mysqli_stmt_init($mysqlidb->conn);
+        $author_array = array();
+        if(!mysqli_stmt_prepare($stmt, $sql)){
+            return null;
+        }
+        if(!mysqli_stmt_execute($stmt)){
+            return null;
+        }
+        $result = mysqli_stmt_get_result($stmt);            
+        while($row = mysqli_fetch_assoc($result)){
+            $author = new Author($row["id"], $row["userName"], $row["name"], null);
+            $author->level = $row["level"];
+            array_push($author_array, $author);
+        }
+        return $author_array;
+    }
+
+    static function checkFields($userName, $userPassword, $userPasswordRepeat){
         if(!isset($userName)){
             header("Location: ../createuser.php?error=emptyfields");
             exit();
@@ -81,11 +100,7 @@ class Author{
             header("Location: ../createuser.php?error=emptyfields");
             exit();
         }
-    
-        if(!isset($adminPassword)){
-            header("Location: ../createuser.php?error=emptyfields");
-            exit();
-        }
+
     }
 
     static function checkPasswords($userPassword, $userPasswordRepeat){

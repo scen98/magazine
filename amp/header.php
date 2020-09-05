@@ -38,9 +38,9 @@
         <li><a href="#" ><span class="icon"><i class="fab fa-windows"></i></span>C#</a></li>
     </ul>
 </li>
-<li><a href="#">Írók</a>
+<li><a href="#">Kollégák</a>
     <ul>
-        <li><a href="#" ><span class="icon"><i class="fas fa-address-book"></i></span>Névsor</a></li>
+        <li><a href="authors.php" ><span class="icon"><i class="fas fa-address-book"></i></span>Névsor</a></li>
         <li><a href="#" ><span class="icon"><i class="fas fa-address-card"></i></i></span>Kezelés</a></li>
         <li id="create-user"><a href="createuser.php" ><span class="icon"><i class="fas fa-plus-circle"></i></span>Új</a></li>
     </ul>

@@ -12,12 +12,22 @@ class Token{
     }
 
     public static function insert($mysqlidb, $token){
-        $sql = "INSERT INTO tokens (name, status, columnId) VALUES (?, ?, ?);";
+        $sql;
+        if($token->columnId == 0){
+            $sql = "INSERT INTO tokens (name, status) VALUES (?, ?);";
+        } else {
+            $sql = "INSERT INTO tokens (name, status, columnId) VALUES (?, ?, ?);";
+        }
         $stmt = mysqli_stmt_init($mysqlidb->conn);
         if(!mysqli_stmt_prepare($stmt, $sql)){
             return null;
         }
-        mysqli_stmt_bind_param($stmt, "ssi", $token->name, $token->status, $token->columnId);
+        if($token->columnId == 0){
+            mysqli_stmt_bind_param($stmt, "si", $token->name, $token->status);
+        } else {
+            mysqli_stmt_bind_param($stmt, "sii", $token->name, $token->status, $token->columnId);
+        }
+        
         if(mysqli_stmt_execute($stmt)){
             return mysqli_insert_id($mysqlidb->conn);
         } else {
@@ -25,13 +35,22 @@ class Token{
         }
     }
 
-    public static function update($mysqlidb, $token){
-        $sql = "UPDATE tokens SET name = ?, status = ?, columnId = ? WHERE id = ? ;";
+    public static function update($mysqlidb, $token){ //NOT CHECKED
+        $sql; 
+        if($token->columnId == 0){
+            $sql = "UPDATE tokens SET name = ?, status = ?, columnId = NULL WHERE id = ? ;";
+        } else {
+            $sql = "UPDATE tokens SET name = ?, status = ?, columnId = ? WHERE id = ? ;";
+        }
         $stmt = mysqli_stmt_init($mysqlidb->conn);
         if(!mysqli_stmt_prepare($stmt, $sql)){
-            return null;
+            return false;
         }
-        mysqli_stmt_bind_param($stmt, "ssii", $token->name, $token->status, $token->columnId, $token->id);
+        if($token->columnId == 0){
+            mysqli_stmt_bind_param($stmt, "ssi", $token->name, $token->status, $token->id);
+        } else {
+            mysqli_stmt_bind_param($stmt, "ssii", $token->name, $token->status, $token->columnId, $token->id);
+        }
         if(mysqli_stmt_execute($stmt)){
             return true;
         } else {
@@ -79,13 +98,13 @@ class Token{
         return $token_array;
     }
 
-    public static function delete($mysqlidb, $id){
-        $sql = "DELETE from token WHERE id = ?";
+    public static function delete($mysqlidb, $id){ //NOT CHECKED
+        $sql = "DELETE from tokens WHERE id = ?";
         $stmt = mysqli_stmt_init($mysqlidb->conn);
         if(!mysqli_stmt_prepare($stmt, $sql)){
             return false;
         }
-        mysqli_stmt_bind_param($stmt, "i", $articleId);
+        mysqli_stmt_bind_param($stmt, "i", $id);
         if(!mysqli_stmt_execute($stmt)){
             return false;
         } else {

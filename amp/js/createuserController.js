@@ -13,7 +13,7 @@ function init(){
 
 window.toggleShow = function(){
     var selectedValue = permSelection.options[permSelection.selectedIndex].value;
-    if(selectedValue == "cml"){
+    if(selectedValue === "cml" || selectedValue === "cma"){
         addColumn();            
         addBtn.style.display = "inline";
     } else {

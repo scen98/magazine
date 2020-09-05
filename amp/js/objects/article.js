@@ -35,7 +35,6 @@ export class Article {
         let xhttp = new XMLHttpRequest();
         xhttp.open("POST", "../amp/includes/requests/deletearticle.php"); 
         xhttp.setRequestHeader("Content-type", "application/json");
-        console.log(JSON.stringify(this));
         xhttp.send(JSON.stringify(this));
         xhttp.onload = function() {
             func(args);
@@ -77,7 +76,8 @@ export function selectMyArticles(func, keyword, limit, offset, orderby, desc){
         try{
             func(parseArray(this.responseText));
         }
-        catch{
+        catch(err){
+            console.log(err);
             console.log(this.responseText);
         }
     }    

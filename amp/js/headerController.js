@@ -29,18 +29,25 @@ window.logOut = function(){
     return false;
 }
 
-function displayContent(permissionData){
+function displayContent(permissionData){   
     permissions = permissionData.permissions;
-    if(permissionData.permissions[0].level === "normal"){
-        hideNonNormal();
-    } else if(permissionData.permissions[0].level === "cml"){
+    if(permissionData.permissions[0].level <= 10){
+        hideFromNormal();
+    } else if(permissionData.permissions[0].level <= 20){
+        hideFromCma();
+    } else if(permissionData.permissions[0].level <= 30){
         hideFromCml();
-    } else if(permissionData.permissions[0].level !== "superadmin"){
+    } else if(permissionData.permissions[0].level <= 40){
         hideFromAdmin();
     }
 }
 
 function hideFromNormal(){
+    tokens.style.display = "none";
+    createUser.style.display = "none";
+}
+
+function hideFromCma(){
     tokens.style.display = "none";
     createUser.style.display = "none";
 }

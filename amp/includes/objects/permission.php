@@ -6,7 +6,7 @@ class Permission{
     public $columnId;
     function __construct($id, $level, $authorId, $columnId){
         $this->id = $id;
-        $this->level = $level;
+        $this->level = intval($level);
         $this->authorId = $authorId;
         $this->columnId = $columnId;
     }

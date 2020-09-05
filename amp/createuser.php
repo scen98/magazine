@@ -1,6 +1,6 @@
 <?php 
     require "header.php";
-    if($_SESSION["permissions"][0]->level !== "superadmin"){
+    if($_SESSION["permissions"][0]->level < 40){
         header("Location: index.php?error=accessdenied");
         exit();
     }
@@ -19,10 +19,11 @@
         <input class="logininput" type="password" placeholder="Enter Password" name="pwd-repeat" required>
         <label for="psw"><b>Új felhasználó jogosultságai: </b></label>
         <select id="permission-type" onChange="toggleShow()" name="permissions" class="columnselect">
-            <option value="normal">Általános</option>
-            <option value="cml">Rovatvezető</option>
-            <option value="admin">Újságvezető</option>
-            <option value="superadmin">Rendszergazda</option>
+            <option value="10">Általános</option>
+            <option value="20">Asszisztens</option>
+            <option value="30">Rovatvezető</option>
+            <option value="40">Újságvezető</option>
+            <option value="50">Rendszergazda</option>
         </select>
         <button id="add-btn" onclick="addColumn()" type="button" style="display: none;" class="addbutton"><i class="fas fa-plus"></i></button>
         <button id="remove-btn" onclick="removeColumn()" type="button" style="display: none;" class="removebutton" ><i class="fas fa-minus"></i></button>
@@ -30,8 +31,6 @@
         <div id="permission-details">
         </div>
         <br>
-        <label><b>Admin jelszó: </b></label>
-        <input class="logininput" type="password" placeholder="Enter Password" name="adminpwd" required>
         <button class="loginbutton" name="adduser" type="submit">Regisztráció</button>
         </form>
 </div>

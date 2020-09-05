@@ -4,8 +4,8 @@ require "../objects/token.php";
 require "../MSQDB.php";
 session_start();
 
-if($_SESSION["permissions"][0] <= 10){
-    http_response_code(403);
+if($_SESSION["permissions"][0]->level < 30){
+    http_response_code(402);
     echo json_encode(["msg"=> "Hozzáférés megtagadva."]);
     exit();
 }
@@ -15,7 +15,7 @@ if(empty($data)){
     echo json_encode(["msg"=> "Hiányos adatok."]);
     exit();
 }
-if($_SESSION["permissions"][0] >= 20 && $_SESSION["permissions"][0] < 40){
+if($_SESSION["permissions"][0]->level < 40){
     if(!isTokenAccessible($data)){
         http_response_code(403);
         echo json_encode(["msg"=> "Hozzáférés megtagadva."]);
@@ -27,14 +27,13 @@ if($data->columnId === 0){
     $data->columnId = null;
 }
 $database = new MSQDB;
-$newId = Token::insert($database, $data);
-if(is_null($newId)){
-    http_response_code(400);
-    echo json_encode(["msg"=> "SQL hiba."]);
+if(Token::update($database, $data)){
+    http_response_code(200);
+    echo json_encode(["msg"=> "success"]);
     exit();
 } else {
-    http_response_code(200);
-    echo json_encode(["newId"=> $newId]);
+    http_response_code(400);
+    echo json_encode(["msg"=> "SQL hiba."]);
     exit();
 }
 
@@ -44,5 +43,5 @@ function isTokenAccessible($token){
             return true;
         }
     }
-    return false;
+    return true;
 }

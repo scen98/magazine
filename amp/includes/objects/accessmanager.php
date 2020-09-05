@@ -3,23 +3,23 @@ require "permission.php";
 session_start();
 class AccessManager{
     public static function isArticleAccessible($article){
-        if($_SESSION["permissions"][0]->level === "normal"){
+        if($_SESSION["permissions"][0]->level <= 10){
             return AccessManager::normalArticleCheck($article);
         }
-        if($_SESSION["permissions"][0]->level === "superadmin" || $_SESSION["permissions"][0]->level === "admin"){
+        if($_SESSION["permissions"][0]->level >= 40){
             return true;
         }    
-        if($_SESSION["permissions"][0]->level === "cml"){
+        if($_SESSION["permissions"][0]->level >= 20 && $_SESSION["permissions"][0]->level <40){
             return AccessManager::cmlArticleCheck($article);
         }
         return false;
     }
 
     public static function filterAccessibleTokens($token_array){
-        if($_SESSION["permissions"][0]->level === "normal"){
+        if($_SESSION["permissions"][0]->level <= 10){
             return null;
         }
-        if($_SESSION["permissions"][0]->level === "admin" || $_SESSION["permissions"][0] === "superadmin"){
+        if($_SESSION["permissions"][0]->level >= 20 && $_SESSION["permissions"][0]->level <40){
             return $token_array;
         }
         return returnTokensByColumn($token_array);
@@ -54,6 +54,9 @@ class AccessManager{
     }
     
     static function cmlArticleCheck($article){
+        if(AccessManager::normalArticleCheck($article)){
+            return true;
+        }
         foreach($_SESSION["permissions"] as $perm){
             if($perm->columnId === $article->columnId){
                 return true;

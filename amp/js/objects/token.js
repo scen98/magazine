@@ -5,6 +5,51 @@ export class Token{
         this.status = status;
         this.columnId = columnId;
     }
+
+    insert(func, args){
+        let xhttp = new XMLHttpRequest();
+        let currentToken = this;
+        xhttp.open("POST", "../amp/includes/requests/inserttoken.php"); 
+        xhttp.setRequestHeader("Content-type", "application/json");
+        xhttp.send(JSON.stringify(this));
+        xhttp.onload = function() {
+            try{
+                currentToken.id = JSON.parse(this.responseText).newId;
+                func(args); 
+            } catch(err){
+                console.log(err);
+                console.log(this.responseText)
+            }
+        }
+    }
+
+    update(func){
+        let xhttp = new XMLHttpRequest();
+        xhttp.open("POST", "../amp/includes/requests/updatetoken.php"); 
+        xhttp.setRequestHeader("Content-type", "application/json");
+        xhttp.send(JSON.stringify(this));
+        xhttp.onload = function() {
+            if(JSON.parse(this.responseText).msg == "success"){
+                func(); 
+            } else {
+                console.log(this.responseText)
+            }
+        }
+    }
+
+    delete(func, args){
+        let xhttp = new XMLHttpRequest();
+        xhttp.open("POST", "../amp/includes/requests/deletetoken.php"); 
+        xhttp.setRequestHeader("Content-type", "application/json");
+        xhttp.send(JSON.stringify(this));
+        xhttp.onload = function() {
+            if(JSON.parse(this.responseText).msg === "success"){              
+                func(args);
+            } else {
+                console.log(this.responseText);
+            }
+        }
+    }
 }
 export function selectTokens(){
     
@@ -14,7 +59,6 @@ export function selectAccessibleTokens(func, args){
     let xhttp = new XMLHttpRequest();
     xhttp.onload = function() {
         try{
-            console.log(this.responseText);
             func(constrFromJSON(this.responseText), args);
         }catch(err) {
             console.log(err.message);

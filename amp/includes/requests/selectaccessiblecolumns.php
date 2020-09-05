@@ -3,7 +3,7 @@ require "../MSQDB.php";
 require "../objects/column.php";
 require "../objects/permission.php";
 session_start();
-if(!isset($_SESSION["permissions"][0]) || $_SESSION["permissions"][0] === "normal"){
+if(!isset($_SESSION["permissions"][0]) || $_SESSION["permissions"][0] <= 10){
     http_response_code(403);
     echo json_encode(["msg" => "Hozzáférés megtagadva."]);
     exit;
@@ -11,14 +11,14 @@ if(!isset($_SESSION["permissions"][0]) || $_SESSION["permissions"][0] === "norma
 $database = new MSQDB;
 $columns = Column::getColumns($database);
 
-if($_SESSION["permissions"][0] === "superadmin" || $_SESSION["permissions"][0] === "admin"){
+if($_SESSION["permissions"][0] >= 40 ){
     array_push($columns, new Column(0, "Mind")); // ezt gyűlölöm de ez a legegyszerűbb megoldás
     http_response_code(200);
     echo json_encode(["columns" => $columns]);
     exit;
 }
 
-if($_SESSION["permissions"][0] === "cml"){
+if($_SESSION["permissions"][0] >= 20 && $_SESSION["permissions"][0] < 40){
     filterColumns();
 }
 
