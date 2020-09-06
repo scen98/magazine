@@ -7,11 +7,11 @@
      <input placeholder="Keresés" id="search" class="searchInput">
         <label>Jogosultság: </label>
         <select class="columnselect" id="permission-select">
-         <option value="" >Mind</option>
-         <option value="normal">Általános</option>
-         <option value="cma">Asszisztens</option>
-         <option value="cml">Rovatvezető</option>
-         <option value="admin">Újságvezető</option>
+         <option value="null" >Mind</option>
+         <option value="10">Általános</option>
+         <option value="20">Asszisztens</option>
+         <option value="30">Rovatvezető</option>
+         <option value="40">Újságvezető</option>
         </select>
         <button id="search-btn" type="button" onclick="search()" class="commandBtn shine" >Mehet!</button>
     </div>

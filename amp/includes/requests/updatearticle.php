@@ -21,12 +21,19 @@ if(!isset($data->imgPath)){
     exit();
 }
 $newArticle = new Article($data->id, $data->title, $data->lead, $_SESSION["id"], date("Y.m.d H:i"), $data->imgPath, $data->columnId, $data->text);
-if(Article::updateArticle($database, $newArticle)){
-    http_response_code(201);
-    echo json_encode(["msg" => $data->imgPath]);
-	exit;
+if(AccessManager::isArticleAccessible($data)){
+    if(Article::updateArticle($database, $newArticle)){
+        http_response_code(201);
+        echo json_encode(["msg" => $data->imgPath]);
+        exit;
+    } else {
+        http_response_code(400);
+        echo json_encode(["msg" => "SQL server hiba."]);
+        exit;
+    }
 } else {
-    http_response_code(400);
-    echo json_encode(["msg" => "SQL server hiba."]);
-	exit;
+    http_response_code(403);
+    echo json_encode(["msg"=> "Hozzáférés megtagadva."]);
+    exit();
 }
+

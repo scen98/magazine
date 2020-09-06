@@ -597,7 +597,7 @@ span.icon {
   }
 
   .authorContainer:hover{
-    background-color: rgb(113, 201, 142);
+    background-color: rgba(113, 201, 142, 0.6);
   }
 
   .authorName {
@@ -623,4 +623,15 @@ span.icon {
     width: 7%;
     margin-left: 1%;
     min-height: 10px;
+  }
+
+  .settingBox {
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 10px;
+  }
+  .settingBox:hover{
+    background-color: rgba(0, 0, 0, 0.2);
   }

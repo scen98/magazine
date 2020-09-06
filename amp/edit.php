@@ -21,7 +21,7 @@ require "header.php";
             <button class="controlbtn shine" onclick="execCmd('selectAll');"><i class="fas fa-globe-europe"></i></button>
             <button class="controlbtn shine" onclick="execCommandWithArg('createLink', prompt('Enter a URL', 'http://'));"><i class="fas fa-link"></i></button>
             <button class="controlbtn shine" onclick="execCmd('unlink');"><i class="fas fa-unlink"></i></button>
-            <button class="controlbtn shine" onclick="insertImage(prompt('Enter the image URL', ''));"><i class="fa fa-file-image-o"></i></button>
+            <button class="controlbtn shine" onclick="execCommandWithArg('insertImage', prompt('Enter the image URL', ''));"><i class="fa fa-file-image-o"></i></button>
             <button class="controlbtn shine" onclick="displayDeleteModal()"><i class="fas fa-trash-alt"></i></button><br>
             <button class="controlbtn shine" onclick="execCmd('bold');"><i class="fas fa-bold"></i></button>
             <button class="controlbtn shine" onclick="execCmd('italic');"><i class="fas fa-italic"></i></button>

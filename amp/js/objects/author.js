@@ -16,7 +16,9 @@ export class Author{
             case 30: 
             return "Rovatvezető";
             case 40:
-            return "Újságvezető"
+            return "Újságvezető";
+            case 50:
+            return "Rendszergazda";
         }
     }
 }
