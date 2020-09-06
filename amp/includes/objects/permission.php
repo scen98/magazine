@@ -17,7 +17,7 @@ class Permission{
             header("Location: ../index.php?error=sql");
             exit();
         }
-        mysqli_stmt_bind_param($stmt, "sii", $level, $authorId, $columnId);
+        mysqli_stmt_bind_param($stmt, "iii", $level, $authorId, $columnId);
         mysqli_stmt_execute($stmt);
     }
 
