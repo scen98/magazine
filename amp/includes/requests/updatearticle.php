@@ -1,7 +1,7 @@
 <?php
 require "../objects/article.php";
 require "../MSQDB.php";
-session_start();
+require "../objects/accessmanager.php";
 if(!isset($_SESSION["id"])){
     http_response_code(403);
     echo json_encode(["msg"=> "No running session."]);
@@ -24,7 +24,7 @@ $newArticle = new Article($data->id, $data->title, $data->lead, $_SESSION["id"],
 if(AccessManager::isArticleAccessible($data)){
     if(Article::updateArticle($database, $newArticle)){
         http_response_code(201);
-        echo json_encode(["msg" => $data->imgPath]);
+        echo json_encode(["msg" => "success"]);
         exit;
     } else {
         http_response_code(400);

@@ -24,8 +24,8 @@ if(AccessManager::isArticleAccessible($data)){
 
 function delete($database, $articleId){
     if(Article::deleteArticle($database, $articleId)){
-        echo http_response_code(200);
-        echo json_encode(["msg"=> "Cikk törölve."]);
+        http_response_code(200);
+        echo json_encode(["msg"=> "success"]);
         exit();
     }
 }

@@ -23,7 +23,7 @@ if(is_null($newArticleId)){
 	exit;
 } else {
     http_response_code(201);
-    echo json_encode(["newId" => $newArticleId]);
+    echo json_encode(["newId" => $newArticleId);
 	exit;
 }
 

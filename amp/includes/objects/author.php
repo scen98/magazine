@@ -1,10 +1,11 @@
 <?php
+require "permission.php";
 class Author{
     public $id;
     public $userName;
     public $uniqName;
     public $password;
-    public $level;
+    public $permissions = array();
     function __construct($id, $userName, $name, $password){
         $this->id = $id;
         $this->uniqName = $userName;
@@ -68,7 +69,14 @@ class Author{
     }
 
     public static function selectAuthors($mysqlidb){
-        $sql = "SELECT DISTINCT authors.id, authors.name, authors.userName, permissions.level FROM authors INNER JOIN permissions on permissions.authorId = authors.id ORDER BY authors.name;";
+        $authors = Author::getAuthors($mysqlidb);
+        $permissions = Permission::selectPermissions($mysqlidb);
+        Author::pairPermissionsToAuthors($authors, $permissions);
+        return $authors;
+    }
+
+    public static function getAuthors($mysqlidb){
+        $sql = "SELECT id, name, userName FROM authors ORDER BY name;";
         $stmt = mysqli_stmt_init($mysqlidb->conn);
         $author_array = array();
         if(!mysqli_stmt_prepare($stmt, $sql)){
@@ -80,10 +88,23 @@ class Author{
         $result = mysqli_stmt_get_result($stmt);            
         while($row = mysqli_fetch_assoc($result)){
             $author = new Author($row["id"], $row["userName"], $row["name"], null);
-            $author->level = $row["level"];
             array_push($author_array, $author);
         }
         return $author_array;
+    }
+
+    static function pairPermissionsToAuthors($authors, $permissions){
+        foreach($permissions as $perm){
+            Author::placePermission($authors, $perm);
+        }
+    }
+
+    static function placePermission($authors, $permission){
+        foreach($authors as $author){
+            if($permission->authorId == $author->id){
+                array_push($author->permissions, $permission);
+            }
+        }
     }
 
     static function checkFields($userName, $userPassword, $userPasswordRepeat){

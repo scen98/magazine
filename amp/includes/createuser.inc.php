@@ -1,10 +1,14 @@
 <?php
 require "MSQDB.php";
 require "objects/author.php";
-require "objects/permission.php";
+require "objects/accessmanager.php";
 
 if(!isset($_POST["adduser"])){
     header("Location: ../createuser.php?error=server");
+    exit();
+}
+if(AccessManager::getMaxLevel() < 50){
+    header("Location: ../createuser.php?error=accessdenied");
     exit();
 }
 $database = new MSQDB;
@@ -32,4 +36,4 @@ if($_POST["permissions"] >= 40 || $_POST["permissions"] <= 10 ){
     }
 }
 mysqli_close($database->conn);
-header("Location: ../createuser.php?add=".$_POST["uname"]);
+header("Location: ../editAuthor.php?aid=".$lastId);

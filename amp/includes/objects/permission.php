@@ -21,7 +21,9 @@ class Permission{
         mysqli_stmt_execute($stmt);
     }
 
-    public static function getPermissions($mysqlidb, $authorId){
+
+
+    public static function selectPermissionsByAID($mysqlidb, $authorId){
         $sql = "SELECT * FROM permissions WHERE authorId = ?;";
         $stmt = mysqli_stmt_init($mysqlidb->conn);
         if(!mysqli_stmt_prepare($stmt, $sql)){
@@ -29,6 +31,22 @@ class Permission{
             exit();     
         }
         mysqli_stmt_bind_param($stmt, "i", $authorId);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $permission_array = array();
+        while($row = mysqli_fetch_assoc($result)){
+            $newp = new Permission($row["id"], $row["level"], $row["authorId"], $row["columnId"]);
+            array_push($permission_array, $newp);
+        }
+        return $permission_array;
+    }
+
+    public static function selectPermissions($mysqlidb){
+        $sql = "SELECT * FROM permissions;";
+        $stmt = mysqli_stmt_init($mysqlidb->conn);
+        if(!mysqli_stmt_prepare($stmt, $sql)){
+            return null;   
+        }
         mysqli_stmt_execute($stmt);
         $result = mysqli_stmt_get_result($stmt);
         $permission_array = array();

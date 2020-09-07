@@ -12,7 +12,7 @@ $database = new MSQDB;
 $authors = Author::selectAuthors($database);
 if(is_null($authors)){
     http_response_code(400);
-    echo json_encode(["msg"=> "SQL hiba."]);
+    echo json_encode(["msg"=> "success"]);
     exit();
 }
 http_response_code(200);

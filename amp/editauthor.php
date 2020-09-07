@@ -10,15 +10,17 @@
         <h3>Felhasználónév</h3>
         <div class="settingBox">
         <h4>Jogosultságok beállításai: </h4>
-        <label>Jogosultság: </label>
+        <label>Jogosultság hozzáadása: </label>
         <select class="columnselect">
-            <option value="10">Általános</option>
-            <option value="20">Asszisztens</option>
-            <option value="30">Rovatvezető</option>
-            <option value="40">Újságvezető</option>
-            <option value="50">Rendszergazda</option>
+
         </select><br>
-        <label>Jogosultság kiterjedése: </label>
+        <div id="permission-table">
+            <div class="permissionContainer">
+                <p class="permissionName">Rovatvezető</p>
+                <p class="permissionScope">Szórakozás</p>
+                <button class="permissionBtn">Törlés</button>
+            </div>
+        </div>
         <select class="columnselect">
 
         </select><br>

@@ -16,9 +16,15 @@ export class Article {
         xhttp.setRequestHeader("Content-type", "application/json");
         xhttp.send(JSON.stringify(this));
         xhttp.onload = function() {
-            var newId = JSON.parse(xhttp.responseText).newId;
-            this.id = newId;
-            func(newId, args);
+            try {
+                var newId = JSON.parse(xhttp.responseText).newId;
+                this.id = newId;
+                func(newId, args);
+            } catch(err){
+                console.log(this.responseText);
+                console.log(err);
+            }
+            
         }
     }
     update(func, args){
@@ -27,7 +33,11 @@ export class Article {
         xhttp.setRequestHeader("Content-type", "application/json");
         xhttp.send(JSON.stringify(this));
         xhttp.onload = function() {
-            func(args);
+            if(JSON.parse(this.responseText).msg == "success"){
+                tryCallBack(func, args, this.responseText);
+            } else {
+                console.log(this.responseText);
+            }            
         }
     }
 
@@ -37,8 +47,21 @@ export class Article {
         xhttp.setRequestHeader("Content-type", "application/json");
         xhttp.send(JSON.stringify(this));
         xhttp.onload = function() {
-            func(args);
+            if(JSON.parse(this.responseText).msg == "success"){
+                tryCallBack(func, args, this.responseText);
+            } else {
+                console.log(this.responseText);
+            }   
         }
+    }
+}
+
+function tryCallBack(func, args, message){
+    try {
+        func(args);
+    }catch(err){
+        console.log(message);
+        console.log(err);
     }
 }
 

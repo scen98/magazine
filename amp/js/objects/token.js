@@ -1,3 +1,4 @@
+
 export class Token{
     constructor(id, name, status, columnId){
         this.id = id;
@@ -29,8 +30,8 @@ export class Token{
         xhttp.setRequestHeader("Content-type", "application/json");
         xhttp.send(JSON.stringify(this));
         xhttp.onload = function() {
-            if(JSON.parse(this.responseText).msg == "success"){
-                func(); 
+            if(JSON.parse(this.responseText).msg === "success"){
+                tryCallback(func, null, this.responseText); 
             } else {
                 console.log(this.responseText)
             }
@@ -44,7 +45,7 @@ export class Token{
         xhttp.send(JSON.stringify(this));
         xhttp.onload = function() {
             if(JSON.parse(this.responseText).msg === "success"){              
-                func(args);
+                tryCallback(func, args, this.responseText);
             } else {
                 console.log(this.responseText);
             }
@@ -53,6 +54,15 @@ export class Token{
 }
 export function selectTokens(){
     
+}
+
+function tryCallback(callback, args, response){
+    try{
+        callback(args);
+    } catch(err){
+        console.log(response);
+        console.log(err);
+    }
 }
 
 export function selectAccessibleTokens(func, args){

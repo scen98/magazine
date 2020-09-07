@@ -4,6 +4,7 @@ require "header.php";
 ?>
 <script type="module" src="js/editController.js"></script>
 <div onload="init()" class="container">
+    <p id="message"></p>
     <form>
         <textarea id="title" name="title" rows="2" type="text" class="titleInput" placeholder="Cím"></textarea><br><br>
         <textarea id="lead" class="leadInput" rows="4" placeholder="Bevezető" cols="50"></textarea><br><br>

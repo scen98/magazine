@@ -1,8 +1,7 @@
 <?php
-require "../objects/permission.php";
+require "../objects/accessmanager.php";
 require "../objects/token.php";
 require "../MSQDB.php";
-session_start();
 if(!isset($_SESSION["permissions"][0])){
     http_response_code(403);
     echo json_encode(["msg"=> "No running session."]);
@@ -28,7 +27,7 @@ exit();
 function filterByColumn($token_array){
     $newTokens = array();
     foreach($token_array as $token){
-        if(isAccessible($token)){
+        if(AccessManager::isTokenAccessible($token)){
            array_push($newTokens, $token);
         }
     }

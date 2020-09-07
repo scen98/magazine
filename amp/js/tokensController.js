@@ -48,7 +48,7 @@ function renderToken(token){
     let saveBtn = document.createElement("button");
     let deleteBtn = document.createElement("button");
     let statusSelect = renderTokenSelect(token);
-    let columnSelect = renderTokenColumnSelect(token)
+    let columnSelect = renderTokenColumnSelect(token);
     container.className = "tokenContainer";
     container.id = token.id;
     name.className = "tokenName";
@@ -99,12 +99,11 @@ function onUpdate(){
 
 function hasAccessToColumn(column){
     for (let perm of permissions) {
-        if(perm.columnId == column.id){
-            return true;
-        }
+       if(perm.columnId == column.id) return true;
     }
     return false;
 }
+
 
 function renderTokenColumnSelect(token){
     let tokenColumnSelect = document.createElement("select");

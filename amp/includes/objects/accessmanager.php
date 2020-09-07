@@ -3,48 +3,43 @@ require "permission.php";
 session_start();
 class AccessManager{
     public static function isArticleAccessible($article){
-        if($_SESSION["permissions"][0]->level <= 10){
+        $highestPermission = AccessManager::getMaxLevel();
+        if($highestPermission <= 10){
             return AccessManager::normalArticleCheck($article);
         }
-        if($_SESSION["permissions"][0]->level >= 40){
+        if($highestPermission >= 40){
             return true;
         }    
-        if($_SESSION["permissions"][0]->level >= 20 && $_SESSION["permissions"][0]->level <40){
+        if($highestPermission >= 20 && $_SESSION["permissions"][0]->level <40){
             return AccessManager::cmlArticleCheck($article);
         }
         return false;
     }
 
-    public static function filterAccessibleTokens($token_array){
-        if($_SESSION["permissions"][0]->level <= 10){
-            return null;
+    public static function isTokenAccessible($token){
+        $highestPermission = AccessManager::getMaxLevel();
+        if($highestPermission <= 20){
+            return false;
         }
-        if($_SESSION["permissions"][0]->level >= 20 && $_SESSION["permissions"][0]->level <40){
-            return $token_array;
+        if($highestPermission >= 40){
+            return true;
+        }    
+        if($highestPermission > 20 && $_SESSION["permissions"][0]->level <40){
+            return AccessManager::cmlTokenCheck($token);
         }
-        return returnTokensByColumn($token_array);
+        return false;
     }
 
-    static function returnTokensByColumn($token_array){
-        $newArray = array();
-        foreach($token_array as $token){
-            if(hasAccesToToken($token)){
-                array_push($newArray, $token);
-            }
-        }
-        return $newArray;
-    }
-
-    public static function hasAccesToToken($token){
-        $result = false;
+    public static function getMaxLevel(){
+        $max = 0;
         foreach($_SESSION["permissions"] as $perm){
-            if($perm === $token->columnId){
-                $result = true;
+            if($perm->level > $max){
+                $max = $perm->level;
             }
         }
-        return $result;
+        return $max;
     }
-    
+
     static function normalArticleCheck($article){
         if($_SESSION["id"] === $article->authorId){
             return true;
@@ -59,6 +54,15 @@ class AccessManager{
         }
         foreach($_SESSION["permissions"] as $perm){
             if($perm->columnId === $article->columnId){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    static function cmlTokenCheck($token){
+        foreach($_SESSION["permissions"] as $perm){
+            if($perm->columnId === $token->columnId){
                 return true;
             }
         }

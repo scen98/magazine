@@ -21,8 +21,7 @@ window.logOut = function(){
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 window.location.href = "../amp/login.php";
-               }
-            
+               }           
         };
         xhttp.open("GET", "../amp/includes/logout.php", true);
         xhttp.send();
@@ -31,15 +30,20 @@ window.logOut = function(){
 
 function displayContent(permissionData){   
     permissions = permissionData.permissions;
-    if(permissionData.permissions[0].level <= 10){
+    let highestPermission = getHighestPermission();
+    if(highestPermission <= 10){
         hideFromNormal();
-    } else if(permissionData.permissions[0].level <= 20){
+    } else if(highestPermission <= 20){
         hideFromCma();
-    } else if(permissionData.permissions[0].level <= 30){
+    } else if(highestPermission <= 30){
         hideFromCml();
-    } else if(permissionData.permissions[0].level <= 40){
+    } else if(highestPermission <= 40){
         hideFromAdmin();
     }
+}
+
+function getHighestPermission(){
+    return Math.max.apply(Math, permissions.map(function(p) { return p.level; }))
 }
 
 function hideFromNormal(){

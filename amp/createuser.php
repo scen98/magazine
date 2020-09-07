@@ -1,9 +1,5 @@
 <?php 
     require "header.php";
-    if($_SESSION["permissions"][0]->level < 40){
-        header("Location: index.php?error=accessdenied");
-        exit();
-    }
     ?>
    <script type="module" src="js/createuserController.js"></script>
     <div class="container">
