@@ -1,13 +1,15 @@
 <?php
 require "permission.php";
+require "tokenpermission.php";
 class Author{
     public $id;
     public $userName;
     public $uniqName;
     public $password;
     public $permissions = array();
+    public $tokenPermissions = array();
     function __construct($id, $userName, $name, $password){
-        $this->id = $id;
+        $this->id = intval($id);
         $this->uniqName = $userName;
         $this->userName = $name;
         $this->password = $password;
@@ -52,7 +54,7 @@ class Author{
         }  
     }
 
-    public static function getAuthor($mysqlidb, $userName){
+    public static function selectAuthorQuery($mysqlidb, $userName){
         $author;
         $sql = "SELECT id, userName, name, password FROM authors WHERE userName = ?;";
         $stmt = mysqli_stmt_init($mysqlidb->conn);
@@ -64,6 +66,15 @@ class Author{
         $result = mysqli_stmt_get_result($stmt);            
         while($row = mysqli_fetch_assoc($result)){
             $author = new Author($row["id"], $row["userName"], $row["name"], $row["password"]);
+        }
+        return $author;
+    }
+
+    public static function selectAuthorByUserName($mysqlidb, $userName){
+        $author = Author::selectAuthorQuery($mysqlidb, $userName);
+        $author->permissions = Permission::selectPermissionsByAID($mysqlidb, $author->id);
+        if(count($author->permissions) > 0 && ($author->permissions[0]->level > 10 || $author->permissions[0]->level >= 40)){
+            $author->tokenPermissions = TokenPermission::selectByAID($mysqlidb, $author->id);
         }
         return $author;
     }

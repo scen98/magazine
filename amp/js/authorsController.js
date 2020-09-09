@@ -1,4 +1,5 @@
 import { Author, selectAllAuthors } from "./objects/author.js";
+import { getHighestPermission } from "./utils.js";
 let authorTable = document.getElementById("author-table");
 let authors = [];
 let searchInput = document.getElementById("search");
@@ -37,7 +38,8 @@ function renderAuthor(author){
 }
 
 function canUserEdit(author, func, args){
-    if(permissions[0].level >= 30 && permissions[0].level > author.getHighestPermission()){
+    let highestPermission = getHighestPermission(permissions);
+    if(highestPermission >= 30 && highestPermission > author.getHighestPermission()){
        func.apply(this,args);
     }
 }
@@ -63,7 +65,7 @@ function renderEditButton(parent, author){
     editBtn.classList.add("blue");
     editBtn.innerHTML = '<i class="fas fa-user-edit"></i>';
     editBtn.addEventListener("click", function() {
-        window.location.href = "../amp/editAuthor.php?aid="+author.id;
+        window.location.href = "../amp/editAuthor.php?author="+author.uniqName;
     })
     parent.appendChild(editBtn);
 }

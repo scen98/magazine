@@ -1,6 +1,6 @@
 export class Column{
     constructor(id, name){
-        this.id = id;
+        this.id = parseInt(id);
         this.name = name;
     }   
 }
@@ -11,7 +11,8 @@ export function getColumns(func, args){
         try{
             func(constrFromJSON(this.responseText), args);
         }catch(err) {
-            console.log(err.message);
+            console.log(err);
+            console.log(this.responseText);
         }
     };    
     xhttp.open("GET", "../amp/includes/requests/getcolumns.php", true);

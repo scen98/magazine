@@ -1,3 +1,4 @@
+import { getHighestPermission } from "./utils.js";
 let createUser = document.getElementById("create-user");
 let header =  document.getElementById("main-header");
 let sticky = header.offsetTop;
@@ -30,7 +31,7 @@ window.logOut = function(){
 
 function displayContent(permissionData){   
     permissions = permissionData.permissions;
-    let highestPermission = getHighestPermission();
+    let highestPermission = getHighestPermission(permissions);
     if(highestPermission <= 10){
         hideFromNormal();
     } else if(highestPermission <= 20){
@@ -40,10 +41,6 @@ function displayContent(permissionData){
     } else if(highestPermission <= 40){
         hideFromAdmin();
     }
-}
-
-function getHighestPermission(){
-    return Math.max.apply(Math, permissions.map(function(p) { return p.level; }))
 }
 
 function hideFromNormal(){

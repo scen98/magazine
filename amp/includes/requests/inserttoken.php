@@ -3,8 +3,7 @@ require "../objects/permission.php";
 require "../objects/token.php";
 require "../MSQDB.php";
 session_start();
-
-if($_SESSION["permissions"][0] <= 10){
+if($_SESSION["permissions"][0]->level <= 10){
     http_response_code(403);
     echo json_encode(["msg"=> "Hozzáférés megtagadva."]);
     exit();
@@ -15,7 +14,7 @@ if(empty($data)){
     echo json_encode(["msg"=> "Hiányos adatok."]);
     exit();
 }
-if($_SESSION["permissions"][0] >= 20 && $_SESSION["permissions"][0] < 40){
+if($_SESSION["permissions"][0]->level >= 20 && $_SESSION["permissions"][0]->level < 40){
     if(!isTokenAccessible($data)){
         http_response_code(403);
         echo json_encode(["msg"=> "Hozzáférés megtagadva."]);

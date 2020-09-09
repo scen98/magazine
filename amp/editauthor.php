@@ -5,29 +5,38 @@
         exit();
     }
     ?>
+    <script type="module" src="js/editauthorController.js"></script>
  <div class="container">
-        <h2>Név</h2>
-        <h3>Felhasználónév</h3>
-        <div class="settingBox">
-        <h4>Jogosultságok beállításai: </h4>
+        <h2 id="user-name" class="authorTitle">Név</h2>
+        <h3 id="uniq-name" class="authorUniq">Felhasználónév</h3>
+        <div id="permission-settings" style="display: none" class="settingBox">
+        <h3>Jogosultságok beállításai: </h3> 
+        <label>Jogosultság típus megváltoztatása: </label>
+        <select id="permission-type" class="columnselect">
+            <option value="10">Általános</option>
+            <option value="20">Rovat irányító</option>
+            <option value="40">Újságvezető</option>
+        </select>
+
+        <button type="button" class="commandBtn shine" onclick="changePermission()" >Megváltoztat</button>
+        <p class="note" >A jogosultság típus megváltoztatása az összes eddigi jogosultság törlésével jár, beleértve a tokenekhez való jogokat is.</p>
+        <div id="add-permission">
         <label>Jogosultság hozzáadása: </label>
-        <select class="columnselect">
+        <select id="permission-column-select" class="columnselect">
 
-        </select><br>
-        <div id="permission-table">
-            <div class="permissionContainer">
-                <p class="permissionName">Rovatvezető</p>
-                <p class="permissionScope">Szórakozás</p>
-                <button class="permissionBtn">Törlés</button>
-            </div>
+        </select>
+        <select id="column-permission-level" class="columnselect">
+            <option value="20">Rovatsegéd</option>
+            <option value="30">Rovatvezető</option>
+        </select>
+        <button onclick="addColumnPermission()" class="plusBtn"><i class="fas fa-plus-square"></i></button>
         </div>
-        <select class="columnselect">
-
-        </select><br>
-        <button type="button"><i class="fas fa-save"></i>   Jogosultságok mentése</button>
+        <div id="permission-table">
+        <p>Jelenlegi jogosultságok:</p>
+        </div>
         </div>
         <div class="settingBox">
-        <h4>Token jogosultságok beállításai: </h4>
+        <h3>Token jogosultságok beállítása: </h3>
 
         </div>
 </div>

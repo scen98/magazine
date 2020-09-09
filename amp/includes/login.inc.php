@@ -1,6 +1,5 @@
 <?php
 require "objects/author.php";
-require "objects/permission.php";
 require "MSQDB.php";
 
 if(!isset($_POST["login"])){
@@ -12,7 +11,8 @@ $userName = $_POST["userName"];
 $password = $_POST["password"];
 //$userName = "szvirag";
 //$password = "főnök1";
-$validAuthor = Author::getAuthor($database, $userName);
+//$validAuthor = Author::getAuthor($database, $userName);
+$validAuthor = Author::selectAuthorByUserName($database, $userName);
 //echo $validAuthor->password;
 
 if(!password_verify($password, $validAuthor->password)){
@@ -22,8 +22,10 @@ if(!password_verify($password, $validAuthor->password)){
 session_start();
 $_SESSION["id"] = $validAuthor->id;
 $_SESSION["userName"] = $validAuthor->userName;
-$_SESSION["name"] = $validAuthor->name;
-$_SESSION["permissions"] = Permission::selectPermissionsByAID($database, $validAuthor->id);
+$_SESSION["uniqName"] = $validAuthor->uniqName;
+//$_SESSION["permissions"] = Permission::selectPermissionsByAID($database, $validAuthor->id);
+$_SESSION["permissions"] = $validAuthor->permissions;
+$_SESSION["tokenPermissions"] = $valudAuthor->tokenPermissions;
 header("Location: ../index.php?logged");
 exit();
 

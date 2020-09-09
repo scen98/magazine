@@ -9,17 +9,16 @@ export class Token{
 
     insert(func, args){
         let xhttp = new XMLHttpRequest();
-        let currentToken = this;
         xhttp.open("POST", "../amp/includes/requests/inserttoken.php"); 
         xhttp.setRequestHeader("Content-type", "application/json");
         xhttp.send(JSON.stringify(this));
-        xhttp.onload = function() {
+        xhttp.onload = () => {
             try{
-                currentToken.id = JSON.parse(this.responseText).newId;
-                func(args); 
+                this.id = JSON.parse(xhttp.responseText).newId;
+                func(this, args); 
             } catch(err){
                 console.log(err);
-                console.log(this.responseText)
+                console.log(xhttp.responseText)
             }
         }
     }

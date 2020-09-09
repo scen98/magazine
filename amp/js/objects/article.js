@@ -15,16 +15,15 @@ export class Article {
         xhttp.open("POST", "../amp/includes/requests/insertarticle.php"); 
         xhttp.setRequestHeader("Content-type", "application/json");
         xhttp.send(JSON.stringify(this));
-        xhttp.onload = function() {
+        xhttp.onload = () => {
             try {
                 var newId = JSON.parse(xhttp.responseText).newId;
                 this.id = newId;
                 func(newId, args);
             } catch(err){
-                console.log(this.responseText);
+                console.log(xhttp.responseText);
                 console.log(err);
             }
-            
         }
     }
     update(func, args){

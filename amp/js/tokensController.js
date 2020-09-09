@@ -1,5 +1,6 @@
 import { Token, selectAccessibleTokens } from "./objects/token.js";
 import { getColumns } from "./objects/column.js";
+import * as utils from "./utils.js";
 let tokenTable = document.getElementById("token-table");
 let columnArray = [];
 let tokenArray = [];
@@ -14,22 +15,24 @@ function init(){
 
 window.insertToken = function(){
     let newToken = new Token(0, newName.value, newStatus.value, newColumn.value);
-    newToken.insert(addToken, newToken);
+    newToken.insert(addToken);
 }
 
 function addToken(token){
     if(token.id !== 0){
+        tokenArray.push(token);
         renderToken(token);
     }
 }
 
 function preparePage(columns){
-    if(permissions[0].level >= 40){
+    let highestPerm = utils.getHighestPermission(permissions);
+    if(highestPerm >= 40){ 
         let all = { id: 0, name: "Mind" }
         columnArray = columns;
         columnArray.unshift(all);
     } else {
-        columnArray = columns.filter(col => hasAccessToColumn(col));
+        columnArray = columns.filter(col => utils.hasCmlAccesToColumn(permissions, col));
     }
     renderColumnSelect(columnSelect);
     selectAccessibleTokens(loadTokens);
@@ -96,14 +99,6 @@ function onTokenDelete(token){
 function onUpdate(){
 
 }
-
-function hasAccessToColumn(column){
-    for (let perm of permissions) {
-       if(perm.columnId == column.id) return true;
-    }
-    return false;
-}
-
 
 function renderTokenColumnSelect(token){
     let tokenColumnSelect = document.createElement("select");
