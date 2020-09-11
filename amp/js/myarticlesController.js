@@ -1,5 +1,6 @@
 import { Article, selectMyArticles } from "./objects/article.js"
 import { getColumns } from "./objects/column.js"
+import * as doc from "./doc.js"
 let articleTable = document.getElementById("article-table");
 let selectOrder;
 let articles = [];
@@ -36,11 +37,8 @@ window.editArticle = function(id){
 }
 
 window.switchDeleteBtn = function(oldButton, article){
-    let newButton = document.createElement("button");
-    newButton.innerHTML = "Törlés";
-    newButton.classList.add("red");
-    newButton.classList.add("articleButton");
-    newButton.addEventListener("click", function() { deleteArticle(article); })
+    let newButton = doc.create("button", null, ["red", "articleButton"], "Törlés");
+    newButton.addEventListener("click", function() { deleteArticle(article); });
     oldButton.parentNode.replaceChild(newButton, oldButton);
 }
 
@@ -59,12 +57,7 @@ function expandArticles(articleData){
 
 function addSearchListener(){
     let input = document.getElementById("search");
-
-    input.addEventListener("keyup", function(event) {
-    if (event.keyCode === 13) {
-        document.getElementById("search-btn").click();
-    }
-    });
+    doc.onEnter(input, () => { document.getElementById("search-btn").click(); });
 }
 
 function setSearchParameters(){
@@ -91,40 +84,18 @@ function loadArticles(articleData){
 }
 
 function renderRow(article){
-    var container = document.createElement("div");
-    var title = document.createElement("p");
-    var lead = document.createElement("div");
-    var columnName = document.createElement("p");
-    var date = document.createElement("p");
-    var editBtn = document.createElement("button");
-    var deleteBtn = document.createElement("button");
+    let container = doc.createDiv(article.id, ["articleContainer"], null);
+    let title = doc.createP(null, ["articleTitle"], article.title);
+    let lead = doc.createDiv(null, ["articleLead"], article.lead);
+    let columnName = doc.createP(null, ["articleColumn"], getColumnNameById(article.columnId));
+    let editBtn = doc.createButton(null, ["articleButton", "blue"], '<i class="fas fa-edit"></i>');
+    let date = doc.createP(null, ["articleDate"], article.date);
+    let deleteBtn = doc.createButton(null, ["articleButton", "red"], '<i class="fas fa-trash-alt"></i>');
 
-    container.className = "articleContainer";
-    container.id = article.id;
-    title.innerHTML = article.title;
-    title.className = "articleTitle";
-    columnName.innerHTML = getColumnNameById(article.columnId);
-    columnName.className = "articleColumn";
-    lead.innerHTML = article.lead;
-    lead.className = "articleLead";
-    editBtn.innerHTML = '<i class="fas fa-edit"></i>';
-    editBtn.className = "articleButton";
-    editBtn.classList.add("blue");
-    editBtn.addEventListener("click", function() { editArticle(article.id); });
-    deleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i>';
-    deleteBtn.className = "articleButton";    
-    deleteBtn.classList.add("red");
-    deleteBtn.addEventListener("click", function() { switchDeleteBtn(deleteBtn, article); })
-    date.innerHTML = article.date;
-    date.className = "articleDate";
-    
-    container.appendChild(title);
-    container.appendChild(columnName);
-    container.appendChild(lead);
-    container.appendChild(deleteBtn);
-    container.appendChild(editBtn);
-    container.appendChild(date);
-     
+    doc.addClick(editBtn, () => { editArticle(article.id); });
+    doc.addClick(deleteBtn, () => { switchDeleteBtn(deleteBtn, article); });
+
+    doc.append(container, [title, columnName, lead, deleteBtn, editBtn, date]);
     articleTable.appendChild(container);
 }
 

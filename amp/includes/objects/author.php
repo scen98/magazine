@@ -73,7 +73,7 @@ class Author{
     public static function selectAuthorByUserName($mysqlidb, $userName){
         $author = Author::selectAuthorQuery($mysqlidb, $userName);
         $author->permissions = Permission::selectPermissionsByAID($mysqlidb, $author->id);
-        if(count($author->permissions) > 0 && ($author->permissions[0]->level > 10 || $author->permissions[0]->level >= 40)){
+        if(count($author->permissions) > 0 && ($author->permissions[0]->level >= 20 && $author->permissions[0]->level < 40)){
             $author->tokenPermissions = TokenPermission::selectByAID($mysqlidb, $author->id);
         }
         return $author;

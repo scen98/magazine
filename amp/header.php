@@ -1,5 +1,6 @@
 <?php
     require "includes/objects/permission.php";
+    require "includes/objects/tokenpermission.php";
     session_start();
     if(!isset($_SESSION["permissions"][0])){
         header("Location: ../amp/login.php?error=timeout");

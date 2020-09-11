@@ -1,5 +1,6 @@
 import { getColumns } from "./objects/column.js"
 import { Article } from "./objects/article.js"
+import * as doc from "./doc.js";
 let columnSelect = document.getElementById("column-select");
 init();
 
@@ -21,15 +22,8 @@ function moveToEditor(articleId){
 
 function renderOptions(columnArray){
     for (let col of columnArray) {
-        renderRow(col);
+        doc.renderOption(columnSelect, col.id, col.name);
     }
-}
-
-function renderRow(column){
-    let opt = document.createElement("option");
-    opt.value = column.id;
-    opt.innerHTML = column.name;
-    columnSelect.add(opt);
 }
 
 function enableEditMode() {

@@ -1,7 +1,7 @@
 <?php 
     require "header.php";
     ?>
-   <script type="module" src="js/createuserController.js"></script>
+  <!-- <script type="module" src="js/createuserController.js"></script> -->
     <div class="container">
         <form action="includes/createuser.inc.php" method="post">
         <p><?php require "includes/messages/addusermessage.php" ?></p>
@@ -13,14 +13,14 @@
         <input class="logininput" type="password" placeholder="Enter Password" name="pwd" required>
         <label for="psw"><b>Új felhaszhnáló jelszava ismét: </b></label>
         <input class="logininput" type="password" placeholder="Enter Password" name="pwd-repeat" required>
-        <label for="psw"><b>Új felhasználó jogosultságai: </b></label>
-        <select id="permission-type" onChange="toggleShow()" name="permissions" class="columnselect">
+       <!--   <label for="psw"><b>Új felhasználó jogosultságai: </b></label>
+      <select id="permission-type" onChange="toggleShow()" name="permissions" class="columnselect">
             <option value="10">Általános</option>
             <option value="20">Asszisztens</option>
             <option value="30">Rovatvezető</option>
             <option value="40">Újságvezető</option>
             <option value="50">Rendszergazda</option>
-        </select>
+        </select> -->
         <button id="add-btn" onclick="addColumn()" type="button" style="display: none;" class="addbutton"><i class="fas fa-plus"></i></button>
         <button id="remove-btn" onclick="removeColumn()" type="button" style="display: none;" class="removebutton" ><i class="fas fa-minus"></i></button>
          <br>

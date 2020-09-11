@@ -1,5 +1,6 @@
-import { Article, selectArticle } from "./objects/article.js"
-import { getColumns } from "./objects/column.js"
+import { Article, selectArticle } from "./objects/article.js";
+import { getColumns } from "./objects/column.js";
+import * as doc from "./doc.js";
 let columnSelect = document.getElementById("column-select");
 let title = document.getElementById("title");
 let lead = document.getElementById("lead");
@@ -86,15 +87,8 @@ function getId(){
 
 function renderOptions(columnArray){  
     for (let col of columnArray) {
-        renderRow(col);
+        doc.renderOption(columnSelect, col.id, col.name);
     }
-}
-
-function renderRow(column){
-    let opt = document.createElement("option");
-        opt.value = column.id;
-        opt.innerHTML = column.name;
-        columnSelect.add(opt);
 }
 
 function enableEditMode() {

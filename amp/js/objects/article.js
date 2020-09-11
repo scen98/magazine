@@ -26,6 +26,7 @@ export class Article {
             }
         }
     }
+
     update(func, args){
         let xhttp = new XMLHttpRequest();
         xhttp.open("POST", "../amp/includes/requests/updatearticle.php"); 

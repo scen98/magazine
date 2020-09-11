@@ -8,8 +8,10 @@ export class Author{
         this.tokenPermissions = [];
     }
 
-    
     getHighestPermission(){
+        if(this.permissions.length === 0){
+            return 0;
+        }
         return Math.max.apply(Math, this.permissions.map(function(p) { return p.level; }))
     }
     getPermissionName(){
@@ -87,10 +89,16 @@ function tryCallback(callback, args, response){
 
 function parseAuthor(json){
     let author = JSON.parse(json).author;
+    let newAuthor;
     if(author.permissions.length === 0){
-        return new Author(author.id, author.uniqName, author.userName, null, []);
+        newAuthor = new Author(author.id, author.uniqName, author.userName, null, []);
+    } else {
+        newAuthor = new Author(author.id, author.uniqName, author.userName, null, author.permissions);
     }
-    return new Author(author.id, author.uniqName, author.userName, null, author.permissions);
+    if(author.tokenPermissions.length > 0){
+        newAuthor.tokenPermissions = author.tokenPermissions;
+    }
+    return newAuthor;
 }
 
 function parseArray(json){

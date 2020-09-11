@@ -21,19 +21,6 @@ if(Author::doesExist($database, $uniqName) === true){
     exit();
 }
 $lastId = Author::createAuthor($database, $uniqName, $userName, $userPassword, $userPasswordRepeat);
-if($_POST["permissions"] >= 40 || $_POST["permissions"] <= 10 ){
-    Permission::createPermission($database, $_POST["permissions"], $lastId, NULL);
-}else {
-    $add = true;
-    $count = 1;
-    while($add){
-        if(isset($_POST["perm".$count])){
-            Permission::createPermission($database, $_POST["permissions"], $lastId, intval($_POST["perm".$count]));
-            $count++;
-        } else {
-            $add = false;
-        }        
-    }
-}
 mysqli_close($database->conn);
 header("Location: ../editAuthor.php?aid=".$lastId);
+exit();

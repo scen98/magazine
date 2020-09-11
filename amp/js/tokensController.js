@@ -1,6 +1,7 @@
-import { Token, selectAccessibleTokens } from "./objects/token.js";
+import * as Token from "./objects/token.js";
 import { getColumns } from "./objects/column.js";
 import * as utils from "./utils.js";
+import * as doc from "./doc.js";
 let tokenTable = document.getElementById("token-table");
 let columnArray = [];
 let tokenArray = [];
@@ -15,7 +16,7 @@ function init(){
 
 window.insertToken = function(){
     let newToken = new Token(0, newName.value, newStatus.value, newColumn.value);
-    newToken.insert(addToken);
+    Token.insertToken(newToken, () => addToken(newToken));
 }
 
 function addToken(token){
@@ -35,7 +36,7 @@ function preparePage(columns){
         columnArray = columns.filter(col => utils.hasCmlAccesToColumn(permissions, col));
     }
     renderColumnSelect(columnSelect);
-    selectAccessibleTokens(loadTokens);
+    Token.selectAccessibleTokens(loadTokens);
 }
 
 function loadTokens(tokens){
@@ -62,7 +63,7 @@ function renderToken(token){
     saveBtn.addEventListener( "click", function() {
         token.status = statusSelect.value;
         token.columnId = columnSelect.value;
-        token.update(onUpdate);
+        Token.update(token, () => { onUpdate(token); });
     }
     );
     deleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i>';
@@ -89,7 +90,8 @@ function switchDeleteBtn(oldButton, token){
 }
 
 function deleteToken(token){
-    token.delete(onTokenDelete, token);
+    Token.remove(token, () => { onTokenDelete(token); } );
+    tokenArray = tokenArray.filter(f => f.id !== token.id);
 }
 
 function onTokenDelete(token){
@@ -110,34 +112,16 @@ function renderTokenColumnSelect(token){
 }
 
 function renderTokenSelect(token){
-    let select = document.createElement("select");
-    select.id = "status-select" + token.id;
-    let active = document.createElement("option");
-    let inactive = document.createElement("option");
-    let mandatory = document.createElement("option");
-    active.value = 1;
-    active.innerHTML = "Aktív";
-    inactive.value = 0;
-    inactive.innerHTML = "Inaktív";
-    mandatory.value = 2;
-    mandatory.innerHTML = "Kötelező";
-    select.appendChild(active);
-    select.appendChild(inactive);
-    select.appendChild(mandatory);
+    let select = doc.createSelect("status-select" + token.id, ["tokenSelect"]);
+    doc.renderOption(select, 1, "Aktív");
+    doc.renderOption(select, 0, "Inaktív");
+    doc.renderOption(select, 2, "Kötelező");
     select.value = token.status;
-    select.classList.add("tokenSelect");
     return select;
 }
 
 function renderColumnSelect(select){
     for (let col of columnArray) {
-        renderOption(select, col);
+        doc.renderOption(select, col.id, col.name);
     }
-}
-
-function renderOption(select, column){
-    let opt = document.createElement("option");
-    opt.value = column.id;
-    opt.innerHTML = column.name;
-    select.appendChild(opt);
 }

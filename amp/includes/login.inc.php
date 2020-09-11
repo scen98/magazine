@@ -25,7 +25,7 @@ $_SESSION["userName"] = $validAuthor->userName;
 $_SESSION["uniqName"] = $validAuthor->uniqName;
 //$_SESSION["permissions"] = Permission::selectPermissionsByAID($database, $validAuthor->id);
 $_SESSION["permissions"] = $validAuthor->permissions;
-$_SESSION["tokenPermissions"] = $valudAuthor->tokenPermissions;
+$_SESSION["tokenPermissions"] = $validAuthor->tokenPermissions;
 header("Location: ../index.php?logged");
 exit();
 

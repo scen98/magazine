@@ -542,7 +542,8 @@ span.icon {
     border-right-width: 3px;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     padding: 10px;
     overflow: hidden;
     border-radius: 4px;
@@ -588,7 +589,8 @@ span.icon {
     border-right-width: 3px;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     padding: 10px;
     overflow: hidden;
     border-radius: 4px;
@@ -633,7 +635,7 @@ span.icon {
     margin: 10px;
   }
   .settingBox:hover{
-    background-color: rgba(0, 0, 0, 0.05);
+    
   }
 
   .permissionContainer {
@@ -644,7 +646,8 @@ span.icon {
     border-right-width: 3px;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     padding: 10px;
     overflow: hidden;
     border-radius: 4px;
@@ -703,6 +706,26 @@ span.icon {
     background-color: #7dbb95;
     width: 40px;
     height: 30px;
+  }
+
+  .green{
+    background-color: #168a42;
+  }
+
+  .green:hover {
+    background-color: #59cc85;
+  }
+
+  .tableContainer{
+    background-color: rgba(137, 151, 235, 0.089);
+    padding: 1%;
+    border-style: solid;
+    border-width: 1.5px;
+    border-radius: 3px;
+  }
+
+  .tableContainer:hover{
+    background-color: rgba(0, 0, 0, 0.05);
   }
 
   .note {

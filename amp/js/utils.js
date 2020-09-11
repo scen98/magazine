@@ -1,4 +1,7 @@
 export function getHighestPermission(permissions){
+    if(permissions.length === 0){
+        return 0;
+    }
     return Math.max.apply(Math, permissions.map(function(p) { return p.level; }));
 }
 

@@ -1,5 +1,6 @@
 <?php
 require "../objects/permission.php";
+require "../objects/tokenpermission.php";
 require "../MSQDB.php";
 session_start();
 
@@ -18,8 +19,9 @@ $database = new MSQDB;
 Permission::deleteByAID($database, $data->authorId);
 if($data->level <= 10 || $data->level >= 40){
     $id = Permission::insertGlobalPermission($database, new Permission(NULL, $data->level, $data->authorId, NULL));
+    TokenPermission::deleteByAID($database, $data->authorId);
     http_response_code(201);
-    echo json_encode(["id"=> $id]);
+    echo json_encode(["newId"=> $id]);
     exit();
 }
 http_response_code(200);

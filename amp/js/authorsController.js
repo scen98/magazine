@@ -1,5 +1,6 @@
 import { Author, selectAllAuthors } from "./objects/author.js";
 import { getHighestPermission } from "./utils.js";
+import * as doc from "./doc.js";
 let authorTable = document.getElementById("author-table");
 let authors = [];
 let searchInput = document.getElementById("search");
@@ -7,11 +8,7 @@ let permissionSearchInput = document.getElementById("permission-select");
 init();
 function init(){
     selectAllAuthors(loadPage);
-    searchInput.addEventListener("keyup", function(event) {
-        if (event.keyCode === 13) {
-            document.getElementById("search-btn").click();
-        }
-        });
+    doc.enterFunction(searchInput, () => document.getElementById("search-btn").click());
 }
 
 function loadPage(authorData){
