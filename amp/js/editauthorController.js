@@ -49,7 +49,7 @@ window.changePermission = () => {
         alert("Ez a jogosultságtípus már be van állítva.");
     } else {
         permissionTable.innerHTML = "";
-        newPermission.change(updateAuthorPermissions);
+        newPermission.change(() => { updateAuthorPermissions(newPermission); });
     }
 }
 
@@ -59,7 +59,7 @@ window.addColumnPermission = () => {
     if(doesPermissionExist(newPermission)){
         alert("Ilyen jogosultság már létezik.");
     } else {
-        newPermission.insert(onInsert);
+        newPermission.insert(()=> { onInsert(newPermission); });
     }
 }
 
@@ -146,34 +146,23 @@ function setPermissionType(){
 }
 
 function renderPermission(permission){
-    let perm = document.createElement("div");
-    let permName = document.createElement("p");
-    let columnName = document.createElement("p");
-    let deleteBtn = document.createElement("button");
-    perm.className = "permissionContainer";
-    perm.id = permission.id;
-    permName.innerText = permissionName(permission);
-    permName.className = "permissionName";
+    let perm = doc.createDiv(permission.id, ["permissionContainer"],);
+    let columnName = doc.createP(["permissionColumn"], "");
+    let permName = doc.createP(["permissionName"], permissionName(permission));
+    let deleteBtn = doc.createButton(["permissionButton", "red"], '<i class="fas fa-trash-alt"></i>', ()=> { switchDeleteBtn(deleteBtn, permission); });
     if(author.getHighestPermission() <= 10 || author.getHighestPermission() >= 40){
         columnName.innerText = "Mind";
     } else {
         columnName.innerText = columns.find(c=> c.id === permission.columnId).name;
-    }  
-    columnName.className = "permissionColumn";
-    deleteBtn.className = "permissionButton";
-    deleteBtn.classList.add("red");
-    deleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i>';
-    deleteBtn.addEventListener("click", function() { switchDeleteBtn(deleteBtn, permission); })
-    perm.appendChild(permName);
-    perm.appendChild(columnName);
-    perm.appendChild(deleteBtn);
+    }
+    doc.append(perm, [permName, columnName, deleteBtn]);
     permissionTable.appendChild(perm);
 }
 
 function renderNoPermissionsMessage(){
     let p = document.createElement("p");
     p.innerText = "A felhasználó nem rendelkezik jogosultságokkal, így nem tudja használni az oldalt.";
-    p.style.fontStyle = "itelic";
+    p.style.fontStyle = "italic";
     permissionTable.appendChild(p);
 }
 
@@ -184,12 +173,9 @@ function renderColumnSelect(select){
 }
 
 function switchDeleteBtn(oldButton, permission){
-    let newButton = document.createElement("button");
-        newButton.innerHTML = "Törlés";
-        newButton.classList.add("red");
-        newButton.classList.add("permissionButton");
-        newButton.addEventListener("click", function() { deletePermission(onPermissionDelete, permission, permission); })
-        oldButton.parentNode.replaceChild(newButton, oldButton);
+    let newButton = doc.createButton(null, ["permissionButton", "red"], "Törlés");
+    doc.addEnter(newButton, ()=> { deletePermission(()=> { onPermissionDelete(permission); }, permission); })
+    oldButton.parentNode.replaceChild(newButton, oldButton);
 }
 //PERMISSIONS---
 //---TOKENS
@@ -217,21 +203,16 @@ function renderAuthorTokenPermissions(){
 }
 
 function renderAuthorTokenPermission(tokenPermission){
-    let container = document.createElement("div");
-    let tokenName = document.createElement("p");
+    let container = doc.createDiv("author-token-" + tokenPermission.id, ["tokenContainer"], );
+    let tokenName = doc.createP(["tokenName"], tokenPermission.tokenName);
     let tokenColumn = document.createElement("p");
-    container.className = "tokenContainer";
-    container.id = "author-token-" + tokenPermission.id;
-    tokenName.className = "tokenName";
-    tokenName.innerText = tokenPermission.tokenName;
-    tokenColumn.className = "permissionColumn";
+
     if(tokenPermission.columnId == null || tokenPermission.columnId === 0){
         tokenColumn.innerText = "Mind";
     } else {
         tokenColumn.innerText  = columns.find(c => c.id === tokenPermission.columnId).name;
     }
-    container.appendChild(tokenName);
-    container.appendChild(tokenColumn);
+    doc.append(container, [tokenName, tokenColumn]);
     if(hasAccessToToken(tokenPermission)){
         createTokenDeleteBtn(container, tokenPermission);
     }
@@ -239,20 +220,12 @@ function renderAuthorTokenPermission(tokenPermission){
 }
 
 function createTokenDeleteBtn(container, tokenPermission){
-    let deleteBtn = document.createElement("button");
-    deleteBtn.className = "tokenButton";
-    deleteBtn.classList.add("red");
-    deleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i>';
-    deleteBtn.addEventListener("click", function() { switchTokenDeleteBtn(tokenPermission, deleteBtn); })
+    let deleteBtn = doc.createButton(["tokenButton", "red"], '<i class="fas fa-trash-alt"></i>', ()=>{ switchTokenDeleteBtn(tokenPermission, deleteBtn); });
     container.appendChild(deleteBtn);
 }
 
 function switchTokenDeleteBtn(tokenPermission, oldButton){
-    let newButton = document.createElement("button");
-    newButton.innerHTML = "Törlés";
-    newButton.classList.add("red");
-    newButton.classList.add("tokenButton");
-    newButton.addEventListener("click", function() { deleteTokenPermission(onTokenPermissionDelete, tokenPermission, tokenPermission); })
+    let newButton = doc.createButton(["tokenButton", "red"], "Törlés", ()=> { deleteTokenPermission(()=> { onTokenPermissionDelete(tokenPermission); }, tokenPermission); });
     oldButton.parentNode.replaceChild(newButton, oldButton);
 }
 
@@ -290,38 +263,28 @@ function renderMyTokens(tokenData){
 }
 
 function renderAccessibleToken(token){
-    let container = document.createElement("div");
-    let name = document.createElement("p");
-    let columnName = document.createElement("p");
-    let addBtn = document.createElement("button");
+    let container = doc.createDiv(null, ["tokenContainer"]);
+    let name = doc.createP(["tokenName"], token.name);
+    let columnName = doc.createP(["tokenButton"], "");
+    let addBtn = doc.createButton(["green", "tokenButton"], '<i class="fas fa-user-plus"></i>', ()=> {
+        if(doesTokenPermissionExist(newTokenPermission)){
+            alert("A felhasználó már rendelkezik ezzel a jogosultsággal.");
+        } else {
+            insertTokenPermission(()=> { onTokenPermissionInsert(newTokenPermission); }, newTokenPermission); 
+        }  
+    });
     let newTokenPermission = {
         authorId: author.id,
         columnId: token.columnId,
         tokenId: token.id,
         tokenName: token.name
     }
-    container.className = "tokenContainer";
-    name.className = "tokenName";
-    name.innerText = token.name;
-    columnName.className = "tokenName";
-    addBtn.className = "tokenButton";
-    addBtn.classList.add("green");
-    addBtn.innerHTML = '<i class="fas fa-user-plus"></i>';
-    addBtn.addEventListener("click", function() { 
-        if(doesTokenPermissionExist(newTokenPermission)){
-            alert("A felhasználó már rendelkezik ezzel a jogosultsággal.");
-        } else {
-            insertTokenPermission(onTokenPermissionInsert, newTokenPermission); 
-        }  
-    });
     if(token.columnId === 0){
         columnName.innerText = "Mind";
     } else {
         columnName.innerText = columns.find(c=> c.id === token.columnId).name;
     }
-    container.appendChild(name);
-    container.appendChild(columnName);
-    container.appendChild(addBtn);
+    doc.append(container, [name, columnName, addBtn]);
     myTokenTable.appendChild(container);
 }
 //TOKENS---

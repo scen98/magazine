@@ -13,7 +13,7 @@ export class Permission {
         xhttp.onload = () => {
             try{
                 this.id = JSON.parse(xhttp.responseText).newId;
-                func(this); 
+                func(); 
             } catch(err){
                 console.log(err);
                 console.log(xhttp.responseText);
@@ -28,7 +28,7 @@ export class Permission {
         xhttp.onload = () => {
             try{
                 this.id = JSON.parse(xhttp.responseText).newId;
-                func(this); 
+                func(); 
             } catch(err){
                 console.log(err);
                 console.log(xhttp.responseText)
@@ -45,7 +45,7 @@ export class Permission {
         xhttp.send(JSON.stringify(data));
         xhttp.onload = () => {
             if(JSON.parse(xhttp.responseText).msg === "success"){
-                tryCallback(func, args, xhttp.responseText);
+                tryCallback(func, xhttp.responseText);
             } else {
                 console.log(xhttp.responseText);
             }
@@ -53,7 +53,7 @@ export class Permission {
     }
 }
 
-export function deletePermission(func, args, permission){
+export function deletePermission(func, permission){
     let xhttp = new XMLHttpRequest();
     let data = {
         id: permission.id
@@ -63,7 +63,7 @@ export function deletePermission(func, args, permission){
     xhttp.send(JSON.stringify(data));
     xhttp.onload = () => {
         if(JSON.parse(xhttp.responseText).msg === "success"){
-            tryCallback(func, args, xhttp.responseText);
+            tryCallback(func, xhttp.responseText);
         } else {
             console.log(xhttp.responseText);
         }
@@ -78,7 +78,7 @@ export function insertTokenPermission(func, tokenPermission){
     xhttp.onload = () => {
         try{
             tokenPermission.id = JSON.parse(xhttp.responseText).newId;
-            func(tokenPermission);
+            func();
         } catch(err){
             console.log(err);
             console.log(xhttp.responseText);
@@ -86,7 +86,7 @@ export function insertTokenPermission(func, tokenPermission){
     }
 }
 
-export function deleteTokenPermission(func, args, tokenPermission){
+export function deleteTokenPermission(func, tokenPermission){
     let xhttp = new XMLHttpRequest();
     let data = {
         id: tokenPermission.id
@@ -96,16 +96,16 @@ export function deleteTokenPermission(func, args, tokenPermission){
     xhttp.send(JSON.stringify(data));
     xhttp.onload = () => {
         if(JSON.parse(xhttp.responseText).msg === "success"){
-            tryCallback(func, args, xhttp.responseText);
+            tryCallback(func, xhttp.responseText);
         } else {
             console.log(xhttp.responseText);
         }
     }
 }
 
-function tryCallback(callback, args, response){
+function tryCallback(callback, response){
     try{
-        callback(args);
+        callback();
     } catch(err){
         console.log(response);
         console.log(err);

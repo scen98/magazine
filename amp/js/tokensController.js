@@ -1,4 +1,4 @@
-import * as Token from "./objects/token.js";
+import { Token, selectAccessibleTokens } from "./objects/token.js";
 import { getColumns } from "./objects/column.js";
 import * as utils from "./utils.js";
 import * as doc from "./doc.js";
@@ -16,7 +16,7 @@ function init(){
 
 window.insertToken = function(){
     let newToken = new Token(0, newName.value, newStatus.value, newColumn.value);
-    Token.insertToken(newToken, () => addToken(newToken));
+    newToken.insert(() => addToken(newToken));
 }
 
 function addToken(token){
@@ -36,7 +36,7 @@ function preparePage(columns){
         columnArray = columns.filter(col => utils.hasCmlAccesToColumn(permissions, col));
     }
     renderColumnSelect(columnSelect);
-    Token.selectAccessibleTokens(loadTokens);
+    selectAccessibleTokens(loadTokens);
 }
 
 function loadTokens(tokens){
@@ -47,50 +47,31 @@ function loadTokens(tokens){
 }
 
 function renderToken(token){
-    let container = document.createElement("div");
-    let name = document.createElement("p");
-    let saveBtn = document.createElement("button");
-    let deleteBtn = document.createElement("button");
-    let statusSelect = renderTokenSelect(token);
-    let columnSelect = renderTokenColumnSelect(token);
-    container.className = "tokenContainer";
-    container.id = token.id;
-    name.className = "tokenName";
-    name.innerHTML = token.name;
-    saveBtn.innerHTML = '<i class="fas fa-save"></i>';
-    saveBtn.className = "tokenButton";
-    saveBtn.classList.add("blue");
-    saveBtn.addEventListener( "click", function() {
+    let container = doc.createDiv(token.id, ["tokenContainer"]);
+    let name = doc.createP(["tokenName"], token.name);
+    let saveBtn = doc.createButton(["tokenButton", "blue"], '<i class="fas fa-save"></i>', ()=>{
         token.status = statusSelect.value;
         token.columnId = columnSelect.value;
-        Token.update(token, () => { onUpdate(token); });
-    }
-    );
-    deleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i>';
-    deleteBtn.className = "tokenButton";    
-    deleteBtn.classList.add("red");
-    deleteBtn.addEventListener("click", function() { 
+        token.update(() => { onUpdate(token); });
+    });
+    let deleteBtn = doc.createButton(["tokenButton", "red"], '<i class="fas fa-trash-alt"></i>', ()=>{
         switchDeleteBtn(deleteBtn, token);
-    })
-    container.appendChild(name);
-    container.appendChild(statusSelect);
-    container.appendChild(columnSelect);
-    container.appendChild(deleteBtn);
-    container.appendChild(saveBtn);
+    });
+    let statusSelect = renderTokenSelect(token);
+    let columnSelect = renderTokenColumnSelect(token);
+    doc.append(container, [name, statusSelect, columnSelect, deleteBtn, saveBtn]);
     tokenTable.appendChild(container);
 }
 
 function switchDeleteBtn(oldButton, token){
-    let newButton = document.createElement("button");
-        newButton.innerHTML = "Törlés";
-        newButton.classList.add("red");
-        newButton.classList.add("tokenButton");
-        newButton.addEventListener("click", function() { deleteToken(token); })
-        oldButton.parentNode.replaceChild(newButton, oldButton);
+    let newButton = doc.createButton(["tokenButton", "red"], "Törlés", ()=> {
+        deleteToken(token);
+    });
+    oldButton.parentNode.replaceChild(newButton, oldButton);
 }
 
 function deleteToken(token){
-    Token.remove(token, () => { onTokenDelete(token); } );
+    token.delete(() => { onTokenDelete(token); } );
     tokenArray = tokenArray.filter(f => f.id !== token.id);
 }
 
@@ -103,9 +84,7 @@ function onUpdate(){
 }
 
 function renderTokenColumnSelect(token){
-    let tokenColumnSelect = document.createElement("select");
-    tokenColumnSelect.id = "column-select" + token.id;
-    tokenColumnSelect.className = "tokenSelect";
+    let tokenColumnSelect = doc.createSelect("column-select" + token.id, ["tokenSelect"]);
     renderColumnSelect(tokenColumnSelect);
     tokenColumnSelect.value = token.columnId;
     return tokenColumnSelect;

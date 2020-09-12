@@ -78,15 +78,6 @@ export function permissionName(permission){
     }
 }
 
-function tryCallback(callback, args, response){
-    try{
-        callback(args);
-    } catch(err){
-        console.log(response);
-        console.log(err);
-    }
-}
-
 function parseAuthor(json){
     let author = JSON.parse(json).author;
     let newAuthor;

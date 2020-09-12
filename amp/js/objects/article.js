@@ -10,16 +10,15 @@ export class Article {
         this.text = text;
     }
 
-    insert(func, args){    
+    insert(func){    
         let xhttp = new XMLHttpRequest();
         xhttp.open("POST", "../amp/includes/requests/insertarticle.php"); 
         xhttp.setRequestHeader("Content-type", "application/json");
         xhttp.send(JSON.stringify(this));
         xhttp.onload = () => {
             try {
-                var newId = JSON.parse(xhttp.responseText).newId;
-                this.id = newId;
-                func(newId, args);
+                this.id = JSON.parse(xhttp.responseText).newId;
+                func();
             } catch(err){
                 console.log(xhttp.responseText);
                 console.log(err);
@@ -27,28 +26,28 @@ export class Article {
         }
     }
 
-    update(func, args){
+    update(func){
         let xhttp = new XMLHttpRequest();
         xhttp.open("POST", "../amp/includes/requests/updatearticle.php"); 
         xhttp.setRequestHeader("Content-type", "application/json");
         xhttp.send(JSON.stringify(this));
         xhttp.onload = function() {
             if(JSON.parse(this.responseText).msg == "success"){
-                tryCallBack(func, args, this.responseText);
+                tryCallBack(func, this.responseText);
             } else {
                 console.log(this.responseText);
             }            
         }
     }
 
-    delete(func, args){
+    delete(func){
         let xhttp = new XMLHttpRequest();
         xhttp.open("POST", "../amp/includes/requests/deletearticle.php"); 
         xhttp.setRequestHeader("Content-type", "application/json");
         xhttp.send(JSON.stringify(this));
         xhttp.onload = function() {
             if(JSON.parse(this.responseText).msg == "success"){
-                tryCallBack(func, args, this.responseText);
+                tryCallBack(func, this.responseText);
             } else {
                 console.log(this.responseText);
             }   
@@ -56,7 +55,7 @@ export class Article {
     }
 }
 
-function tryCallBack(func, args, message){
+function tryCallBack(func, message){
     try {
         func(args);
     }catch(err){

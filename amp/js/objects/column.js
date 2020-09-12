@@ -5,11 +5,11 @@ export class Column{
     }   
 }
 
-export function getColumns(func, args){
+export function getColumns(func){
     let xhttp = new XMLHttpRequest();
     xhttp.onload = function() {
         try{
-            func(constrFromJSON(this.responseText), args);
+            func(constrFromJSON(this.responseText));
         }catch(err) {
             console.log(err);
             console.log(this.responseText);
@@ -19,11 +19,11 @@ export function getColumns(func, args){
     xhttp.send();    
 }
 
-export function selectAcccessibleColumns(func, args){
+export function selectAcccessibleColumns(func){
     let xhttp = new XMLHttpRequest();
     xhttp.onload = function() {
         try{
-            func(constrFromJSON(this.responseText), args);
+            func(constrFromJSON(this.responseText));
         }catch(err) {
             console.log(err.message);
         }

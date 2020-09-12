@@ -21,7 +21,7 @@ if($_SESSION["permissions"][0]->level >= 30 && $_SESSION["permissions"][0]->leve
     $token_array = filterByColumn($token_array);
 }
 http_response_code(200);
-echo json_encode(["result"=> $token_array]);
+echo json_encode(["tokens"=> $token_array]);
 exit();
 
 function filterByColumn($token_array){

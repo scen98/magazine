@@ -5,16 +5,34 @@ export function renderOption(select, value, innerText){
     select.appendChild(opt);
 }
 
-export function createDiv(id, classList, innerHTML){
-    return create("div", id, classList, innerHTML);
+export function createDiv(id, classList){
+    let element = document.createElement("div");
+    if(id != null){
+        element.id = id;
+    }
+    for (let c of classList) {
+        element.classList.add(c);
+    }
+    return element;
 }
 
-export function createP(id, classList, innerHTML){
-    return create("p", id, classList, innerHTML);
+export function createP(classList, innerText){
+    let element = document.createElement("p");
+    for (let c of classList) {
+        element.classList.add(c);
+    }
+    element.innerText = innerText;
+    return element;
 }
 
-export function createButton(id, classList, innerHTML){
-    return create("button", id, classList, innerHTML);
+export function createButton(classList, innerHTML, func){
+    let element = document.createElement("button");
+    for (let c of classList) {
+        element.classList.add(c);
+    }
+    element.innerHTML = innerHTML;
+    element.addEventListener("click", func);
+    return element;
 }
 
 export function createSelect(id, classList){
@@ -51,7 +69,7 @@ export function addClick(parent, func){
     parent.addEventListener("click", func);
 }
 
-export function onEnter(element, func){
+export function addEnter(element, func){
     element.addEventListener("keyup", function(event) {
         if (event.keyCode === 13) {
             func();

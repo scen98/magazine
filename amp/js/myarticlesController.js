@@ -84,17 +84,13 @@ function loadArticles(articleData){
 }
 
 function renderRow(article){
-    let container = doc.createDiv(article.id, ["articleContainer"], null);
-    let title = doc.createP(null, ["articleTitle"], article.title);
-    let lead = doc.createDiv(null, ["articleLead"], article.lead);
-    let columnName = doc.createP(null, ["articleColumn"], getColumnNameById(article.columnId));
-    let editBtn = doc.createButton(null, ["articleButton", "blue"], '<i class="fas fa-edit"></i>');
+    let container = doc.createDiv(article.id, ["articleContainer"]);
+    let title = doc.createP(["articleTitle"], article.title);
+    let lead = doc.createDiv(["articleLead"], article.lead);
+    let columnName = doc.createP(["articleColumn"], getColumnNameById(article.columnId));
+    let editBtn = doc.createButton(["articleButton", "blue"], '<i class="fas fa-edit"></i>', () => { editArticle(article.id); });
     let date = doc.createP(null, ["articleDate"], article.date);
-    let deleteBtn = doc.createButton(null, ["articleButton", "red"], '<i class="fas fa-trash-alt"></i>');
-
-    doc.addClick(editBtn, () => { editArticle(article.id); });
-    doc.addClick(deleteBtn, () => { switchDeleteBtn(deleteBtn, article); });
-
+    let deleteBtn = doc.createButton(null, ["articleButton", "red"], '<i class="fas fa-trash-alt"></i>', () => { switchDeleteBtn(deleteBtn, article); });
     doc.append(container, [title, columnName, lead, deleteBtn, editBtn, date]);
     articleTable.appendChild(container);
 }

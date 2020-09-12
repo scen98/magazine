@@ -8,7 +8,7 @@ let permissionSearchInput = document.getElementById("permission-select");
 init();
 function init(){
     selectAllAuthors(loadPage);
-    doc.enterFunction(searchInput, () => document.getElementById("search-btn").click());
+    doc.addEnter(searchInput, () => document.getElementById("search-btn").click());
 }
 
 function loadPage(authorData){
@@ -19,17 +19,10 @@ function loadPage(authorData){
 }
 
 function renderAuthor(author){
-    let container = document.createElement("div");
-    let name = document.createElement("p");
-    let level = document.createElement("p");
-    container.id = "author-container"+author.id;
-    container.className = "authorContainer";
-    name.innerHTML = author.userName;
-    name.className = "authorName";
-    level.innerHTML = author.getPermissionName();
-    level.className = "authorLevel";
-    container.appendChild(name);
-    container.appendChild(level);
+    let container = doc.createDiv("author-container"+author.id, ["authorContainer"]);
+    let name = doc.createP(["authorName"], author.userName);
+    let level = doc.createP(["authorLevel"], author.getPermissionName());
+    doc.append(container, [name, level]);
     authorTable.appendChild(container);
     canUserEdit(author, renderEditButton, [container, author]);
 }
@@ -57,12 +50,6 @@ window.search = function(){
 }
 
 function renderEditButton(parent, author){
-    let editBtn = document.createElement("button");
-    editBtn.className = "authorButton";
-    editBtn.classList.add("blue");
-    editBtn.innerHTML = '<i class="fas fa-user-edit"></i>';
-    editBtn.addEventListener("click", function() {
-        window.location.href = "../amp/editAuthor.php?author="+author.uniqName;
-    })
+    let editBtn = doc.createButton(["authorButton", "blue"], '<i class="fas fa-user-edit"></i>', ()=> { window.location.href = "../amp/editAuthor.php?author="+author.uniqName; });
     parent.appendChild(editBtn);
 }
