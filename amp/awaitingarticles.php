@@ -1,13 +1,11 @@
 <?php 
     require "header.php";
     ?>
-    <script type="module" src="js/myarticlesController.js"></script>
+    <script type="module" src="js/awaitingarticlesController.js"></script>
  <div class="container">
     <div class="searchBar">
      <input placeholder="Keresés" id="search" class="searchInput">
-        <select class="columnselect" id="order-select">
-         <option value="date">Dátum</option>
-         <option value="title">Cím</option>
+        <select class="columnselect" id="column-select">
         </select>
         <select class="columnselect" id="desc-select">
             <option value="true">Csökkenő</option>
@@ -32,8 +30,7 @@
         <button onclick="hideDeleteModal()" type="button">Mégse</button>
     </div>    
     </div>
-  </div>  
-       
+  </div>    
 </div>
 <?php
     require "footer.php";

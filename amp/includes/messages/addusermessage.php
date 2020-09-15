@@ -18,6 +18,8 @@ function errorGenerator($error){
         echo "Helytelen admin jelszó.";
     } else if($error == "nametaken"){
         echo "Ez a felhasználónév már foglalt.";
+    } else if($error == "accessdenied"){
+        echo "Hozzáférés megtagadva.";
     } else {
         echo "Ismeretlen hiba a kérelem feldolgozásakor.";
     }

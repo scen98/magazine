@@ -40,8 +40,7 @@ class Permission{
         $sql = "SELECT * FROM permissions WHERE authorId = ?;";
         $stmt = mysqli_stmt_init($mysqlidb->conn);
         if(!mysqli_stmt_prepare($stmt, $sql)){
-            header("Location: ../index.php?error=sql");
-            exit();     
+            return null;
         }
         mysqli_stmt_bind_param($stmt, "i", $authorId);
         mysqli_stmt_execute($stmt);

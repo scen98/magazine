@@ -173,8 +173,8 @@ function renderColumnSelect(select){
 }
 
 function switchDeleteBtn(oldButton, permission){
-    let newButton = doc.createButton(null, ["permissionButton", "red"], "Törlés");
-    doc.addEnter(newButton, ()=> { deletePermission(()=> { onPermissionDelete(permission); }, permission); })
+    let newButton = doc.createButton(["permissionButton", "red"], "Törlés");
+    doc.addClick(newButton, ()=> { deletePermission(()=> { onPermissionDelete(permission); }, permission); })
     oldButton.parentNode.replaceChild(newButton, oldButton);
 }
 //PERMISSIONS---
@@ -206,6 +206,7 @@ function renderAuthorTokenPermission(tokenPermission){
     let container = doc.createDiv("author-token-" + tokenPermission.id, ["tokenContainer"], );
     let tokenName = doc.createP(["tokenName"], tokenPermission.tokenName);
     let tokenColumn = document.createElement("p");
+    tokenColumn.className = "permissionColumn";
 
     if(tokenPermission.columnId == null || tokenPermission.columnId === 0){
         tokenColumn.innerText = "Mind";
@@ -265,7 +266,7 @@ function renderMyTokens(tokenData){
 function renderAccessibleToken(token){
     let container = doc.createDiv(null, ["tokenContainer"]);
     let name = doc.createP(["tokenName"], token.name);
-    let columnName = doc.createP(["tokenButton"], "");
+    let columnName = doc.createP(["permissionColumn"], ""); //permission igen
     let addBtn = doc.createButton(["green", "tokenButton"], '<i class="fas fa-user-plus"></i>', ()=> {
         if(doesTokenPermissionExist(newTokenPermission)){
             alert("A felhasználó már rendelkezik ezzel a jogosultsággal.");

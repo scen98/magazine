@@ -2,16 +2,13 @@
 require "../objects/accessmanager.php";
 require "../objects/token.php";
 require "../MSQDB.php";
+require "requestutils.php";
 if(!isset($_SESSION["permissions"][0])){
-    http_response_code(403);
-    echo json_encode(["msg"=> "No running session."]);
-    exit();
+    RequestUtils::permissionDenied();
 }
 
 if($_SESSION["permissions"][0]->level <= 20){
-    http_response_code(403);
-    echo json_encode(["msg"=> "Hozzáférés megtagadva."]);
-    exit();
+    RequestUtils::permissionDenied();
 }
 
 $database = new MSQDB;
@@ -20,9 +17,7 @@ $token_array = $token_array = Token::selectTokens($database);
 if($_SESSION["permissions"][0]->level >= 30 && $_SESSION["permissions"][0]->level < 40){
     $token_array = filterByColumn($token_array);
 }
-http_response_code(200);
-echo json_encode(["tokens"=> $token_array]);
-exit();
+RequestUtils::returnData("tokens", $token_array);
 
 function filterByColumn($token_array){
     $newTokens = array();

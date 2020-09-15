@@ -3,6 +3,7 @@ let createUser = document.getElementById("create-user");
 let header =  document.getElementById("main-header");
 let sticky = header.offsetTop;
 let tokens = document.getElementById("tokens");
+let awaiting = document.getElementById("awaiting-articles");
 window.permissions = [];
 init();
 function init(){    
@@ -29,7 +30,7 @@ window.logOut = function(){
     return false;
 }
 
-function displayContent(permissionData){   
+function displayContent(permissionData){
     permissions = permissionData.permissions;
     let highestPermission = getHighestPermission(permissions);
     if(highestPermission <= 10){
@@ -46,6 +47,7 @@ function displayContent(permissionData){
 function hideFromNormal(){
     tokens.style.display = "none";
     createUser.style.display = "none";
+    awaiting.style.display = "none";
 }
 
 function hideFromCma(){

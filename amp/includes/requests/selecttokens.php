@@ -1,8 +1,7 @@
 <?php
 require "MSQDB.php";
+require "requestutils.php";
 if(!isset($_SESSION["id"])){
-    http_response_code(403);
-    echo json_encode(["msg"=> "No running session."]);
-    exit();
+    RequestUtils::permissionDenied();
 }
 $database = new MSQDB;

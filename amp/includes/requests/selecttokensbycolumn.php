@@ -1,7 +1,7 @@
 <?php
-require "../objects/author.php";
 require "../MSQDB.php";
 require "requestutils.php";
+require "../objects/token.php";
 session_start();
 if(!isset($_SESSION["id"])){
     RequestUtils::permissionDenied();
@@ -9,10 +9,9 @@ if(!isset($_SESSION["id"])){
 $data = json_decode(file_get_contents("php://input"));
 RequestUtils::checkData($data);
 $database = new MSQDB;
-$author = Author::selectAuthorByUserName($database, $data->name);
-$author->password = "";
-if(!is_null($author)){
-    RequestUtils::returnData("author", $author);
-} else {
+$tokenInstance_array = Token::selectByColumnId($database, $data->columnId);
+if(is_null($tokenInstance_array)){
     RequestUtils::sqlError();
+} else {
+    RequestUtils::returnData("tokens", $tokenInstance_array);
 }

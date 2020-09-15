@@ -29,7 +29,7 @@ function renderAuthor(author){
 
 function canUserEdit(author, func, args){
     let highestPermission = getHighestPermission(permissions);
-    if(highestPermission >= 30 && highestPermission > author.getHighestPermission()){
+    if(highestPermission >= 30 && highestPermission >= author.getHighestPermission()){
        func.apply(this,args);
     }
 }

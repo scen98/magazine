@@ -1,3 +1,16 @@
+export function bindById(elementId, value){
+    let element = document.getElementById(elementId)
+    element.addEventListener("change", () => {
+        value = document.value;
+    })
+}
+
+export function bind(element, value){
+    element.addEventListener("change", ()=>{
+        value = element.value;
+    })
+}
+
 export function renderOption(select, value, innerText){
     let opt = document.createElement("option");
     opt.value = value;
@@ -72,6 +85,14 @@ export function addClick(parent, func){
 export function addEnter(element, func){
     element.addEventListener("keyup", function(event) {
         if (event.keyCode === 13) {
+            func();
+        }
+        });
+}
+
+export function addNonLetterKey(element, func){
+    element.addEventListener("keyup", function(event) {
+        if (event.keyCode === 13 ||  event.keyCode === 32 || event.keyCode === 17){
             func();
         }
         });

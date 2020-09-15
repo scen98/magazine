@@ -57,11 +57,11 @@ function expandArticles(articleData){
 
 function addSearchListener(){
     let input = document.getElementById("search");
-    doc.onEnter(input, () => { document.getElementById("search-btn").click(); });
+    doc.addEnter(input, () => { document.getElementById("search-btn").click(); });
 }
 
 function setSearchParameters(){
-    search = search = document.getElementById("search").value;
+    search = document.getElementById("search").value;
     selectOrder = document.getElementById("order-select").value;
     selectDesc = document.getElementById("desc-select").value;
 }
@@ -86,11 +86,12 @@ function loadArticles(articleData){
 function renderRow(article){
     let container = doc.createDiv(article.id, ["articleContainer"]);
     let title = doc.createP(["articleTitle"], article.title);
-    let lead = doc.createDiv(["articleLead"], article.lead);
+    let lead = doc.createDiv(null, ["articleLead"]);
+    lead.innerText = article.lead;
     let columnName = doc.createP(["articleColumn"], getColumnNameById(article.columnId));
     let editBtn = doc.createButton(["articleButton", "blue"], '<i class="fas fa-edit"></i>', () => { editArticle(article.id); });
-    let date = doc.createP(null, ["articleDate"], article.date);
-    let deleteBtn = doc.createButton(null, ["articleButton", "red"], '<i class="fas fa-trash-alt"></i>', () => { switchDeleteBtn(deleteBtn, article); });
+    let date = doc.createP(["articleDate"], article.date);
+    let deleteBtn = doc.createButton(["articleButton", "red"], '<i class="fas fa-trash-alt"></i>', () => { switchDeleteBtn(deleteBtn, article); });
     doc.append(container, [title, columnName, lead, deleteBtn, editBtn, date]);
     articleTable.appendChild(container);
 }

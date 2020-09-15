@@ -1,19 +1,17 @@
 <?php
-require "../objects/accessmanager.php";
-require "../objects/token.php";
+require "../objects/article.php";
 require "../MSQDB.php";
 require "requestutils.php";
+session_start();
 $data = json_decode(file_get_contents("php://input"));
 RequestUtils::checkData($data);
-
-if(!AccessManager::isTokenAccessible($data)){
-    RequestData::permissionDenied();
-}
-
 $database = new MSQDB;
-$result = Token::delete($database, $data->id);
-if($result === true){
+$lock = Article::selectLock($database, $data->id);
+if($lock->lockedBy !== $_SESSION["id"]){
+    RequestUtils::permissionDenied();
+}
+if(Article::lockArticle($database, $data)){
     RequestUtils::sendSuccess();
 } else {
     RequestUtils::sqlError();
-}
+}  

@@ -79,9 +79,9 @@ class Token{
         return $token_array;
     }
 
-    public static function selectTokensByColumn($mysqlidb, $columnId){ //TODO
+    public static function selectByColumnId($mysqlidb, $columnId){ 
         $token_array = array();
-        $sql = "SELECT * from tokens WHERE columnId = ?;";
+        $sql = "SELECT * from tokens WHERE (columnId = ? OR columnId IS NULL) AND status = 1;";
         $stmt = mysqli_stmt_init($mysqlidb->conn);
         if(!mysqli_stmt_prepare($stmt, $sql)){
             return null;
@@ -98,7 +98,7 @@ class Token{
         return $token_array;
     }
 
-    public static function delete($mysqlidb, $id){ //NOT CHECKED
+    public static function delete($mysqlidb, $id){
         $sql = "DELETE from tokens WHERE id = ?";
         $stmt = mysqli_stmt_init($mysqlidb->conn);
         if(!mysqli_stmt_prepare($stmt, $sql)){

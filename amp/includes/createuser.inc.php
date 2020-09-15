@@ -1,13 +1,12 @@
 <?php
 require "MSQDB.php";
 require "objects/author.php";
-require "objects/accessmanager.php";
-
+session_start();
 if(!isset($_POST["adduser"])){
     header("Location: ../createuser.php?error=server");
     exit();
 }
-if(AccessManager::getMaxLevel() < 50){
+if($_SESSION["permissions"][0]->level < 50){
     header("Location: ../createuser.php?error=accessdenied");
     exit();
 }
@@ -22,5 +21,5 @@ if(Author::doesExist($database, $uniqName) === true){
 }
 $lastId = Author::createAuthor($database, $uniqName, $userName, $userPassword, $userPasswordRepeat);
 mysqli_close($database->conn);
-header("Location: ../editAuthor.php?aid=".$lastId);
+header("Location: ../editAuthor.php?author=".$lastId);
 exit();

@@ -22,8 +22,8 @@
 <li><a href="write.php">Új cikk</a></li>
 <li><a href="#">Cikkek</a>
     <ul>
-        <li><a href="myarticles.php?p=1" ><span class="icon"><i class="fas fa-handshake"></i></span>Cikkeim</a></li>
-        <li><a href="#" ><span class="icon"><i class="fas fa-address-card"></i></span>Részletek</a></li>
+        <li><a href="myarticles.php" ><span class="icon"><i class="fas fa-handshake"></i></span>Cikkeim</a></li>
+        <li id="awaiting-articles"><a href="awaitingarticles.php" ><span class="icon"><i class="fas fa-file-alt"></i></span>Publiikáció</a></li>
     </ul>
 </li>
 <li><a href="#">Jogosultságok</a>

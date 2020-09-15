@@ -1,4 +1,4 @@
-import { Article, selectArticle } from "./objects/article.js";
+import { Article, selectArticle, saveText } from "./objects/article.js";
 import { getColumns } from "./objects/column.js";
 import * as doc from "./doc.js";
 let columnSelect = document.getElementById("column-select");
@@ -9,6 +9,7 @@ let text = document.getElementById("txtField");
 let article;
 let message = document.getElementById("message");
 let modal = document.getElementById("myModal");
+let stateSelect = document.getElementById("state-select");
 init();
 
 function init(){
@@ -43,6 +44,13 @@ window.openImgPath = function(){
     window.open(imgPath.value);
 }
 
+window.updateState = ()=>{
+    article.state = stateSelect.value;
+    article.updateState(()=>{
+        
+    });
+}
+
 function loadPage(columns){
     renderOptions(columns);
     selectArticle(loadArticle, getId());
@@ -69,6 +77,7 @@ function refreshArticle(){
     imgPath.value = article.imgPath;
     columnSelect.value = article.columnId;
     text.contentWindow.document.body.innerHTML = article.text;
+    stateSelect.value = article.state;
 }
 
 function setArticle(){
@@ -77,6 +86,7 @@ function setArticle(){
     article.imgPath = imgPath.value
     article.columnId = columnSelect.value
     article.text = text.contentWindow.document.body.innerHTML;
+    article.state = stateSelect.value;
 }
 
 function getId(){

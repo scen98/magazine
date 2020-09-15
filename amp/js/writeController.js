@@ -12,8 +12,8 @@ function init(){
 window.insertArticle = function(){
     let newArticle = new Article(0, document.getElementById("new-title").value, document.getElementById("lead").value, 
     null, null, document.getElementById("img-path").value, columnSelect.options[columnSelect.selectedIndex].value, 
-    document.getElementById("txtField").contentWindow.document.body.innerHTML);
-    newArticle.insert(moveToEditor);
+    { text: document.getElementById("txtField").contentWindow.document.body.innerHTML });
+    newArticle.insert(()=> { moveToEditor(newArticle.id); });
 }
 
 function moveToEditor(articleId){

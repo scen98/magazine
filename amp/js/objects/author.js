@@ -1,6 +1,7 @@
+import * as caller from "./caller.js";
 export class Author{
     constructor(id, uniqName, userName, password, permissions){
-        this.id = id;
+        this.id = parseInt(id);
         this.uniqName = uniqName;
         this.userName = userName;
         this.password = password;
@@ -30,37 +31,20 @@ export class Author{
     }
 }
 export function selectAllAuthors(func){
-    let xhttp = new XMLHttpRequest();
-    xhttp.open("GET", "../amp/includes/requests/selectauthors.php"); 
-    xhttp.onload = function() {
-        try{
-            func(parseArray(this.responseText));  
-        }
-        catch(err){
-            console.log(err);
-            console.log(this.responseText);
-        }
-    }  
-    xhttp.setRequestHeader("Content-type", "application/json");
-    xhttp.send();
+    let f = (response)=> {
+        func(parseArray(response));  
+    }
+    caller.GET("../amp/includes/requests/selectauthors.php", f);
 }
 
 export function selectAuthorByName(func, authorName){
-    let xhttp = new XMLHttpRequest();
+    let f = (response) => {
+        func(parseAuthor(response));
+    }
     let data = {
         name: authorName
     }
-    xhttp.open("POST", "../amp/includes/requests/selectauthorbyname.php"); 
-    xhttp.setRequestHeader("Content-type", "application/json");
-    xhttp.send(JSON.stringify(data));
-    xhttp.onload = function() {
-        try{
-            func(parseAuthor(this.responseText));
-        }catch (err){
-            console.log(this.responseText);
-            console.log(err);
-        }
-    }
+    caller.POST("../amp/includes/requests/selectauthorbyname.php", JSON.stringify(data), f);
 }
 
 export function permissionName(permission){

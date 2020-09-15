@@ -2,23 +2,17 @@
 require "../objects/permission.php";
 require "../objects/token.php";
 require "../MSQDB.php";
+require "requestutils.php";
 session_start();
 if($_SESSION["permissions"][0]->level <= 10){
-    http_response_code(403);
-    echo json_encode(["msg"=> "Hozzáférés megtagadva."]);
-    exit();
+    RequestUtils::permissionDenied();
 }
 $data = json_decode(file_get_contents("php://input"));
-if(empty($data)){
-    http_response_code(400);
-    echo json_encode(["msg"=> "Hiányos adatok."]);
-    exit();
-}
+RequestUtils::checkData($data);
+
 if($_SESSION["permissions"][0]->level >= 20 && $_SESSION["permissions"][0]->level < 40){
     if(!isTokenAccessible($data)){
-        http_response_code(403);
-        echo json_encode(["msg"=> "Hozzáférés megtagadva."]);
-        exit();
+        RequestUtils::checkData($data);
     }
 }
 
@@ -28,14 +22,12 @@ if($data->columnId === 0){
 $database = new MSQDB;
 $newId = Token::insert($database, $data);
 if(is_null($newId)){
-    http_response_code(400);
-    echo json_encode(["msg"=> "SQL hiba."]);
-    exit();
+    RequestUtils::sqlError();
 } else {
-    http_response_code(200);
-    echo json_encode(["newId"=> $newId]);
-    exit();
+     RequestUtils::returnData("newId", $newId);
 }
+
+
 
 function isTokenAccessible($token){
     foreach($_SESSION["permissions"] as $perm){

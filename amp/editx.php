@@ -2,7 +2,7 @@
 require "header.php";
 //require "includes/edit.inc.php";
 ?>
-<script type="module" src="js/editController.js"></script>
+<script type="module" src="js/editxController.js"></script>
 <div onload="init()" class="container">
     <p id="message"></p>
     <form>
@@ -12,13 +12,14 @@ require "header.php";
         <select name="column" class="columnselect" id="column-select"></select><br>
         <label>Kép:  </label>
         <input id="img-path" name="img-path" type="text" class="imgsrc">
-        <button onclick="openImgPath()" type="button"><i class="fas fa-external-link-square-alt"></i></button><br>
-        <select id="state-select" class="columnselect">
-            <option value="0">Írás alatt</option>
-            <option value="1">Ellenőrzésre vár</option>
-        </select> 
-        <button type="button" class="commandBtn" onclick="updateState()">Publikáció</button>
+        <button onclick="openImgPath()" type="button"><i class="fas fa-external-link-square-alt"></i></button>
+        <br>
     </form>
+    <div>
+        <h4>Állapot: </p> <p id="state"></h4>
+        <button id="lock-btn" onClick="switchLock()"></button>
+        <p id="lock-message"></p>
+    </div>
     <div id="edit-controls" class="editcontrols">
             <button class="controlbtn shine" onclick="execCmd('undo');"><i class="fas fa-undo"></i></button>
             <button class="controlbtn shine" onclick="execCmd('redo');"><i class="fas fa-redo"></i></button>
@@ -73,11 +74,12 @@ require "header.php";
                 <option value="7">7</option>
             </select>
             <!--<button class="controlbtn" onclick="execCommandWithArg('insertImage', prompt('Enter the image URL', ''));" ><i class="fa fa-file-image-o"></i></button> -->            
-        </div>        
+        </div> 
+       
         <iframe class="textedit" value="texts" id="txtField" name="richTextField"></iframe>
-            <form method="post">
-                <button onclick="saveArticle()" type="button" class="btn" id="submit">Mentés</button>
-            </form>
+        <h3>Tokenek: </h3>
+        <div id="token-table">
+        </div>
     </div>
 <div id="myModal" class="modal">
   <!-- Modal content -->

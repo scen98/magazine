@@ -1,58 +1,50 @@
-
+import * as caller from "./caller.js";
 export class Token{
     constructor(id, name, status, columnId){
-        this.id = id;
+        this.id = parseInt(id);
         this.name = name;
         this.status = status;
-        this.columnId = columnId;
+        this.columnId = parseInt(columnId);
     }
 
     insert(func){
-        let xhttp = new XMLHttpRequest();
-        xhttp.open("POST", "../amp/includes/requests/inserttoken.php"); 
-        xhttp.setRequestHeader("Content-type", "application/json");
-        xhttp.send(JSON.stringify(this));
-        xhttp.onload = () => {
-            try{
-                this.id = JSON.parse(xhttp.responseText).newId;
-                func();
-            } catch(err){
-                console.log(err);
-                console.log(xhttp.responseText)
-            }
+        let f = (response) => {
+            this.id = JSON.parse(response).newId;
+            func();
         }
+        caller.POST("../amp/includes/requests/inserttoken.php", JSON.stringify(this), f);
     }
 
     update(func){
-        let xhttp = new XMLHttpRequest();
-        xhttp.open("POST", "../amp/includes/requests/updatetoken.php"); 
-        xhttp.setRequestHeader("Content-type", "application/json");
-        xhttp.send(JSON.stringify(this));
-        xhttp.onload = function() {
-            if(JSON.parse(this.responseText).msg === "success"){
-                tryCallback(func, this.responseText); 
+        let f = (response) =>{
+            if(JSON.parse(response).msg === "success"){
+                func();
             } else {
-                console.log(this.responseText)
+                console.log(response);
             }
         }
+        caller.POST("../amp/includes/requests/updatetoken.php", JSON.stringify(this), f);
     }
 
     delete(func){
-        let xhttp = new XMLHttpRequest();
-        xhttp.open("POST", "../amp/includes/requests/deletetoken.php"); 
-        xhttp.setRequestHeader("Content-type", "application/json");
-        xhttp.send(JSON.stringify(this));
-        xhttp.onload = function() {
-            if(JSON.parse(this.responseText).msg === "success"){              
-                tryCallback(func, this.responseText);
+        let f = (response) =>{
+            if(JSON.parse(response).msg === "success"){
+                func();
             } else {
-                console.log(this.responseText);
+                console.log(response);
             }
         }
+        caller.POST("../amp/includes/requests/deletetoken.php", JSON.stringify(this), f);
     }
 }
-export function selectTokens(){
-    
+export function selectTokensByColumn(func, columnId){
+    let f = (response) => {
+        func(constrFromJSON(response));
+    }
+    let data = {
+        columnId: columnId
+    }
+    caller.POST("../amp/includes/requests/selecttokensbycolumn.php", JSON.stringify(data), f);
 }
 
 function tryCallback(callback, response){
@@ -65,17 +57,10 @@ function tryCallback(callback, response){
 }
 
 export function selectAccessibleTokens(func){
-    let xhttp = new XMLHttpRequest();
-    xhttp.onload = function() {
-        try{
-            func(constrFromJSON(this.responseText));
-        }catch(err) {
-            console.log(err.message);
-            console.log(this.responseText);
-        }
-    };    
-    xhttp.open("GET", "../amp/includes/requests/selectaccessibletokens.php", true);
-    xhttp.send();
+    let f = (response) => {
+        func(constrFromJSON(response));
+    }
+    caller.GET("../amp/includes/requests/selectaccessibletokens.php", f);
 }
 
 function constrFromJSON(json){
@@ -85,4 +70,11 @@ function constrFromJSON(json){
         tokenArray.push(new Token(t.id, t.name, t.status, t.columnId));
     }
     return tokenArray;
+}
+
+export function getMyTokenPermissions(func){
+    let f = (response)=>{
+        func(JSON.parse(response).tokenPermissions);
+    }
+    caller.GET("../amp/includes/gettokenpermissions.php", f);
 }

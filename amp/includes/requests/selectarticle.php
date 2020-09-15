@@ -2,31 +2,23 @@
   require "../MSQDB.php";
   require "../objects/article.php";
   require "../objects/accessmanager.php";
+  require "../objects/tokenInstance.php";
+  require "requestutils.php";
 if(!isset($_SESSION["permissions"])){
-    http_response_code(403);
-    echo json_encode(["msg"=> "No running session."]);
-    exit();
+    RequestUtils::permissionDenied();
 }
-
 $data = json_decode(file_get_contents("php://input"));
-if(empty($data)){
-    http_response_code(400);
-    echo json_encode(["msg"=> "Data is incomplete"]);
-    exit();
-}
+RequestUtils::checkData($data);
 $database = new MSQDB;
 $art = Article::getArticle($database, $data->id);
 if(is_null($art)){
-    http_response_code(400);
-    echo json_encode(["msg"=> "SQL szerver hiba."]);
-    exit();
+    RequestUtils::sqlError();
+}
+if($art->state === 1){
+    $art->tokenInstances = TokenInstance::selectByArticleId($database, $data->id);
 }
 if(AccessManager::isArticleAccessible($art)){
-    http_response_code(200);
-    echo json_encode(["article" => $art]);
-    exit();
+    RequestUtils::returnData("article", $art);
 } else {
-    http_response_code(403);
-    echo json_encode(["msg"=> "Hozzáférés megtagadva."]);
-    exit();
+    RequestUtils::permissionDenied();
 }

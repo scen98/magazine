@@ -1,3 +1,4 @@
+import * as caller from "./caller.js";
 export class Permission {
     constructor(id, level, authorId){
         this.id = parseInt(id);
@@ -6,108 +7,69 @@ export class Permission {
         this.columnId;
     }
     insert(func){
-        let xhttp = new XMLHttpRequest();
-        xhttp.open("POST", "../amp/includes/requests/insertpermission.php"); 
-        xhttp.setRequestHeader("Content-type", "application/json");
-        xhttp.send(JSON.stringify(this));
-        xhttp.onload = () => {
-            try{
-                this.id = JSON.parse(xhttp.responseText).newId;
-                func(); 
-            } catch(err){
-                console.log(err);
-                console.log(xhttp.responseText);
-            }
+        let f = (response)=>{
+            this.id = JSON.parse(response).newId;
+            func(); 
         }
+        caller.POST("../amp/includes/requests/insertpermission.php", JSON.stringify(this), f);
     }
     change(func){
-        let xhttp = new XMLHttpRequest();
-        xhttp.open("POST", "../amp/includes/requests/changepermissiontype.php"); 
-        xhttp.setRequestHeader("Content-type", "application/json");
-        xhttp.send(JSON.stringify(this));
-        xhttp.onload = () => {
-            try{
-                this.id = JSON.parse(xhttp.responseText).newId;
-                func(); 
-            } catch(err){
-                console.log(err);
-                console.log(xhttp.responseText)
-            }
+        let f = (response)=>{
+            this.id = JSON.parse(response).newId;
+            func(); 
         }
+        caller.POST("../amp/includes/requests/changepermissiontype.php", JSON.stringify(this), f);
     }
     delete(func){
-        let xhttp = new XMLHttpRequest();
+        let f = (response)=>{
+            if(JSON.parse(response).msg === "success"){
+                func();
+            } else {
+                console.log(response);
+            }
+        }
         let data = {
             id: this.id
         }
-        xhttp.open("POST", "../amp/includes/requests/deletepermission.php"); 
-        xhttp.setRequestHeader("Content-type", "application/json");
-        xhttp.send(JSON.stringify(data));
-        xhttp.onload = () => {
-            if(JSON.parse(xhttp.responseText).msg === "success"){
-                tryCallback(func, xhttp.responseText);
-            } else {
-                console.log(xhttp.responseText);
-            }
-        }
+        caller.POST("../amp/includes/requests/deletepermission.php", JSON.stringify(data), f);
     }
 }
 
 export function deletePermission(func, permission){
-    let xhttp = new XMLHttpRequest();
+    let f = (response)=>{
+        if(JSON.parse(response).msg === "success"){
+            func();
+        } else {
+            console.log(response);
+        }
+    }
     let data = {
         id: permission.id
     }
-    xhttp.open("POST", "../amp/includes/requests/deletepermission.php"); 
-    xhttp.setRequestHeader("Content-type", "application/json");
-    xhttp.send(JSON.stringify(data));
-    xhttp.onload = () => {
-        if(JSON.parse(xhttp.responseText).msg === "success"){
-            tryCallback(func, xhttp.responseText);
-        } else {
-            console.log(xhttp.responseText);
-        }
-    }
+    caller.POST("../amp/includes/requests/deletepermission.php", JSON.stringify(data), f);
+
 }
 
 export function insertTokenPermission(func, tokenPermission){
-    let xhttp = new XMLHttpRequest();
-    xhttp.open("POST", "../amp/includes/requests/inserttokenpermission.php"); 
-    xhttp.setRequestHeader("Content-type", "application/json");
-    xhttp.send(JSON.stringify(tokenPermission));
-    xhttp.onload = () => {
-        try{
-            tokenPermission.id = JSON.parse(xhttp.responseText).newId;
-            func();
-        } catch(err){
-            console.log(err);
-            console.log(xhttp.responseText);
-        }
+    let f = (response)=>{
+        tokenPermission.id = JSON.parse(response).newId;
+        func(); 
     }
+    caller.POST("../amp/includes/requests/inserttokenpermission.php", JSON.stringify(tokenPermission), f);
 }
 
 export function deleteTokenPermission(func, tokenPermission){
-    let xhttp = new XMLHttpRequest();
-    let data = {
-        id: tokenPermission.id
-    }
-    xhttp.open("POST", "../amp/includes/requests/deletetokenpermission.php"); 
-    xhttp.setRequestHeader("Content-type", "application/json");
-    xhttp.send(JSON.stringify(data));
-    xhttp.onload = () => {
-        if(JSON.parse(xhttp.responseText).msg === "success"){
-            tryCallback(func, xhttp.responseText);
+    let f = (response)=>{
+        
+        if(JSON.parse(response).msg === "success"){
+            func(); 
         } else {
-            console.log(xhttp.responseText);
+            console.log(response);
         }
     }
-}
-
-function tryCallback(callback, response){
-    try{
-        callback();
-    } catch(err){
-        console.log(response);
-        console.log(err);
+    let data = {
+        id: tokenPermission.id,
+        columnId: tokenPermission.columnId
     }
+    caller.POST("../amp/includes/requests/deletetokenpermission.php", JSON.stringify(data), f);
 }
