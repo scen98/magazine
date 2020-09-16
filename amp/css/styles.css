@@ -597,9 +597,20 @@ span.icon {
     margin-bottom: 2px;
   }
 
+  .tokenInfo{
+    width: 16%;
+    margin-right: 2%;
+    margin-left: 2%;
+    float: left;
+    font-size: 15px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    font-style: italic;
+  }
+
   .tokenButton {
     float: right;
-    width: 7%;
+    width: 9%;
     margin-left: 1%;
     min-height: 10px;
   }
@@ -825,10 +836,18 @@ span.icon {
   }
 
   .awaitArticleTitle{
-    width: 80%;  
+    width: 75%;  
     font-size: 18px;
     font-weight: bolder;
-   
+  }
+
+  .awaitArticleAuthorName{
+    float: right;
+    width: 25%;  
+    font-size: 18px;
+    font-weight: bolder;
+    font-style: italic;
+    text-align: right;
   }
 
   .awaitArticleDate{
@@ -847,6 +866,7 @@ span.icon {
     margin-right: 3%;
   }
 
+
   .awaitArticleButton{
     cursor: pointer;
     float: left;
@@ -864,7 +884,14 @@ span.icon {
     height: 30px;
     border-radius: 4px;
     text-align: center;
-    
+  }
+
+  .redToken{
+    background-color: rgb(179, 64, 64);
+  }
+
+  .redToken:hover{
+    background-color: rgb(112, 53, 53);
   }
 
   .gray{
@@ -873,4 +900,24 @@ span.icon {
 
   .white {
     background-color: #f7f7f7;
+  }
+
+  .acceptBtn{
+    margin: auto;
+    width: 40px;
+    height: 30px;
+    border-radius: 6px;
+    cursor: pointer;
+    border-style: solid;
+    border-width: 2px;
+    border-color: rgb(16, 85, 16);
+    background-color: #5cc272;
+    font-size: 20px;
+  }
+
+  .acceptBtn:hover{
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgb(8, 20, 8);
+    background-color: #a7ffba;
   }

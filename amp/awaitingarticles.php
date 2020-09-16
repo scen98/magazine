@@ -7,9 +7,11 @@
      <input placeholder="Keresés" id="search" class="searchInput">
         <select class="columnselect" id="column-select">
         </select>
-        <select class="columnselect" id="desc-select">
-            <option value="true">Csökkenő</option>
-            <option value="false">Növekvő</option>            
+        <select class="columnselect" id="state-select" value="1">
+            <option value="0">Készülő</option>
+            <option value="1">Ellenőrzés alatt</option>
+            <option value="2">Publikálható</option>  
+            <option value="3">Archív</option>  
         </select>
         <button id="search-btn" type="button" onclick="search()" class="commandBtn shine" >Mehet!</button>
     </div>

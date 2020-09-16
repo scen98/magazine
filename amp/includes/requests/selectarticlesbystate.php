@@ -11,9 +11,9 @@ RequestUtils::checkData($data);
 $database = new MSQDB;
 $article_array = array();
 if($data->columnId == 0){
-    $article_array = Article::selectState1Articles($database, $data->keyword, $data->limit, $data->offset);
+    $article_array = Article::selectByState($database, $data->keyword, $data->limit, $data->offset, $data->state);
 } else {
-   $article_array = Article::selectState1ArticlesByColumn($database, $data->keyword, $data->limit, $data->offset, $data->columnId);
+   $article_array = Article::selectByStateAndColumn($database, $data->keyword, $data->limit, $data->offset, $data->columnId, $data->state);
 }
 if(is_null($article_array)){
     RequestUtils::sqlerror();

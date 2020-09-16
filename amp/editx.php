@@ -20,6 +20,17 @@ require "header.php";
         <button id="lock-btn" onClick="switchLock()"></button>
         <p id="lock-message"></p>
     </div>
+    <h3>Tokenek: </h3>
+        <div id="token-table">
+        </div>
+    <h3>Cikk státusza: </h3>
+    <select class="columnselect" id="state-select">
+        <option value="0">Írás alatt</option>
+        <option value="1">Ellenőrzésre vár</option>
+        <option value="2">Kész</option>
+        <option value="3">Archív</option>
+    </select>
+    <button onclick="checkState()" class="acceptBtn"><i class="fas fa-check-square"></i></button>
     <div id="edit-controls" class="editcontrols">
             <button class="controlbtn shine" onclick="execCmd('undo');"><i class="fas fa-undo"></i></button>
             <button class="controlbtn shine" onclick="execCmd('redo');"><i class="fas fa-redo"></i></button>
@@ -77,11 +88,9 @@ require "header.php";
         </div> 
        
         <iframe class="textedit" value="texts" id="txtField" name="richTextField"></iframe>
-        <h3>Tokenek: </h3>
-        <div id="token-table">
-        </div>
+       
     </div>
-<div id="myModal" class="modal">
+<div id="delete-modal" class="modal">
   <!-- Modal content -->
   <div class="modal-content">
     <span onclick="hideDeleteModal()" class="close">&times;</span>
@@ -90,7 +99,17 @@ require "header.php";
         <button onclick="deleteArticle()" type="button">Törlés</button>
         <button onclick="hideDeleteModal()" type="button">Mégse</button>
     </div>
-    
+  </div>
+</div>  
+<div id="state-modal" class="modal">
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span onclick="hideStateModal()" class="close">&times;</span>
+    <p>A cikk nem rendelkezik a szükséges tokenekkel. Biztosan szeretni folytatni?</p>
+    <div class="center">
+        <button onclick="saveState()" type="button">Megerősít</button>
+        <button onclick="hideStateModal()" type="button">Mégse</button>
+    </div>
   </div>
 </div>  
 

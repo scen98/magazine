@@ -1,7 +1,8 @@
-import { Article, selectArticle, saveText } from "./objects/article.js";
+import { Article, selectArticle } from "./objects/article.js";
 import * as Token from "./objects/token.js";
 import { getColumns } from "./objects/column.js";
 import * as doc from "./doc.js";
+import { TokenInstance } from "./objects/tokenInstance.js";
 let columnSelect = document.getElementById("column-select");
 let title = document.getElementById("title");
 let lead = document.getElementById("lead");
@@ -9,12 +10,15 @@ let imgPath = document.getElementById("img-path");
 let text = document.getElementById("txtField");
 let article;
 let message = document.getElementById("message");
-let modal = document.getElementById("myModal");
+let deleteModal = document.getElementById("delete-modal");
 let state = document.getElementById("state");
 let lockMessage = document.getElementById("lock-message");
 let lockBtn = document.getElementById("lock-btn");
 let necessaryTokens = [];
 let myTokenPermissions;
+let tokenTable = document.getElementById("token-table");
+let stateSelect = document.getElementById("state-select");
+let stateModal = document.getElementById("state-modal");
 
 init();
 
@@ -28,17 +32,28 @@ window.saveArticle = function(){
     article.update(refreshMessage);
 }
 
+window.displayStateModal = function(){
+    stateModal.style.display = "block";
+}
+
+window.hideStateModal = function(){
+    stateModal.style.display = "none";
+}
+
 window.displayDeleteModal = function(){
-    modal.style.display = "block";
+    deleteModal.style.display = "block";
 }
 
 window.hideDeleteModal = function(){
-    modal.style.display = "none";
+    deleteModal.style.display = "none";
 }
 
 window.onclick = function(event){
-    if(event.target == modal){
-        modal.style.display = "none";
+    if(event.target == deleteModal){
+        deleteModal.style.display = "none";
+    }
+    if(event.target == stateModal){
+        stateModal.style.display = "none";
     }
 }
 
@@ -56,6 +71,20 @@ window.switchLock = () =>{
     }, permissions[0].authorId);
 }
 
+window.checkState = () =>{
+    article.state = stateSelect.value;
+    if(!allTokensExist() && article.state > 1){
+        displayStateModal();
+    } else {
+        article.updateState();
+    }
+}
+
+window.saveState = ()=>{
+    article.updateState();
+    hideStateModal();
+}
+
 function setMyTokenPermissions(tokenPermissions){ 
     myTokenPermissions = tokenPermissions;
 }
@@ -67,26 +96,109 @@ function loadPage(columns){
 
 function loadArticle(art){ 
     article = art;
+    if(article.state === 0){
+        window.location.href = "../amp/edit.php?aid="+article.id;
+    }
+    stateSelect.value = article.state;
     Token.selectTokensByColumn((response)=>{
-        loadTokenInstances(response);
+        if(article.state > 0){
+            renderTokens(response);
+        }
     }, article.columnId);
     article.id = getId();
     refreshArticle();
 }
+function allTokensExist(){
+    return necessaryTokens.every(doesTokenInstanceExist);
+}
 
-function loadTokenInstances(tokenInstances){ ////////////////////////////////////////////////////////////////////////////////////TODO////////////////////////////
-    necessaryTokens = tokenInstances;
-    for (let instance of necessaryTokens) {
-        renderTokenInstance(instance);
+function renderTokens(tokens){
+    necessaryTokens = tokens;
+    for (let token of necessaryTokens) {
+        renderToken(token);
     }
 }
 
-function renderTokenInstance(tokenInstance){
+function renderToken(token){
+    let container = doc.createDiv("token"+token.id, ["tokenContainer"]);
+    let name = doc.createP(["tokenName"], token.name);
+    let doesExist = doesTokenInstanceExist(token);
+    let hasAccess = hasAccessToToken(token);
+    doc.append(container, [name]);
+    if(doesExist && hasAccess){ 
+        renderExistingTokenElements(token, container);
+    } else if(!doesExist && hasAccess) {
+        renderNonExistingTokenElements(token, container);
+    } else {
+        container.classList.add("redToken");
+    }
+    doc.append(tokenTable, [container]); 
+}
+
+function renderNonExistingTokenElements(token, tokenContainer){
+    let addBtn =  doc.createButton(["tokenButton", "green"], '<i class="fas fa-plus-square"></i>', ()=>{
+        let newTokenInstance = new TokenInstance(0, article.id, token.id, {date: new Date(), authorName: "Általam"});
+        newTokenInstance.insert( ()=> { onTokenInstanceInsert(newTokenInstance); });
+    });
+    tokenContainer.classList.add("redToken");
+    
+    doc.append(tokenContainer, [addBtn]);
+}
+
+function onTokenInstanceInsert(newTokenInstance){
+    article.tokenInstances.push(newTokenInstance);
+    tokenTable.innerHTML = "";
+    for (let token of necessaryTokens) {
+        renderToken(token);
+    }
+}
+
+function renderExistingTokenElements(token, tokenContainer){
+    let tokenInstance = article.tokenInstances.find(t=> t.tokenId === token.id);
+    let deleteBtn =  doc.createButton(["tokenButton", "red"], '<i class="fas fa-minus-circle"></i>', ()=>{
+        switchDeleteButton(deleteBtn, tokenInstance);
+    });
+    tokenContainer.classList.add("green");
+    
+    let tokenAuthor = doc.createP(["tokenInfo"], tokenInstance.authorName + ": ");
+    let date = new Date(tokenInstance.date);
+    let tokenDate = doc.createP(["tokenInfo"], date.getFullYear() + ". " + doc.monthNames[date.getMonth()] + ". " + date.getDay()  + " " + date.getHours() + ":" + date.getMinutes());
+    doc.append(tokenContainer, [tokenAuthor, tokenDate, deleteBtn]);
     
 }
 
-function hasAccessToTokenInstance(tokenInstance){
-    
+function switchDeleteButton(oldButton, toDelete){
+    let newBtn = doc.createButton(["tokenButton", "red"], "Eltávolít", ()=>{
+        toDelete.delete(()=> {
+            onTokenInstanceDelete(toDelete);
+        });
+    });
+    oldButton.parentNode.replaceChild(newBtn, oldButton);
+}
+
+function onTokenInstanceDelete(tokenInstance){
+    article.tokenInstances = article.tokenInstances.filter(t=> t.id !== tokenInstance.id);
+    tokenTable.innerHTML = "";
+    for (let token of necessaryTokens) {
+        renderToken(token);
+    }
+}
+
+function hasAccessToToken(token){
+    if(permissions[0].level >= 40){
+        return true;
+    }
+    for (let tokenPermission of myTokenPermissions) {
+        if(token.id === tokenPermission.tokenId) return true;            
+    }
+    return false;
+}
+
+function doesTokenInstanceExist(token){
+    for (let tokenInstance of article.tokenInstances) {
+        if(token.id === tokenInstance.tokenId) return true;
+    }
+    return false;
 }
 
 function onDelete(){
@@ -108,8 +220,6 @@ function refreshArticle(){
 }
 
 function setState(){
-   // console.log(permissions[0].authorId);
-  //  console.log(article.lockedBy);
     if(article.isLocked === 0){
         openState();
     } else if(article.isLocked === 1 && article.lockedBy == permissions[0].authorId){

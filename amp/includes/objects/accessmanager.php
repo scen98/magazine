@@ -24,7 +24,7 @@ class AccessManager{
         if($highestPermission >= 40){
             return true;
         }    
-        if($highestPermission > 20 && $_SESSION["permissions"][0]->level <40){
+        if($highestPermission >= 30 && $_SESSION["permissions"][0]->level <40){
             return AccessManager::cmlTokenCheck($token);
         }
         return false;
@@ -60,7 +60,7 @@ class AccessManager{
         return false;
     }
 
-    static function cmlTokenCheck($token){
+    public static function cmlTokenCheck($token){
         foreach($_SESSION["permissions"] as $perm){
             if($perm->columnId === $token->columnId){
                 return true;

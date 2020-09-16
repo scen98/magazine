@@ -97,3 +97,5 @@ export function addNonLetterKey(element, func){
         }
         });
 }
+
+export let monthNames = ["jan", "febr", "márc", "ápr", "máj", "jún", "júl", "aug", "szept", "okt", "nov", "dec"];

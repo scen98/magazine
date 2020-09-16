@@ -1,4 +1,4 @@
-import { Article, selectState1Articles } from "./objects/article.js"
+import { Article, selectArticlesByState } from "./objects/article.js"
 import { getColumns } from "./objects/column.js"
 import * as doc from "./doc.js";
 import * as utils from "./utils.js";
@@ -9,17 +9,19 @@ let articles = [];
 let columns = [];
 let articlePerPage = 30;
 let search = document.getElementById("search");
+let state = document.getElementById("state-select");
 let selectDesc;
 
 init();
 function init(){
+    state.value = 1;
     search.value = "";
     getColumns(requestArticles);
     addSearchListener();
 }
 window.expand = function() {
     try {
-        selectState1Articles(expandArticles, search.value, articlePerPage, articles.length+1, columnSelect.value);
+        selectArticlesByState(expandArticles, search.value, articlePerPage, articles.length+1, columnSelect.value, state.value);
     }
     catch {
         document.getElementById("expand-btn").style.display = "none";
@@ -29,11 +31,16 @@ window.expand = function() {
 window.search = function(){
     articleTable.innerHTML = "";
     articles = [];
-    selectState1Articles(loadArticles, search.value, articlePerPage, 0, columnSelect.value);
+    selectArticlesByState(loadArticles, search.value, articlePerPage, 0, columnSelect.value, state.value);
 }
 
-window.editArticle = function(id){
-    window.location.href = "../amp/editx.php?aid="+id;
+window.editArticle = function(article){
+    if(article.state > 0){
+        window.location.href = "../amp/editx.php?aid="+article.id;
+    } else {
+        window.location.href = "../amp/edit.php?aid="+article.id;
+    }
+    
 }
 
 window.switchChangeStateBtn = function(oldButton, article){
@@ -64,7 +71,7 @@ function addSearchListener(){
 function requestArticles(columnData){
     columns = columnData;
     renderColumnSelect();
-    selectState1Articles(loadArticles, "", articlePerPage, 0, columnSelect.value);
+    selectArticlesByState(loadArticles, "", articlePerPage, 0, columnSelect.value, 1);
 }
 
 function renderColumnSelect(){
@@ -93,12 +100,13 @@ function loadArticles(articleData){
 function renderRow(article){
     let container = doc.createDiv(article.id, ["awaitArticleContainer"]);
     let title = doc.createP(["awaitArticleTitle"], article.title);
+    let authorName = doc.createP(["awaitArticleAuthorName"], article.authorName);
     let columnName = doc.createP(["awaitArticleColumn"], getColumnNameById(article.columnId));
-    let editBtn = doc.createButton(["awaitArticleButton", "blue"], '<i class="fas fa-edit"></i>', () => { editArticle(article.id); });
+    let editBtn = doc.createButton(["awaitArticleButton", "blue"], '<i class="fas fa-edit"></i>', () => { editArticle(article); });
     let date = doc.createP(["awaitArticleDate"], article.date);
     let changeStateBtn = doc.createButton(["awaitArticleButton", "red"], '<i class="fas fa-backspace"></i>', () => { switchChangeStateBtn(changeStateBtn, article); });
     let lockDiv = renderLock(article);
-    doc.append(container, [title, editBtn, changeStateBtn, lockDiv, columnName, date]);
+    doc.append(container, [authorName, title, editBtn, changeStateBtn, lockDiv, columnName, date]);
     articleTable.appendChild(container);
 }
 

@@ -79,6 +79,24 @@ class Token{
         return $token_array;
     }
 
+    public static function selectById($mysqlidb, $id){
+        $newToken;
+        $sql = "SELECT * from tokens WHERE id = ?;";
+        $stmt = mysqli_stmt_init($mysqlidb->conn);
+        if(!mysqli_stmt_prepare($stmt, $sql)){
+            return null;
+        }
+        mysqli_stmt_bind_param($stmt, "i", $id);
+        if(!mysqli_stmt_execute($stmt)){
+            return null;
+        }
+        $result = mysqli_stmt_get_result($stmt);
+        while($row = mysqli_fetch_assoc($result)){
+            $newToken = new Token($row["id"], $row["name"], $row["status"], $row["columnId"]);
+        }
+        return $newToken;
+    }
+
     public static function selectByColumnId($mysqlidb, $columnId){ 
         $token_array = array();
         $sql = "SELECT * from tokens WHERE (columnId = ? OR columnId IS NULL) AND status = 1;";

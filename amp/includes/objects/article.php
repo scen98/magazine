@@ -108,20 +108,22 @@ class Article {
         return $article;
     }
 
-    public static function selectState1Articles($mysqlidb, $keyword, $limit, $offset){
+    public static function selectByState($mysqlidb, $keyword, $limit, $offset, $state){
         $article_array = array();
         $sql = "SELECT articles.id, articles.title, articles.lead, articles.authorId, articles.date, articles.columnId, articles.state,
-        locks.isLocked, locks.lockedBy
+        locks.isLocked, locks.lockedBy, authors.name
         FROM articles
         INNER JOIN locks on articles.id = locks.articleId
-        WHERE articles.state = 1 AND (articles.title LIKE CONCAT('%',?,'%') OR articles.lead LIKE CONCAT('%',?,'%'))
+        INNER JOIN authors ON articles.authorId = authors.id
+        WHERE articles.state = ? AND (articles.title LIKE CONCAT('%',?,'%') OR articles.lead LIKE CONCAT('%',?,'%'))
         ORDER BY articles.date 
-        LIMIT ? OFFSET ?;";
+        LIMIT ? OFFSET ?
+        ;";
         $stmt = mysqli_stmt_init($mysqlidb->conn);
         if(!mysqli_stmt_prepare($stmt, $sql)){
             return "null";
         }     
-        mysqli_stmt_bind_param($stmt, "ssii", $keyword, $keyword, $limit, $offset);
+        mysqli_stmt_bind_param($stmt, "issii", $state, $keyword, $keyword, $limit, $offset);
         if(!mysqli_stmt_execute($stmt)){
             return "null";
         }
@@ -131,25 +133,27 @@ class Article {
             $article->isLocked = $row["isLocked"];
             $article->lockedBy = $row["lockedBy"];
             $article->state = $row["state"];
+            $article->authorName = $row["name"];
             array_push($article_array, $article);
         }
         return $article_array;       
     }
 
-    public static function selectState1ArticlesByColumn($mysqlidb, $keyword, $limit, $offset, $columnId){
+    public static function selectByStateAndColumn($mysqlidb, $keyword, $limit, $offset, $columnId, $state){
         $article_array = array();
         $sql = "SELECT articles.id, articles.title, articles.lead, articles.authorId, articles.date, articles.columnId, articles.state,
-        locks.isLocked, locks.lockedBy
+        locks.isLocked, locks.lockedBy, authors.name
         FROM articles
         INNER JOIN locks on articles.id = locks.articleId
-        WHERE articles.state = 1 AND articles.columnId = ? AND (articles.title LIKE CONCAT('%',?,'%') OR articles.lead LIKE CONCAT('%',?,'%'))
+        INNER JOIN authors ON articles.authorId = authors.id
+        WHERE articles.state = ? AND articles.columnId = ? AND (articles.title LIKE CONCAT('%',?,'%') OR articles.lead LIKE CONCAT('%',?,'%'))
         ORDER BY articles.date
         LIMIT ? OFFSET ?;";
         $stmt = mysqli_stmt_init($mysqlidb->conn);
         if(!mysqli_stmt_prepare($stmt, $sql)){
             return null;
         }     
-        mysqli_stmt_bind_param($stmt, "issii", $columnId, $keyword, $keyword, $limit, $offset);
+        mysqli_stmt_bind_param($stmt, "iissii", $state, $columnId, $keyword, $keyword, $limit, $offset);
         if(!mysqli_stmt_execute($stmt)){
             return null;
         }
@@ -159,6 +163,7 @@ class Article {
             $article->isLocked = $row["isLocked"];
             $article->lockedBy = $row["lockedBy"];
             $article->state = $row["state"];
+            $article->authorName = $row["name"];
             array_push($article_array, $article);
         }
         return $article_array;     

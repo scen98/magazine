@@ -1,6 +1,7 @@
 import * as caller from "./caller.js";
+import * as TokenInstance from "./tokenInstance.js";
 export class Article {
-    constructor(id, title, lead, authorId, date, imgPath, columnId, { text, isLocked, lockedBy, state } = {}){
+    constructor(id, title, lead, authorId, date, imgPath, columnId, { text, isLocked, lockedBy, state, authorName } = {}){
         this.id = parseInt(id);
         this.title = title;
         this.lead = lead;
@@ -12,6 +13,7 @@ export class Article {
         this.isLocked = isLocked;
         this.lockedBy = parseInt(lockedBy);
         this.state = state;
+        this.authorName = authorName;
     }
 
     insert(func){
@@ -73,7 +75,7 @@ export class Article {
         }
         let f = (response) => {
             if(JSON.parse(response).msg === "success"){
-                func();
+                //func();
             } else{
                 console.log(response);
             }
@@ -123,39 +125,25 @@ export function selectMyArticles(func, keyword, limit, offset, orderby, desc){
     caller.POST("../amp/includes/requests/selectmyarticles.php", JSON.stringify(args), f);   
 }
 
-export function selectState1Articles(func, keyword, limit, offset, columnId){
+export function selectArticlesByState(func, keyword, limit, offset, columnId, state){
     let data = {
         keyword: keyword,
         limit: parseInt(limit),
         offset: parseInt(offset),
-        columnId: parseInt(columnId)
+        columnId: parseInt(columnId),
+        state: parseInt(state)
     }
     let f = (response) =>{
         func(parseArray(response));
     }
-    caller.POST("../amp/includes/requests/selectstate1articles.php", JSON.stringify(data), f);
-}
-
-export function saveText(func, article){
-    let data = {
-        id: article.id,
-        text: article.text
-    }
-    let f = (response)=>{
-        if(JSON.parse(response).msg === "success"){
-            func();
-        } else {
-            console.log(response);
-        }
-    }
-    caller.POST("../amp/includes/requests/savetext.php", JSON.stringify(data), f);
+    caller.POST("../amp/includes/requests/selectarticlesbystate.php", JSON.stringify(data), f);
 }
 
 function parseArray(json){
     let articleArray = Array();
     for (let art of JSON.parse(json).articles) {
         let newArticle = new Article(art.id, art.title, art.lead, art.authorId, art.date, art.imgP,art.columnId,
-            {text: art.text, isLocked: art.isLocked, lockedBy: art.lockedBy, state: art.state});
+            {text: art.text, isLocked: art.isLocked, lockedBy: art.lockedBy, state: art.state, authorName: art.authorName});
         articleArray.push(newArticle);
     }
     return articleArray;
@@ -164,9 +152,9 @@ function parseArray(json){
 function constrFromJSON(json){
     let data = JSON.parse(json).article;
     let article = new Article(data.id, data.title, data.lead, data.authorId, data.date, data.imgPath, data.columnId, 
-        {text: data.text, isLocked: data.isLocked, lockedBy: data.lockedBy, state: data.state});
-    if(data.state === 1){
-        article.tokenInstances = data.tokenInstances;
+        {text: data.text, isLocked: data.isLocked, lockedBy: data.lockedBy, state: data.state, authorName: data.authorName});
+    if(data.state > 0){
+        article.tokenInstances = TokenInstance.constrFromJson(json);
     }
     return article;
 }

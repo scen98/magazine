@@ -2,7 +2,7 @@
   require "../MSQDB.php";
   require "../objects/article.php";
   require "../objects/accessmanager.php";
-  require "../objects/tokenInstance.php";
+  require "../objects/tokeninstance.php";
   require "requestutils.php";
 if(!isset($_SESSION["permissions"])){
     RequestUtils::permissionDenied();
@@ -14,7 +14,7 @@ $art = Article::getArticle($database, $data->id);
 if(is_null($art)){
     RequestUtils::sqlError();
 }
-if($art->state === 1){
+if($art->state > 0){
     $art->tokenInstances = TokenInstance::selectByArticleId($database, $data->id);
 }
 if(AccessManager::isArticleAccessible($art)){
