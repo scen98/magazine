@@ -13,7 +13,7 @@
          <option value="30">Rovatvezető</option>
          <option value="40">Újságvezető</option>
         </select>
-        <button id="search-btn" type="button" onclick="search()" class="commandBtn shine" >Mehet!</button>
+        <button id="search-btn" type="button" class="commandBtn shine" >Mehet!</button>
     </div>
     <div id="author-table">
 

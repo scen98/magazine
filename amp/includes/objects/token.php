@@ -98,6 +98,9 @@ class Token{
     }
 
     public static function selectByColumnId($mysqlidb, $columnId){ 
+        if($columnId === 0 || is_null($columnId)){
+            return Token::selectTokens($mysqlidb);
+        }
         $token_array = array();
         $sql = "SELECT * from tokens WHERE (columnId = ? OR columnId IS NULL) AND status = 1;";
         $stmt = mysqli_stmt_init($mysqlidb->conn);

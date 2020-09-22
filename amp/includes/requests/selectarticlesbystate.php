@@ -15,6 +15,9 @@ if($data->columnId == 0){
 } else {
    $article_array = Article::selectByStateAndColumn($database, $data->keyword, $data->limit, $data->offset, $data->columnId, $data->state);
 }
+//foreach($article_array as $art){
+   // $art->tokenInstances = TokenInstance::selectByArticleId($database, $art->id);
+//}
 if(is_null($article_array)){
     RequestUtils::sqlerror();
 } else {

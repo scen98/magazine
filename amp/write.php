@@ -2,6 +2,7 @@
 require "header.php";
 ?>
 <script type="module" src="js/writeController.js"></script>
+<script type="text/javascript" src="js/textEditController.js"></script>
 <div onload="init()" class="container">
     <form>
         <textarea id="new-title" name="title" rows="2" type="text" class="titleInput" placeholder="Cím"></textarea><br><br>
@@ -10,7 +11,7 @@ require "header.php";
         <select name="column" class="columnselect" id="column-select"></select><br>
         <label>Kép:  </label>
         <input id="img-path" name="img-path" type="text" class="imgsrc">
-        <button onclick="openImgPath()" type="button"><i class="fas fa-external-link-square-alt"></i></button><br>
+        <button id="open-img-path-btn" type="button"><i class="fas fa-external-link-square-alt"></i></button><br>
     </form>
     <div class="editcontrols">
     <button class="controlbtn" onclick="execCmd('undo');"><i class="fas fa-undo"></i></button>
@@ -46,7 +47,7 @@ require "header.php";
             </select>
             <button class="controlbtn shine" onclick="execCmd('insertHorizontalRule');">HR</button>
             <button class="controlbtn shine" onclick="execCommandWithArg('createLink', prompt('Enter a URL', 'http://'));"><i class="fas fa-link"></i></button>
-            <select onchange="execCommandWithArg('fontName', this.value);" >
+            <select class="columnselect" onchange="execCommandWithArg('fontName', this.value);" >
                 <option value="Arial">Arial</option>
                 <option value="Comain Sans">Comain Sans</option>
                 <option value="Courier">Courier</option>
@@ -55,7 +56,7 @@ require "header.php";
                 <option value="Times New Roman">Times New Roman</option>
                 <option value="Verdana">Verdana</option>
             </select>
-            <select onchange="execCommandWithArg('fontSize', this.value);" >
+            <select  class="columnselect" onchange="execCommandWithArg('fontSize', this.value);" >
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -68,8 +69,8 @@ require "header.php";
         
         <iframe class="textedit" value="texts" id="txtField" name="richTextField"></iframe>
 
-            <form method="post" action="tester.php">
-                <button onclick="insertArticle()" type="button" id="submit">Save</button>
+            <form method="post">
+                <button id="save-article-btn" type="button" class="commandBtn shine" id="submit">Mentés</button>
             </form>    
 
 </div>

@@ -1,28 +1,38 @@
-export function GET(location, func){
+export function GET(url, func) {
     let xhttp = new XMLHttpRequest();
-    xhttp.onload = function() {
-        try{
+    xhttp.onload = function () {
+        try {
             func(this.responseText);
-        }catch(err) {
+        }
+        catch (err) {
             console.log(err);
             console.log(this.responseText);
         }
-    };    
-    xhttp.open("GET", location, true);
+    };
+    xhttp.open("GET", url, true);
     xhttp.send();
 }
-
-export function POST(location, message, func){
+export function GETSynch(url, func) {
     let xhttp = new XMLHttpRequest();
-    xhttp.open("POST", location); 
+    xhttp.onload = function () {
+        return this.responseText;
+    };
+    xhttp.open("GET", url, false);
+    xhttp.send();
+}
+export function POST(url, message, func) {
+    let xhttp = new XMLHttpRequest();
+    xhttp.open("POST", url);
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.send(message);
     xhttp.onload = () => {
-        try{
-            func(xhttp.responseText); 
-        } catch(err){
-            console.log(err);
-            console.log(xhttp.responseText)
+        try {
+            func(xhttp.responseText);
         }
-    }
+        catch (err) {
+            console.log(err);
+            console.log(xhttp.responseText);
+        }
+    };
 }
+//# sourceMappingURL=caller.js.map

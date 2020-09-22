@@ -4,7 +4,7 @@ class Column {
     public $name;
 
     function __construct($id, $name){
-        $this->id = $id;
+        $this->id = intval($id);
         $this->name = $name;
     }
 

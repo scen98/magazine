@@ -1,109 +1,101 @@
-import { Article, selectMyArticles } from "./objects/article.js"
-import { getColumns } from "./objects/column.js"
-import * as doc from "./doc.js"
+import { selectMyArticles } from "./objects/article.js";
+import { getColumns } from "./objects/column.js";
+import * as doc from "./doc.js";
 let articleTable = document.getElementById("article-table");
+let expandBtn = document.getElementById("expand-btn");
+let searchBtn = document.getElementById("search-btn");
 let selectOrder;
 let articles = [];
 let columns = [];
 let articlePerPage = 20;
-let search = "";
+let searchInput = "";
 let selectDesc;
 init();
-
-function init(){
+function init() {
     loadPage();
     setSearchParameters();
     addSearchListener();
+    doc.addChange(document.getElementById("search"), search);
+    doc.addClick(expandBtn, expand);
+    doc.addClick(searchBtn, search);
 }
-
-window.expand = function() {
+function loadPage() {
+    getColumns(prepareArticles);
+}
+function expand() {
     try {
-        selectMyArticles(expandArticles, search, articlePerPage, columns.length+1, selectOrder, selectDesc);
+        selectMyArticles(expandArticles, searchInput, articlePerPage, columns.length + 1, selectOrder, selectDesc);
     }
-    catch {
+    catch (_a) {
         document.getElementById("expand-btn").style.display = "none";
-    }  
+    }
 }
-
-window.search = function(){
+function search() {
     setSearchParameters();
     articleTable.innerHTML = "";
     articles = [];
-    selectMyArticles(loadArticles, search, articlePerPage, 0, selectOrder, selectDesc);
+    selectMyArticles(loadArticles, searchInput, articlePerPage, 0, selectOrder, selectDesc);
 }
-
-window.editArticle = function(id){
-    window.location.href = "../amp/edit.php?aid="+id;
+function editArticle(id) {
+    window.location.href = "../amp/edit.php?aid=" + id;
 }
-
-window.switchDeleteBtn = function(oldButton, article){
-    let newButton = doc.create("button", null, ["red", "articleButton"], "Törlés");
-    newButton.addEventListener("click", function() { deleteArticle(article); });
+function switchDeleteBtn(oldButton, article) {
+    let newButton = doc.createButton(["red", "articleButton"], "Törlés", () => { deleteArticle(article); });
     oldButton.parentNode.replaceChild(newButton, oldButton);
 }
-
-window.deleteArticle = function(article){
-    article.delete(function() {  });
-    document.getElementById(article.id).remove();
+function deleteArticle(article) {
+    article.delete(function () { });
+    document.getElementById(article.id.toString()).remove();
     articles = articles.filter(a => a.id !== article.id);
 }
-
-function expandArticles(articleData){
-    if(articleData.length > 0){
+function expandArticles(articleData) {
+    if (articleData.length > 0) {
         loadArticles(articleData);
     }
-    displayExpandBtn(articleData);   
+    displayExpandBtn(articleData);
 }
-
-function addSearchListener(){
+function addSearchListener() {
     let input = document.getElementById("search");
     doc.addEnter(input, () => { document.getElementById("search-btn").click(); });
 }
-
-function setSearchParameters(){
-    search = document.getElementById("search").value;
+function setSearchParameters() {
+    searchInput = document.getElementById("search").value;
     selectOrder = document.getElementById("order-select").value;
     selectDesc = document.getElementById("desc-select").value;
 }
-
-function loadPage(){
-    getColumns(prepareArticles);
-}
-
-function prepareArticles(columnData){
+function prepareArticles(columnData) {
     columns = columnData;
     selectMyArticles(loadArticles, "", articlePerPage, 0, "date", true);
 }
-
-function loadArticles(articleData){
+function loadArticles(articleData) {
     articles = articles.concat(articleData);
     for (var art of articleData) {
         renderRow(art);
     }
     displayExpandBtn(articleData);
 }
-
-function renderRow(article){
-    let container = doc.createDiv(article.id, ["articleContainer"]);
+function renderRow(article) {
+    let container = doc.createDiv(article.id.toString(), ["articleContainer"]);
     let title = doc.createP(["articleTitle"], article.title);
     let lead = doc.createDiv(null, ["articleLead"]);
     lead.innerText = article.lead;
     let columnName = doc.createP(["articleColumn"], getColumnNameById(article.columnId));
     let editBtn = doc.createButton(["articleButton", "blue"], '<i class="fas fa-edit"></i>', () => { editArticle(article.id); });
-    let date = doc.createP(["articleDate"], article.date);
+    let date = doc.createP(["articleDate"], doc.parseDateHun(article.date));
     let deleteBtn = doc.createButton(["articleButton", "red"], '<i class="fas fa-trash-alt"></i>', () => { switchDeleteBtn(deleteBtn, article); });
     doc.append(container, [title, columnName, lead, deleteBtn, editBtn, date]);
     articleTable.appendChild(container);
 }
-
-function getColumnNameById(columnId){
+function getColumnNameById(columnId) {
     var result = columns.find(c => c.id == columnId);
     return result.name;
 }
-function displayExpandBtn(articleData){
-    if(articleData.length < articlePerPage){
+function displayExpandBtn(articleData) {
+    if (articleData.length < articlePerPage) {
         document.getElementById("expand-btn").style.display = "none";
-    } else {
+    }
+    else {
         document.getElementById("expand-btn").style.display = "inline";
     }
 }
+//# sourceMappingURL=myarticlesController.js.map

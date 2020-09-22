@@ -1,55 +1,57 @@
-import { Author, selectAllAuthors } from "./objects/author.js";
-import { getHighestPermission } from "./utils.js";
+import { selectAllAuthors, getMyInfo } from "./objects/author.js";
 import * as doc from "./doc.js";
-let authorTable = document.getElementById("author-table");
+//var utils_1 = require("./utils");
+let authorTable = doc.getDiv("author-table");
 let authors = [];
-let searchInput = document.getElementById("search");
-let permissionSearchInput = document.getElementById("permission-select");
+let searchInput = doc.getInput("search");
+let permissionSearchInput = doc.getSelect("permission-select");
+let myInfo;
 init();
-function init(){
-    selectAllAuthors(loadPage);
-    doc.addEnter(searchInput, () => document.getElementById("search-btn").click());
+function init() {
+    getMyInfo(setMyInfo);
+    doc.addClick(doc.getBtn("search-btn"), search);
+    doc.addEnter(searchInput, search);
 }
-
-function loadPage(authorData){
+function setMyInfo(authorData) {
+    myInfo = authorData;
+    selectAllAuthors(loadPage);
+}
+function loadPage(authorData) {
     authors = authorData;
-    for (let a of authors) {
-        renderAuthor(a);
+    for (let author of authors) {
+        renderAuthor(author);
     }
 }
-
-function renderAuthor(author){
-    let container = doc.createDiv("author-container"+author.id, ["authorContainer"]);
+function renderAuthor(author) {
+    let container = doc.createDiv("author-container" + author.id, ["authorContainer"]);
     let name = doc.createP(["authorName"], author.userName);
     let level = doc.createP(["authorLevel"], author.getPermissionName());
     doc.append(container, [name, level]);
     authorTable.appendChild(container);
     canUserEdit(author, renderEditButton, [container, author]);
 }
-
-function canUserEdit(author, func, args){
-    let highestPermission = getHighestPermission(permissions);
-    if(highestPermission >= 30 && highestPermission >= author.getHighestPermission()){
-       func.apply(this,args);
+function canUserEdit(author, func, args) {
+    var highestPermission = myInfo.getHighestPermission();
+    if (highestPermission >= 30 && highestPermission >= author.getHighestPermission()) {
+        func.apply(this, args);
     }
 }
-
-window.search = function(){
+function search() {
     let keyword = searchInput.value.toLowerCase();
     let searchedLevel = permissionSearchInput.value;
     let result = [];
-    result = authors.filter(a=> a.userName.toLowerCase().includes(keyword));
-    if(searchedLevel !== "null"){
-        result = result.filter(a=> a.getHighestPermission() === parseInt(searchedLevel));
+    result = authors.filter(function (a) { return a.userName.toLowerCase().includes(keyword); });
+    if (searchedLevel !== "null") {
+        result = result.filter(function (a) { return a.getHighestPermission() === parseInt(searchedLevel); });
     }
-
     authorTable.innerHTML = "";
     for (let author of result) {
         renderAuthor(author);
     }
 }
-
-function renderEditButton(parent, author){
-    let editBtn = doc.createButton(["authorButton", "blue"], '<i class="fas fa-user-edit"></i>', ()=> { window.location.href = "../amp/editAuthor.php?author="+author.uniqName; });
+function renderEditButton(parent, author) {
+    let editBtn = doc.createButton(["authorButton", "blue"], '<i class="fas fa-user-edit"></i>', function () { window.location.href = "../amp/editAuthor.php?author=" + author.uniqName; });
     parent.appendChild(editBtn);
 }
+//# sourceMappingURL=authorsController.js.map
+//# sourceMappingURL=authorsController.js.map

@@ -140,19 +140,6 @@ a, a:focus, a:hover {
   outline: 0;
 }
 
-#post-container {
-
-}
-
-#post-container img {
-  width: 100px;
-  overflow: hidden;
-}
-
-img {
-  width: 100%;
-}
-
 .card-panel {
   margin: 0;
   padding: 60px;

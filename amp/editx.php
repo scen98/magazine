@@ -30,7 +30,7 @@ require "header.php";
         <option value="2">Kész</option>
         <option value="3">Archív</option>
     </select>
-    <button onclick="checkState()" class="acceptBtn"><i class="fas fa-check-square"></i></button>
+   <button onclick="checkState()" class="acceptBtn"><i class="fas fa-check-square"></i></button> 
     <div id="edit-controls" class="editcontrols">
             <button class="controlbtn shine" onclick="execCmd('undo');"><i class="fas fa-undo"></i></button>
             <button class="controlbtn shine" onclick="execCmd('redo');"><i class="fas fa-redo"></i></button>
@@ -66,7 +66,7 @@ require "header.php";
                 <option value="H6">H6</option>
             </select>
             <button class="controlbtn shine" onclick="execCmd('insertHorizontalRule');">__</button>
-            <select onchange="execCommandWithArg('fontName', this.value);" >
+            <select  class="columnselect" onchange="execCommandWithArg('fontName', this.value);" >
                 <option value="Arial">Arial</option>
                 <option value="Comain Sans">Comain Sans</option>
                 <option value="Courier">Courier</option>
@@ -75,7 +75,7 @@ require "header.php";
                 <option value="Times New Roman">Times New Roman</option>
                 <option value="Verdana">Verdana</option>
             </select>
-            <select onchange="execCommandWithArg('fontSize', this.value);" >
+            <select  class="columnselect" onchange="execCommandWithArg('fontSize', this.value);" >
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -105,7 +105,7 @@ require "header.php";
   <!-- Modal content -->
   <div class="modal-content">
     <span onclick="hideStateModal()" class="close">&times;</span>
-    <p>A cikk nem rendelkezik a szükséges tokenekkel. Biztosan szeretni folytatni?</p>
+    <p>A cikk nem rendelkezik a szükséges tokenekkel. Biztosan szeretné folytatni?</p>
     <div class="center">
         <button onclick="saveState()" type="button">Megerősít</button>
         <button onclick="hideStateModal()" type="button">Mégse</button>

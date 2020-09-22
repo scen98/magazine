@@ -1,19 +1,18 @@
 import * as caller from "./caller.js";
-export class Column{
-    constructor(id, name){
-        this.id = parseInt(id);
+export class Column {
+    constructor(id, name) {
+        this.id = id;
         this.name = name;
-    }   
-}
-
-export function getColumns(func){
-    let f = (response)=>{
-        func(constrFromJSON(response));
     }
-    caller.GET("../amp/includes/requests/getcolumns.php", f);  
 }
-
-export function selectAcccessibleColumns(func){ //azt se tudom hogy ez a cucc kell-e még de nem merem kitörölni mert egyszer talán hátha igen
+export function getColumns(func) {
+    let f = (response) => {
+        func(constrFromJSON(response));
+    };
+    caller.GET("../amp/includes/requests/getcolumns.php", f);
+}
+/*
+export function selectAcccessibleColumns(func: (columns: Column[])=>void){ //azt se tudom hogy ez a cucc kell-e még de nem merem kitörölni mert egyszer talán hátha igen
     let xhttp = new XMLHttpRequest();
     xhttp.onload = function() {
         try{
@@ -21,12 +20,12 @@ export function selectAcccessibleColumns(func){ //azt se tudom hogy ez a cucc ke
         }catch(err) {
             console.log(err.message);
         }
-    };    
+    };
     xhttp.open("GET", "../amp/includes/requests/selectaccessiblecolumns.php", true);
-    xhttp.send();    
+    xhttp.send();
 }
-
-function constrFromJSON(json){
+*/
+function constrFromJSON(json) {
     let data = JSON.parse(json).columns;
     let columnArray = [];
     for (let col of data) {
@@ -34,4 +33,4 @@ function constrFromJSON(json){
     }
     return columnArray;
 }
-
+//# sourceMappingURL=column.js.map

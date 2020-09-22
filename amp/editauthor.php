@@ -18,7 +18,7 @@
             <option value="40">Újságvezető</option>
         </select>
 
-        <button type="button" class="commandBtn shine" onclick="changePermission()" >Megváltoztat</button>
+        <button id="change-permission-btn" type="button" class="commandBtn shine"  >Megváltoztat</button>
         <p class="note" >A jogosultság típus megváltoztatása az összes eddigi jogosultság törlésével jár, beleértve a tokenekhez való jogokat is.</p>
         <div style="display: none" id="add-permission">
         <label>Jogosultság hozzáadása: </label>
@@ -29,7 +29,7 @@
             <option value="20">Rovatsegéd</option>
             <option value="30">Rovatvezető</option>
         </select>
-        <button onclick="addColumnPermission()" class="plusBtn"><i class="fas fa-plus-square"></i></button>
+        <button id="add-column-permission-btn" class="plusBtn"><i class="fas fa-plus-square"></i></button>
         </div>
         <h3>Jelenlegi jogosultságok:</h3>
         <div id="permission-table" class="tableContainer">

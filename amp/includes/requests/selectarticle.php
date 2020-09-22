@@ -2,7 +2,7 @@
   require "../MSQDB.php";
   require "../objects/article.php";
   require "../objects/accessmanager.php";
-  require "../objects/tokeninstance.php";
+  //require "../objects/tokeninstance.php";
   require "requestutils.php";
 if(!isset($_SESSION["permissions"])){
     RequestUtils::permissionDenied();

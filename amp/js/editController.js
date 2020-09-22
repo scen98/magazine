@@ -1,113 +1,98 @@
-import { Article, selectArticle } from "./objects/article.js";
-import { getColumns } from "./objects/column.js";
+import * as A from "./objects/article.js";
 import * as doc from "./doc.js";
-let columnSelect = document.getElementById("column-select");
-let title = document.getElementById("title");
-let lead = document.getElementById("lead");
-let imgPath = document.getElementById("img-path");  
+import { getColumns } from "./objects/column.js";
+let columnSelect = doc.getSelect("column-select");
+let title = doc.getInput("title");
+document.getElementById("title");
+let lead = doc.getInput("lead");
+document.getElementById("lead");
+let imgPath = doc.getInput("img-path");
 let text = document.getElementById("txtField");
 let article;
-let message = document.getElementById("message");
-let modal = document.getElementById("myModal");
+let message = doc.get("message");
+let modal = doc.getDiv("myModal");
 let stateSelect = document.getElementById("state-select");
+doc.addClick("change-state-button", updateState);
+doc.addClick("save-article-button", saveArticle);
+doc.addClick("delete-btn", displayDeleteModal);
+doc.addClick("delete-article-btn", deleteArticle);
+doc.addClick("open-img-path-btn", openImgPath);
+doc.addClick("hide-modal-btn1", hideDeleteModal);
+doc.addClick("hide-modal-btn2", hideDeleteModal);
 init();
-
-function init(){
-    enableEditMode();
+function init() {
+    // enableEditMode();
     getColumns(loadPage);
 }
-
-window.saveArticle = function(){
+function saveArticle() {
     setArticle();
     article.update(refreshMessage);
 }
-
-window.displayDeleteModal = function(){
+function displayDeleteModal() {
     modal.style.display = "block";
 }
-
-window.hideDeleteModal = function(){
+function hideDeleteModal() {
     modal.style.display = "none";
 }
-
-window.onclick = function(event){
-    if(event.target == modal){
+window.onclick = function (event) {
+    if (event.target == modal) {
         modal.style.display = "none";
     }
-}
-
-window.deleteArticle = function(){
+};
+function deleteArticle() {
     article.delete(onDelete);
 }
-
-window.openImgPath = function(){
+function openImgPath() {
     window.open(imgPath.value);
 }
-
-window.updateState = ()=>{
-    article.state = stateSelect.value;
-    article.updateState(()=>{
-        
-    });
+function updateState() {
+    article.state = parseInt(stateSelect.value);
+    article.updateState(null);
 }
-
-function loadPage(columns){
+function loadPage(columns) {
     renderOptions(columns);
-    selectArticle(loadArticle, getId());
+    A.selectArticle(loadArticle, getId());
 }
-
-function loadArticle(art){    
+function loadArticle(art) {
     article = art;
     article.id = getId();
-    refreshArticle();    
+    refreshArticle();
 }
-
-function onDelete(){
+function onDelete() {
     window.location.href = "../amp/index.php";
 }
-
-function refreshMessage(){    
+function refreshMessage() {
     let d = new Date();
-    message.innerHTML = "Legutóbb mentve: "+d.getHours() + ":" + d.getMinutes();
+    message.innerHTML = "Legutóbb mentve: " + d.getHours() + ":" + d.getMinutes();
 }
-
-function refreshArticle(){
+function refreshArticle() {
     title.value = article.title;
     lead.value = article.lead;
     imgPath.value = article.imgPath;
-    columnSelect.value = article.columnId;
+    columnSelect.value = article.columnId.toString();
     text.contentWindow.document.body.innerHTML = article.text;
-    stateSelect.value = article.state;
+    stateSelect.value = article.state.toString();
+    enableEditMode();
 }
-
-function setArticle(){
+function setArticle() {
     article.title = title.value;
     article.lead = lead.value;
-    article.imgPath = imgPath.value
-    article.columnId = columnSelect.value
+    article.imgPath = imgPath.value;
+    article.columnId = parseInt(columnSelect.value);
     article.text = text.contentWindow.document.body.innerHTML;
-    article.state = stateSelect.value;
+    article.state = parseInt(stateSelect.value);
 }
-
-function getId(){
+function getId() {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
-    return urlParams.get("aid");
+    return parseInt(urlParams.get("aid"));
 }
-
-function renderOptions(columnArray){  
+function renderOptions(columnArray) {
     for (let col of columnArray) {
-        doc.renderOption(columnSelect, col.id, col.name);
+        doc.renderOption(columnSelect, col.id.toString(), col.name);
     }
 }
-
 function enableEditMode() {
-    richTextField.document.designMode = "On";
+    text.contentWindow.document.designMode = "On";
 }
-
-window.execCmd = function(command){
-    richTextField.document.execCommand(command, false, null);
-}
-window.execCommandWithArg = function(command, arg){
-    richTextField.document.execCommand(command, false, arg);
-}
+//# sourceMappingURL=editController.js.map

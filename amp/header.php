@@ -23,7 +23,8 @@
 <li><a href="#">Cikkek</a>
     <ul>
         <li><a href="myarticles.php" ><span class="icon"><i class="fas fa-handshake"></i></span>Cikkeim</a></li>
-        <li id="awaiting-articles"><a href="awaitingarticles.php" ><span class="icon"><i class="fas fa-file-alt"></i></span>Publiikáció</a></li>
+        <li id="awaiting-articles"><a href="awaitingarticles.php" ><span class="icon"><i class="fas fa-file-alt"></i></span>Publikáció</a></li>
+        <li id="position-page"><a href="positions.php" ><span class="icon"><i class="fas fa-file-alt"></i></span>Újság</a></li>
     </ul>
 </li>
 <li><a href="#">Jogosultságok</a>
@@ -46,7 +47,7 @@
         <li id="create-user"><a href="createuser.php" ><span class="icon"><i class="fas fa-plus-circle"></i></span>Új</a></li>
     </ul>
 </li>
-<li class="username"><a onclick="logOut()"><i class="fas fa-sign-out-alt "></a></i></li>
+<li class="username"><a id="log-out"><i class="fas fa-sign-out-alt "></a></i></li>
 <li class="username"><a href="#"><?php echo $_SESSION["userName"] ?></a></li>
 </ul>
     </header>

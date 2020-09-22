@@ -13,23 +13,29 @@
             <option value="2">Publikálható</option>  
             <option value="3">Archív</option>  
         </select>
-        <button id="search-btn" type="button" onclick="search()" class="commandBtn shine" >Mehet!</button>
+        <label>Nem rendelkezik: </label>
+        <select  id="token-select" class="columnselect">
+          <option value="0">---</option>
+        </select>
+        <label for="exclude-locked">Szerkeszthetem</label>
+        <input  id="exclude-locked" type="checkbox" class="standardCheckbox" checked>
+        <button id="search-btn" type="button" class="commandBtn shine" >Mehet!</button>
     </div>
     <div id="article-table">
 
     </div>
     <div class="centered">
-    <button id="expand-btn" onclick="expand()" class="expandBtn">Mutass még</button>
+    <button id="expand-btn" class="expandBtn">Mutass még</button>
     </div>
     </div>
 <div id="delete-modal" class="modal">
   <!-- Modal content -->
   <div class="modal-content">
-    <span onclick="hideDeleteModal()" class="close">&times;</span>
+    <span class="close">&times;</span>
     <p>Biztosan törölni szeretné ezt a cikket?</p>
     <div class="center">
         <button id="delete-btn" type="button">Törlés</button>
-        <button onclick="hideDeleteModal()" type="button">Mégse</button>
+        <button  type="button">Mégse</button>
     </div>    
     </div>
   </div>    

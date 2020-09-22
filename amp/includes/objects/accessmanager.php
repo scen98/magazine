@@ -40,6 +40,24 @@ class AccessManager{
         return $max;
     }
 
+    public static function hasAccessToPosition($position){
+        if($_SESSION["permissions"][0]->level >= 40){
+            return true;
+        } else if(AccessManager::getMaxLevel() >= 30){
+           return AccessManager::cmlPositionCheck($position);
+        }
+        return false;
+    }
+
+    static function cmlPositionCheck($position){
+        foreach($_SESSION["permissions"] as $perm){
+            if($perm->columnId == $position->columnId){
+                return true;
+            }
+        }
+        return false;
+    }
+
     static function normalArticleCheck($article){
         if($_SESSION["id"] === $article->authorId){
             return true;

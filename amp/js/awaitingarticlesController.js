@@ -1,139 +1,196 @@
-import { Article, selectArticlesByState } from "./objects/article.js"
-import { getColumns } from "./objects/column.js"
+import { selectArticlesByState } from "./objects/article.js";
+import { getColumns } from "./objects/column.js";
 import * as doc from "./doc.js";
 import * as utils from "./utils.js";
-
-let articleTable = document.getElementById("article-table");
-let columnSelect = document.getElementById("column-select");
+import { Token, selectAccessibleTokens, selectTokensByColumn } from "./objects/token.js";
+import { getMyInfo } from "./objects/author.js";
+let articleTable = doc.getDiv("article-table");
+let columnSelect = doc.getSelect("column-select");
 let articles = [];
 let columns = [];
-let articlePerPage = 30;
-let search = document.getElementById("search");
-let state = document.getElementById("state-select");
-let selectDesc;
-
+let tokens = [];
+let articlePerPage = 50;
+let searchInput = doc.getInput("search");
+let state = doc.getSelect("state-select");
+let tokenSelect = doc.getSelect("token-select");
+let excludeLocked = doc.getInput("exclude-locked");
+let myInfo;
 init();
-function init(){
-    state.value = 1;
-    search.value = "";
-    getColumns(requestArticles);
+function init() {
+    state.value = "1";
+    searchInput.value = "";
+    getMyInfo(loadAccessibleTokens);
+    getColumns(requestTokens);
+    addListeners();
+}
+function addListeners() {
+    doc.addChange(tokenSelect, renderArticles);
+    doc.addChange(excludeLocked, renderArticles);
+    doc.addClick("search-btn", search);
+    doc.addClick("expand-btn", expand);
+    doc.addClick("state-select", search);
+    doc.addClick("column-select", search);
+    doc.addClick(tokenSelect, search);
     addSearchListener();
 }
-window.expand = function() {
+function loadAccessibleTokens(me) {
+    myInfo = me;
+    selectAccessibleTokens((tokenData) => {
+        for (let token of tokenData) {
+            doc.renderOption(tokenSelect, token.id.toString(), token.name);
+        }
+    });
+}
+function expand() {
     try {
-        selectArticlesByState(expandArticles, search.value, articlePerPage, articles.length+1, columnSelect.value, state.value);
+        selectArticlesByState(expandArticles, searchInput.value, articlePerPage, articles.length + 1, parseInt(columnSelect.value), parseInt(state.value));
     }
-    catch {
-        document.getElementById("expand-btn").style.display = "none";
-    }  
+    catch (_a) {
+        doc.get("expand-btn").style.display = "none";
+    }
 }
-
-window.search = function(){
-    articleTable.innerHTML = "";
+function search() {
     articles = [];
-    selectArticlesByState(loadArticles, search.value, articlePerPage, 0, columnSelect.value, state.value);
+    selectArticlesByState(loadArticles, searchInput.value, articlePerPage, 0, parseInt(columnSelect.value), parseInt(state.value));
 }
-
-window.editArticle = function(article){
-    if(article.state > 0){
-        window.location.href = "../amp/editx.php?aid="+article.id;
-    } else {
-        window.location.href = "../amp/edit.php?aid="+article.id;
+function editArticle(article) {
+    if (article.state > 0) {
+        window.open("../amp/editx.php?aid=" + article.id);
     }
-    
+    else {
+        window.open("../amp/edit.php?aid=" + article.id);
+    }
 }
-
-window.switchChangeStateBtn = function(oldButton, article){
+function switchChangeStateBtn(oldButton, article) {
     let newButton = doc.create("button", null, ["red", "awaitArticleButton"], "Visszaküldés");
-    newButton.addEventListener("click", function() { changeState(article); });
+    newButton.addEventListener("click", function () { changeState(article); });
     oldButton.parentNode.replaceChild(newButton, oldButton);
 }
-
-window.changeState = function(article){
-    article.state = 0;
-    article.updateState(function() {  });
-    document.getElementById(article.id).remove();
+function changeState(article) {
+    article.state = article.state - 1;
+    article.updateState(function () { });
+    doc.remove(article.id.toString());
     articles = articles.filter(a => a.id !== article.id);
 }
-
-function expandArticles(articleData){
-    if(articleData.length > 0){
+function renderArticles() {
+    articleTable.innerHTML = "";
+    for (var art of articles.filter(a => !a.hasTokenInstance(new Token(parseInt(tokenSelect.value))))) {
+        if (isEditable(art) == excludeLocked.checked)
+            renderRow(art);
+    }
+}
+function expandArticles(articleData) {
+    if (articleData.length > 0) {
         loadArticles(articleData);
     }
-    displayExpandBtn(articleData);   
+    displayExpandBtn(articleData);
 }
-
-function addSearchListener(){
-    let input = document.getElementById("search");
+function addSearchListener() {
+    let input = doc.get("search");
     doc.addEnter(input, () => { document.getElementById("search-btn").click(); });
 }
-
-function requestArticles(columnData){
+function requestTokens(columnData) {
     columns = columnData;
-    renderColumnSelect();
-    selectArticlesByState(loadArticles, "", articlePerPage, 0, columnSelect.value, 1);
+    selectTokensByColumn(requestArticles, null);
 }
-
-function renderColumnSelect(){
-    let highestPerm = utils.getHighestPermission(permissions);
+function requestArticles(tokenData) {
+    tokens = tokenData;
+    renderColumnSelect();
+    selectArticlesByState(loadArticles, "", articlePerPage, 0, parseInt(columnSelect.value), 1);
+}
+function renderColumnSelect() {
+    let highestPerm = myInfo.getHighestPermission();
     let accessibleColumns = [];
-    if(highestPerm >= 40){ 
-        let all = { id: 0, name: "Mind" }
+    if (highestPerm >= 40) {
+        let all = { id: 0, name: "Mind" };
         accessibleColumns = columns;
         accessibleColumns.unshift(all);
-    } else {
-        accessibleColumns = columns.filter(col => utils.hasCmlAccesToColumn(permissions, col));
+    }
+    else {
+        accessibleColumns = columns.filter(col => utils.hasCmlAccesToColumn(myInfo.permissions, col));
     }
     for (let column of accessibleColumns) {
         doc.renderOption(columnSelect, column.id, column.name);
     }
 }
-
-function loadArticles(articleData){
+function loadArticles(articleData) {
     articles = articles.concat(articleData);
-    for (var art of articleData) {
-        renderRow(art);
-    }
+    renderArticles();
     displayExpandBtn(articleData);
 }
-
-function renderRow(article){
-    let container = doc.createDiv(article.id, ["awaitArticleContainer"]);
+function renderRow(article) {
+    let container = doc.createDiv(article.id.toString(), ["awaitArticleContainer"]);
     let title = doc.createP(["awaitArticleTitle"], article.title);
-    let authorName = doc.createP(["awaitArticleAuthorName"], article.authorName);
-    let columnName = doc.createP(["awaitArticleColumn"], getColumnNameById(article.columnId));
     let editBtn = doc.createButton(["awaitArticleButton", "blue"], '<i class="fas fa-edit"></i>', () => { editArticle(article); });
-    let date = doc.createP(["awaitArticleDate"], article.date);
-    let changeStateBtn = doc.createButton(["awaitArticleButton", "red"], '<i class="fas fa-backspace"></i>', () => { switchChangeStateBtn(changeStateBtn, article); });
+    let table = doc.createTable(["awaitArticleTable"]);
+    doc.renderTableRow(table, [doc.createP(["awaitArticleAuthorName"], article.authorName).outerHTML, getColumnNameById(article.columnId), doc.parseDateHun(article.date)]);
     let lockDiv = renderLock(article);
-    doc.append(container, [authorName, title, editBtn, changeStateBtn, lockDiv, columnName, date]);
+    if (article.state > 0) {
+        let changeStateBtn = doc.createButton(["awaitArticleButton", "red"], '<i class="fas fa-backspace"></i>', () => { switchChangeStateBtn(changeStateBtn, article); });
+        doc.append(container, [title, table, editBtn, changeStateBtn, lockDiv]);
+    }
+    else {
+        doc.append(container, [title, table, editBtn, lockDiv]);
+    }
+    renderTokenInstances(container, article);
     articleTable.appendChild(container);
 }
-
-function renderLock(article){
+function renderTokenInstances(container, article) {
+    for (let token of tokens) {
+        if (isTokenNecessary(token, article))
+            renderTokenInstance(container, article, token);
+    }
+}
+function renderTokenInstance(container, article, token) {
+    let tokenDiv = doc.createDiv(null, ["redAwaitingToken"]);
+    if (article.hasTokenInstance(token)) {
+        tokenDiv.className = "greenAwaitingToken";
+    }
+    tokenDiv.innerText = token.name;
+    doc.append(container, [tokenDiv]);
+}
+function isTokenNecessary(token, article) {
+    if (token.columnId === 0)
+        return true;
+    return article.columnId === token.columnId;
+}
+function renderLock(article) {
     let lockDiv = doc.createDiv(null, ["lock"]);
-    if(article.isLocked === 1){
+    if (article.isLocked) {
         lockDiv.innerHTML = '<i class="fas fa-lock"></i>';
-        if(article.lockedBy === permissions[0].authorId){
+        if (article.lockedBy === myInfo.permissions[0].authorId) {
             lockDiv.style.backgroundColor = "whitesmoke";
-        } else {
-            lockDiv.style.backgroundColor = "gray";
+            lockDiv.title = "Ön által lezárva";
         }
-    } else {
+        else {
+            lockDiv.style.backgroundColor = "gray";
+            lockDiv.title = "Más felhasználó által lezárva";
+        }
+    }
+    else {
         lockDiv.innerHTML = '<i class="fas fa-lock-open"></i>';
         lockDiv.style.backgroundColor = "green";
+        lockDiv.title = "Nyitott";
     }
     return lockDiv;
 }
-
-function getColumnNameById(columnId){
+function isEditable(article) {
+    if (!article.isLocked)
+        return true;
+    if (article.lockedBy === myInfo.permissions[0].authorId)
+        return true;
+    return false;
+}
+function getColumnNameById(columnId) {
     var result = columns.find(c => c.id == columnId);
     return result.name;
 }
-function displayExpandBtn(articleData){
-    if(articleData.length < articlePerPage){
+function displayExpandBtn(articleData) {
+    if (articleData.length < articlePerPage) {
         document.getElementById("expand-btn").style.display = "none";
-    } else {
+    }
+    else {
         document.getElementById("expand-btn").style.display = "inline";
     }
 }
+//# sourceMappingURL=awaitingarticlesController.js.map
