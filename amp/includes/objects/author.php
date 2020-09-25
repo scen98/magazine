@@ -54,6 +54,26 @@ class Author{
         }  
     }
 
+    public static function selectAuthor($mysqlidb, $id){
+        $author;
+        $sql = "SELECT id, userName, name, password FROM authors WHERE id = ?;";
+        $stmt = mysqli_stmt_init($mysqlidb->conn);
+        if(!mysqli_stmt_prepare($stmt, $sql)){
+            return null;
+        }
+        mysqli_stmt_bind_param($stmt, "i", $id);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);            
+        while($row = mysqli_fetch_assoc($result)){
+            $author = new Author($row["id"], $row["userName"], $row["name"], $row["password"]);
+        }
+        $author->permissions = Permission::selectPermissionsByAID($mysqlidb, $id);
+        if(count($author->permissions) > 0 && ($author->permissions[0]->level >= 20 && $author->permissions[0]->level < 40)){
+            $author->tokenPermissions = TokenPermission::selectByAID($mysqlidb, $id);
+        }
+        return $author;
+    }
+
     public static function selectAuthorQuery($mysqlidb, $userName){
         $author;
         $sql = "SELECT id, userName, name, password FROM authors WHERE userName = ?;";

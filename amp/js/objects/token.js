@@ -8,14 +8,10 @@ export class Token {
     }
     insert(func) {
         let f = (response) => {
-            if (JSON.parse(response).msg === "success") {
-                func();
-            }
-            else {
-                console.log(response);
-            }
+            this.id = JSON.parse(response).newId;
+            func();
         };
-        caller.POST("../amp/includes/requests/updatetoken.php", JSON.stringify(this), f);
+        caller.POST("../amp/includes/requests/inserttoken.php", JSON.stringify(this), f);
     }
     update(func) {
         let f = (response) => {
@@ -48,6 +44,15 @@ export function selectTokensByColumn(func, columnId) {
         columnId: columnId
     };
     caller.POST("../amp/includes/requests/selecttokensbycolumn.php", JSON.stringify(data), f);
+}
+export function selectActiveTokensByColumn(func, columnId) {
+    let f = (response) => {
+        func(constrFromJSON(response));
+    };
+    let data = {
+        columnId: columnId
+    };
+    caller.POST("../amp/includes/requests/selectactivetokensbycolumn.php", JSON.stringify(data), f);
 }
 export function selectAccessibleTokens(func) {
     let f = (response) => {

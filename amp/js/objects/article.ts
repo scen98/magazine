@@ -31,7 +31,6 @@ export class Article {
     }
 
     insert(func:any){
-        console.log(this);
         let f = (response:string) => {
             this.id = JSON.parse(response).newId;
             func();
@@ -89,7 +88,7 @@ export class Article {
         }
         let f = (response:string) => {
             if(JSON.parse(response).msg === "success"){
-                //func();
+                func();
             } else{
                 console.log(response);
             }
@@ -138,18 +137,19 @@ export function selectArticles(func:any, articleIdArray:number[]){
     caller.POST("../amp/includes/requests/selectarticles.php", JSON.stringify(data), f);
 }
 
-export function selectMyArticles(func: (articles: Article[])=>void, keyword:string, limit:number, offset:number, orderby:string, desc:boolean){
+export function selectByAuthorId(func: (articles: Article[])=>void, authorId: number, keyword:string, state: number, columnId: number, limit:number, offset:number){
     let args = {
+        authorId: authorId,
         keyword: keyword,
         limit: limit,
         offset: offset,
-        orderby: orderby,
-        desc: desc
+        state: state,
+        columnId: columnId
     }
     let f = (response:string)=> {
         func(parseArray(response));
     }
-    caller.POST("../amp/includes/requests/selectmyarticles.php", JSON.stringify(args), f);   
+    caller.POST("../amp/includes/requests/selectarticlesbyauthor.php", JSON.stringify(args), f);   
 }
 
 export function selectArticlesByState(func: (articles: Article[])=>void, keyword:string, limit:number, offset:number, columnId:number, state:number){
@@ -178,8 +178,10 @@ function parseArray(json):Article[]{
 function constrFromJSON(json):Article{
     let art = JSON.parse(json).article;
     let article = new Article(art.id, art.title, art.lead, art.authorId, new Date(art.date), art.imgPath, art.columnId, art.text, art.isLocked == 1, art.lockedBy, art.state, art.authorName);
-    if(art.state > 0 && art.tokenInstances != undefined && art.tokenInstances.length > 0){
+    if(art.state > 0 && art.tokenInstances != null && art.tokenInstances.length > 0){ //asd
         article.tokenInstances = ti.constrArray(art.tokenInstances);
+    } else {
+        article.tokenInstances = [];
     }
   //  if(data.state > 0){
      //   article.tokenInstances = TokenInstance.constrFromJson(json);

@@ -1,7 +1,7 @@
 <?php
+//require "../objects/tokenpermission.php";
 require "../MSQDB.php";
 require "../objects/accessmanager.php";
-require "../objects/tokenpermission.php";
 require "requestutils.php";
 require "../objects/tokeninstance.php";
 require "../objects/token.php";
@@ -12,7 +12,6 @@ $data = json_decode(file_get_contents("php://input"));
 RequestUtils::checkData($data);
 $database = new MSQDB;
 $token = Token::selectById($database, $data->tokenId);
-
 if(AccessManager::getMaxLevel() === 20){
     if(!cmaCheck($token)){
         RequestUtils::permissionDenied();
@@ -33,8 +32,8 @@ if(is_null($newId)){
 }
 
 function cmaCheck($token){
-    foreach($_SESSION["tokenPermissions"] as $tokenPermission){
-        if($token->tokenId === $tokenPermission->tokenId){
+    foreach($_SESSION["tokenPermissions"] as $tk){
+        if($token->id === $tk->tokenId){
             return true;
         }
     }

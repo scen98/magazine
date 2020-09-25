@@ -1,45 +1,25 @@
 <?php
 require "header.php";
-//require "includes/edit.inc.php";
 ?>
-<script type="module" src="js/editxController.js"></script>
+<script type="module" src="js/writeController.js" ></script>
+<script type="text/javascript" src="js/textEditController.js" defer ></script>
 <div onload="init()" class="container">
-    <p id="message"></p>
     <form>
-        <textarea id="title" name="title" rows="2" type="text" class="titleInput" placeholder="Cím"></textarea><br><br>
+        <textarea id="new-title" name="title" rows="2" type="text" class="titleInput" placeholder="Cím"></textarea><br><br>
         <textarea id="lead" class="leadInput" rows="4" placeholder="Bevezető" cols="50"></textarea><br><br>
         <label>Rovat:  </label>
         <select name="column" class="columnselect" id="column-select"></select><br>
         <label>Kép:  </label>
         <input id="img-path" name="img-path" type="text" class="imgsrc">
-        <button onclick="openImgPath()" type="button"><i class="fas fa-external-link-square-alt"></i></button>
-        <br>
+        <button id="open-img-path-btn" type="button"><i class="fas fa-external-link-square-alt"></i></button><br>
     </form>
-    <div>
-        <h4>Állapot: </p> <p id="state"></h4>
-        <button id="lock-btn" onClick="switchLock()"></button>
-        <p id="lock-message"></p>
-    </div>
-    <h3>Tokenek: </h3>
-        <div id="token-table">
-        </div>
-    <h3>Cikk státusza: </h3>
-    <select class="columnselect" id="state-select">
-        <option value="0">Írás alatt</option>
-        <option value="1">Ellenőrzésre vár</option>
-        <option value="2">Kész</option>
-        <option value="3">Archív</option>
-    </select>
-   <button onclick="checkState()" class="acceptBtn"><i class="fas fa-check-square"></i></button> 
-    <div id="edit-controls" class="editcontrols">
-            <button class="controlbtn shine" onclick="execCmd('undo');"><i class="fas fa-undo"></i></button>
+    <div class="editcontrols">
+    <button class="controlbtn" onclick="execCmd('undo');"><i class="fas fa-undo"></i></button>
             <button class="controlbtn shine" onclick="execCmd('redo');"><i class="fas fa-redo"></i></button>
-            <button class="controlbtn shine" onclick="saveArticle()" type="button" id="submit"><i class="fas fa-save"></i></button>
             <button class="controlbtn shine" onclick="execCmd('selectAll');"><i class="fas fa-globe-europe"></i></button>
             <button class="controlbtn shine" onclick="execCommandWithArg('createLink', prompt('Enter a URL', 'http://'));"><i class="fas fa-link"></i></button>
             <button class="controlbtn shine" onclick="execCmd('unlink');"><i class="fas fa-unlink"></i></button>
             <button class="controlbtn shine" onclick="execCommandWithArg('insertImage', prompt('Enter the image URL', ''));"><i class="fa fa-file-image-o"></i></button>
-            <button class="controlbtn shine" onclick="displayDeleteModal()"><i class="fas fa-trash-alt"></i></button><br>
             <button class="controlbtn shine" onclick="execCmd('bold');"><i class="fas fa-bold"></i></button>
             <button class="controlbtn shine" onclick="execCmd('italic');"><i class="fas fa-italic"></i></button>
             <button class="controlbtn shine" onclick="execCmd('underline');"><i class="fas fa-underline"></i></button>
@@ -65,8 +45,9 @@ require "header.php";
                 <option value="H5">H5</option>
                 <option value="H6">H6</option>
             </select>
-            <button class="controlbtn shine" onclick="execCmd('insertHorizontalRule');">__</button>
-            <select  class="columnselect" onchange="execCommandWithArg('fontName', this.value);" >
+            <button class="controlbtn shine" onclick="execCmd('insertHorizontalRule');">HR</button>
+            <button class="controlbtn shine" onclick="execCommandWithArg('createLink', prompt('Enter a URL', 'http://'));"><i class="fas fa-link"></i></button>
+            <select class="columnselect" onchange="execCommandWithArg('fontName', this.value);" >
                 <option value="Arial">Arial</option>
                 <option value="Comain Sans">Comain Sans</option>
                 <option value="Courier">Courier</option>
@@ -84,35 +65,15 @@ require "header.php";
                 <option value="6">6</option>
                 <option value="7">7</option>
             </select>
-            <!--<button class="controlbtn" onclick="execCommandWithArg('insertImage', prompt('Enter the image URL', ''));" ><i class="fa fa-file-image-o"></i></button> -->            
-        </div> 
-       
+        </div>
+        
         <iframe class="textedit" value="texts" id="txtField" name="richTextField"></iframe>
-       
-    </div>
-<div id="delete-modal" class="modal">
-  <!-- Modal content -->
-  <div class="modal-content">
-    <span onclick="hideDeleteModal()" class="close">&times;</span>
-    <p>Biztosan törölni szeretné ezt a cikket?</p>
-    <div class="center">
-        <button onclick="deleteArticle()" type="button">Törlés</button>
-        <button onclick="hideDeleteModal()" type="button">Mégse</button>
-    </div>
-  </div>
-</div>  
-<div id="state-modal" class="modal">
-  <!-- Modal content -->
-  <div class="modal-content">
-    <span onclick="hideStateModal()" class="close">&times;</span>
-    <p>A cikk nem rendelkezik a szükséges tokenekkel. Biztosan szeretné folytatni?</p>
-    <div class="center">
-        <button onclick="saveState()" type="button">Megerősít</button>
-        <button onclick="hideStateModal()" type="button">Mégse</button>
-    </div>
-  </div>
-</div>  
 
+            <form method="post">
+                <button id="save-article-btn" type="button" class="commandBtn shine" id="submit">Mentés</button>
+            </form>    
+
+</div>
 <?php
 require "footer.php";
 ?>

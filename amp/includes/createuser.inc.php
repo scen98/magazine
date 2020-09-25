@@ -21,5 +21,5 @@ if(Author::doesExist($database, $uniqName) === true){
 }
 $lastId = Author::createAuthor($database, $uniqName, $userName, $userPassword, $userPasswordRepeat);
 mysqli_close($database->conn);
-header("Location: ../editAuthor.php?author=".$lastId);
+header("Location: ../editAuthor.php?author=".$uniqName);
 exit();

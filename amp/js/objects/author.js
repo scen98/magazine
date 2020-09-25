@@ -11,7 +11,7 @@ export class Author {
         this.tokenPermissions = tokenPermissions;
     }
     getHighestPermission() {
-        if (this.permissions.length === 0) {
+        if (this.permissions == null || this.permissions.length === 0) {
             return 0;
         }
         return Math.max.apply(Math, this.permissions.map(function (p) { return p.level; }));
@@ -36,6 +36,15 @@ export function selectAllAuthors(func) {
         func(parseArray(response));
     };
     caller.GET("../amp/includes/requests/selectauthors.php", f);
+}
+export function selectAuthor(func, id) {
+    let f = (response) => {
+        func(parseAuthor(response));
+    };
+    let data = {
+        id: id
+    };
+    caller.POST("../amp/includes/requests/selectauthor.php", JSON.stringify(data), f);
 }
 export function selectAuthorByName(func, authorName) {
     let f = (response) => {

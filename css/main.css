@@ -1448,7 +1448,7 @@ body {
 }
 
 .top-post-area .top-post-left .feature-image-thumb .overlay-bg {
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.3); 
 }
 
 .top-post-area .top-post-left .feature-image-thumb img {
@@ -1547,7 +1547,7 @@ body {
 }
 
 .top-post-area .top-post-right .single-top-post .feature-image-thumb .overlay-bg {
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.3); 
 }
 
 .top-post-area .top-post-right .single-top-post:hover .feature-image-thumb img {
@@ -1669,7 +1669,7 @@ body {
 }
 
 .latest-post-area .latest-post-wrap .single-latest-post .feature-img .overlay-bg {
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.1); 
   -webkit-transition: all 0.3s ease 0s;
   -moz-transition: all 0.3s ease 0s;
   -o-transition: all 0.3s ease 0s;
@@ -1784,7 +1784,7 @@ body {
 }
 
 .popular-post-wrap .feature-post .feature-img .overlay-bg {
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.3);
 }
 
 .popular-post-wrap .feature-post:hover .feature-img img {
@@ -1863,7 +1863,7 @@ body {
 }
 
 .popular-post-wrap .single-popular-post .feature-img .overlay-bg {
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.1); 
 }
 
 .popular-post-wrap .single-popular-post .feature-img img {
@@ -1973,7 +1973,7 @@ body {
 }
 
 .relavent-story-post-wrap .single-relavent-post .feature-img .overlay-bg {
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.1); 
 }
 
 .relavent-story-post-wrap .single-relavent-post:hover .feature-img img {
@@ -2090,7 +2090,7 @@ body {
 }
 
 .editors-pick-post .feature-img .overlay-bg {
-  background: rgba(0, 0, 0, 0.4);
+   background: rgba(0, 0, 0, 0.1); 
 }
 
 .editors-pick-post .feature-img:hover img {
@@ -2777,7 +2777,7 @@ body {
 }
 
 .single-post-wrap .feature-img-thumb .overlay-bg {
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.1); 
 }
 
 .single-post-wrap .content-wrap {
@@ -3112,7 +3112,7 @@ div.thumbnail_container img {
 }
 
 div.thumbnail_container .overlay-bg {
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.1); 
 }
 
 /*-------- End video post Style -------------*/
@@ -3316,4 +3316,18 @@ div.thumbnail_container .overlay-bg {
 
 .footer-area .footer-bottom .footer-social a:hover {
   background: #f6214b;
+}
+
+.iframeContainer{
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; 
+  height: 0;
+}
+.iframeContainer iframe{
+  position: absolute;
+  top:0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }

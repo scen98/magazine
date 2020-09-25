@@ -1,24 +1,20 @@
 <?php 
     require "header.php";
     ?>
-    <script type="module" src="js/awaitingarticlesController.js"></script>
+    <script type="module" src="js/myarticlesController.js"></script>
  <div class="container">
     <div class="searchBar">
-     <input placeholder="Keresés" id="search" class="searchInput">
+     <input placeholder="Keresés" id="search" class="searchInput" value="0">
         <select class="columnselect" id="column-select">
+          <option value="0">Mind</option>
         </select>
-        <select class="columnselect" id="state-select" value="1">
-            <option value="0">Készülő</option>
-            <option value="1">Ellenőrzés alatt</option>
-            <option value="2">Publikálható</option>  
-            <option value="3">Archív</option>  
+        <select  id="state-select" class="columnselect">
+          <option value="-1">Piszkozat</option>
+          <option value="0">Készülő</option>
+          <option value="1">Ellenőrzés alatt</option>
+          <option value="2">Publikálható</option>
+          <option value="3">Archív</option>
         </select>
-        <label>Nem rendelkezik: </label>
-        <select  id="token-select" class="columnselect">
-          <option value="0">---</option>
-        </select>
-        <label for="exclude-locked">Szerkeszthetem</label>
-        <input  id="exclude-locked" type="checkbox" class="standardCheckbox" checked>
         <button id="search-btn" type="button" class="commandBtn shine" >Mehet!</button>
     </div>
     <div id="article-table">

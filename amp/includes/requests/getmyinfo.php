@@ -8,5 +8,5 @@ if(!isset($_SESSION["id"])){
 }
 $me = new Author($_SESSION["id"], $_SESSION["uniqName"], $_SESSION["userName"], null);
 $me->permissions = $_SESSION["permissions"];
-$me->tokenpermissions = $_SESSION["tokenPermissions"];
+$me->tokenPermissions = $_SESSION["tokenPermissions"];
 RequestUtils::returnData("author", $me);

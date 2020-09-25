@@ -14,13 +14,10 @@ export class Token{
 
     insert(func: () => void){
         let f = (response: string) =>{
-            if(JSON.parse(response).msg === "success"){
-                func();
-            } else {
-                console.log(response);
-            }
+            this.id = JSON.parse(response).newId;
+            func();
         }
-        caller.POST("../amp/includes/requests/updatetoken.php", JSON.stringify(this), f);
+        caller.POST("../amp/includes/requests/inserttoken.php", JSON.stringify(this), f);
     }
 
     update(func: ()=> void){
@@ -54,6 +51,18 @@ export function selectTokensByColumn(func: (tokens: Token[])=>void, columnId: nu
     }
     caller.POST("../amp/includes/requests/selecttokensbycolumn.php", JSON.stringify(data), f);
 }
+
+export function selectActiveTokensByColumn(func: (tokens: Token[])=>void, columnId: number){
+    let f = (response: string) => {
+        func(constrFromJSON(response));
+    }
+    let data = {
+        columnId: columnId
+    }
+    caller.POST("../amp/includes/requests/selectactivetokensbycolumn.php", JSON.stringify(data), f);
+}
+
+
 
 export function selectAccessibleTokens(func: (tokens: Token[])=>void){
     let f = (response: string) => {

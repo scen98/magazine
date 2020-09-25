@@ -17,8 +17,10 @@ if(is_null($art)){
 if($art->state > 0){
     $art->tokenInstances = TokenInstance::selectByArticleId($database, $data->id);
 }
+RequestUtils::returnData("article", $art);
+/*
 if(AccessManager::isArticleAccessible($art)){
-    RequestUtils::returnData("article", $art);
+    
 } else {
     RequestUtils::permissionDenied();
-}
+}*/

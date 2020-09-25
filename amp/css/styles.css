@@ -6,6 +6,33 @@ body {
   background-repeat: no-repeat;
   background-attachment: fixed;
   height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.iframeContainer{
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; 
+  height: 0;
+}
+.iframeContainer iframe{
+  position: absolute;
+  top:0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+a:hover {
+  text-decoration: underline;
+  color: rgb(143, 83, 83);
 }
 
 table {
@@ -393,10 +420,10 @@ span.icon {
   }
 
   .shine {
-    text-decoration: none;
+   /* text-decoration: none;*/
     /*border: 1px solid rgb(146, 148, 248);*/
-    position: relative;
-    overflow: hidden;
+  /*  position: relative;
+    overflow: hidden;*/
   }
   
   .shine:hover {
@@ -405,7 +432,6 @@ span.icon {
   
   .shine:before {
     content: "";
-    position: absolute;
     top: 0;
     left: -100%;
     width: 100%;
@@ -510,6 +536,8 @@ span.icon {
   .articleLead {
     font-size: 18px;
     float:left;
+    margin-top: 1px;
+    margin-bottom: 1px;
   }
 
   .pageNumberContainer {
@@ -674,9 +702,6 @@ span.icon {
     border-radius: 5px;
     padding: 5px;
     margin: 10px;
-  }
-  .settingBox:hover{
-    
   }
 
   .permissionContainer {
@@ -1149,4 +1174,14 @@ span.icon {
   .standardCheckbox{
     font-size: 18px;
     padding: 10px;
+  }
+
+  .mainImg{
+    width: 90%;
+  }
+
+  .articleText{
+    padding: 10px;
+    border-radius: 5px;
+    background-color: white;
   }

@@ -24,15 +24,19 @@ function loadPage(authorData) {
 }
 function renderAuthor(author) {
     let container = doc.createDiv("author-container" + author.id, ["authorContainer"]);
-    let name = doc.createP(["authorName"], author.userName);
+    let name = doc.createA(["authorName"], author.userName, `../amp/szerzo.php?szerzo=${author.id}`);
     let level = doc.createP(["authorLevel"], author.getPermissionName());
     doc.append(container, [name, level]);
     authorTable.appendChild(container);
     canUserEdit(author, renderEditButton, [container, author]);
 }
 function canUserEdit(author, func, args) {
-    var highestPermission = myInfo.getHighestPermission();
-    if (highestPermission >= 30 && highestPermission >= author.getHighestPermission()) {
+    let myHighestPermission = myInfo.getHighestPermission();
+    let authorHighestPermission = author.getHighestPermission();
+    if (myHighestPermission >= 50 && myHighestPermission > authorHighestPermission) {
+        func.apply(this, args);
+    }
+    else if (myHighestPermission >= 30 && myHighestPermission >= authorHighestPermission && authorHighestPermission >= 20) {
         func.apply(this, args);
     }
 }
@@ -50,7 +54,7 @@ function search() {
     }
 }
 function renderEditButton(parent, author) {
-    let editBtn = doc.createButton(["authorButton", "blue"], '<i class="fas fa-user-edit"></i>', function () { window.location.href = "../amp/editAuthor.php?author=" + author.uniqName; });
+    let editBtn = doc.createButton(["authorButton", "blue"], '<i class="fas fa-user-edit"></i>', function () { window.location.href = `../amp/szerzo_szerk.php?author=${author.uniqName}`; });
     parent.appendChild(editBtn);
 }
 //# sourceMappingURL=authorsController.js.map

@@ -15,7 +15,7 @@ export class Author{
     }
 
     getHighestPermission(): number{
-        if(this.permissions.length === 0){
+        if(this.permissions == null || this.permissions.length === 0){
             return 0;
         }
         return Math.max.apply(Math, this.permissions.map(function(p:any) { return p.level; }))
@@ -40,6 +40,16 @@ export function selectAllAuthors(func: (authors: Author[])=>void){
         func(parseArray(response));  
     }
     caller.GET("../amp/includes/requests/selectauthors.php", f);
+}
+
+export function selectAuthor(func: (authors: Author)=>void, id: number){
+    let f = (response:string) => {
+        func(parseAuthor(response));
+    }
+    let data = {
+        id: id
+    }
+    caller.POST("../amp/includes/requests/selectauthor.php", JSON.stringify(data), f);
 }
 
 export function selectAuthorByName(func: (authors: Author)=>void, authorName:string){
@@ -81,10 +91,10 @@ function parseAuthor(json:string){
         newAuthor = new Author(author.id, author.uniqName, author.userName);
     } else {
         newAuthor = new Author(author.id, author.uniqName, author.userName, perm.constrPermission(author.permissions), perm.constrTokenPermission(author.tokenPermissions));
-    }
+    } 
     if(author.tokenPermissions.length > 0){
         newAuthor.tokenPermissions = author.tokenPermissions;
-    }
+    } 
     return newAuthor;
 }
 

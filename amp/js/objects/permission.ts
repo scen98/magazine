@@ -48,7 +48,9 @@ export function deletePermission(func: any, permission: Permission){
         }
     }
     let data = {
-        id: permission.id
+        id: permission.id,
+        columnId: permission.columnId,
+        authorId: permission.authorId
     }
     caller.POST("../amp/includes/requests/deletepermission.php", JSON.stringify(data), f);
 

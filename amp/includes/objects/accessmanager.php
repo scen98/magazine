@@ -1,5 +1,6 @@
 <?php
 require "permission.php";
+require "tokenpermission.php";
 session_start();
 class AccessManager{
     public static function isArticleAccessible($article){
@@ -12,6 +13,20 @@ class AccessManager{
         }    
         if($highestPermission >= 20 && $_SESSION["permissions"][0]->level <40){
             return AccessManager::cmlArticleCheck($article);
+        }
+        return false;
+    }
+
+    public static function isTokenReadable($token){
+        $highestPermission = AccessManager::getMaxLevel();
+        if($highestPermission >= 40){
+            return true;
+        }    
+        if($highestPermission >= 30){
+            return AccessManager::cmlTokenCheck($token);
+        }
+        if($highestPermission >= 20){
+            return AccessManager::cmaTokenCheck($token);
         }
         return false;
     }
@@ -81,6 +96,15 @@ class AccessManager{
     public static function cmlTokenCheck($token){
         foreach($_SESSION["permissions"] as $perm){
             if($perm->columnId === $token->columnId){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static function cmaTokenCheck($token){
+        foreach($_SESSION["tokenPermissions"] as $perm){
+            if($perm->tokenId === $token->id){
                 return true;
             }
         }

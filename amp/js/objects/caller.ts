@@ -11,15 +11,15 @@ export function GET(url: string, func: (objects: string)=>void){
     xhttp.open("GET", url, true);
     xhttp.send();
 }
-
-export function GETSynch(url: string, func: (objects: string)=>void){
+/*
+export function GETSynch(url: string): string{
     let xhttp = new XMLHttpRequest();
     xhttp.onload = function() {
         return this.responseText;
     };    
     xhttp.open("GET", url, false);
     xhttp.send();
-}
+}*/
 
 export function POST(url: string, message: any, func: (resp: string)=>void){
     let xhttp = new XMLHttpRequest();

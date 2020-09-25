@@ -25,7 +25,6 @@ function loadPage(columnData) {
 }
 function loadAuthor(authorData) {
     author = authorData;
-    //renderTokenBox();
     getMyInfo(renderAuthor);
     doc.get("user-name").innerText = author.userName;
     doc.get("uniq-name").innerText = author.uniqName;
@@ -62,19 +61,20 @@ function addColumnPermission() {
     else {
         newPermission.insert(() => { onInsert(newPermission); });
     }
+    renderTokenBox();
 }
 function onInsert(newPermission) {
     author.permissions.push(newPermission);
     renderPermission(newPermission);
+    renderTokenBox();
 }
 function doesPermissionExist(newPermission) {
-    if (author.permissions.length === 0) {
-        false;
+    if (author.permissions == null || author.permissions.length === 0) {
+        return false;
     }
     for (let perm of author.permissions) {
-        if (arePermissionsEqual(perm, newPermission)) {
+        if (arePermissionsEqual(perm, newPermission))
             return true;
-        }
     }
     return false;
 }
@@ -92,6 +92,10 @@ function arePermissionsEqual(perm1, perm2) {
 function onPermissionDelete(permission) {
     doc.remove(permission.id.toString());
     author.permissions = author.permissions.filter(p => p.id !== permission.id);
+    let tokensToDelete = accessibleTokens.filter(t => t.columnId === permission.columnId);
+    for (let token of tokensToDelete) {
+        author.tokenPermissions = author.tokenPermissions.filter(t => t.tokenId !== token.id);
+    }
 }
 function updateAuthorPermissions(permission) {
     author.permissions = [];
@@ -108,13 +112,13 @@ function updateAuthorPermissions(permission) {
 }
 function renderPermissions() {
     doc.get("permission-settings").style.display = "block";
-    for (let perm of author.permissions) {
-        renderPermission(perm);
-    }
-    if (author.permissions.length === 0) {
+    if (author.permissions == null || author.permissions.length === 0) {
         renderNoPermissionsMessage();
     }
     else {
+        for (let perm of author.permissions) {
+            renderPermission(perm);
+        }
         setPermissionType();
         displayPermissionAdder();
     }
@@ -169,12 +173,17 @@ function renderColumnSelect(select) {
 }
 function switchDeleteBtn(oldButton, permission) {
     let newButton = doc.createButton(["permissionButton", "red"], "Törlés");
-    doc.addClick(newButton, () => { deletePermission(() => { onPermissionDelete(permission); }, permission); });
+    doc.addClick(newButton, () => { deletePermission(() => { onPermissionDelete(permission); renderTokenBox(); }, permission); });
     oldButton.parentNode.replaceChild(newButton, oldButton);
 }
 //PERMISSIONS---
 //---TOKENS
 function renderTokenBox() {
+    if (author.permissions != null && !author.permissions.some(p => p.level === 20)) {
+        doc.get("token-permissions").style.display = "none";
+        return false;
+    }
+    doc.get("token-permissions").style.display = "block";
     authorTokenTable.innerHTML = "";
     if (utils.getHighestPermission(myInfo.permissions) >= 30 && (parseInt(permissionType.value) === 20 || author.getHighestPermission() >= 20) && author.getHighestPermission() < 40) {
         selectAccessibleTokens(renderMyTokens);
@@ -187,13 +196,11 @@ function renderTokenBox() {
     }
 }
 function onTokenPermissionInsert(newPermission) {
-    if (author.tokenPermissions == null) {
-        //  author.tokenPermissions = [];
-    }
     author.tokenPermissions.push(newPermission);
     renderAuthorTokenPermission(newPermission);
 }
 function renderAuthorTokenPermissions() {
+    authorTokenTable.innerHTML = "";
     for (let perm of author.tokenPermissions) {
         renderAuthorTokenPermission(perm);
     }
@@ -250,9 +257,13 @@ function hasAccessToToken(token) {
 function renderMyTokens(tokenData) {
     accessibleTokens = tokenData;
     myTokenTable.innerHTML = "";
-    for (let token of accessibleTokens) {
+    for (let token of accessibleTokens.filter(t => isTokenRelevant(t))) {
         renderAccessibleToken(token);
     }
+}
+function isTokenRelevant(token) {
+    let permission = author.permissions.find(t => t.columnId === token.columnId);
+    return permission != null && permission.level < 30;
 }
 function renderAccessibleToken(token) {
     let container = doc.createDiv(null, ["tokenContainer"]);

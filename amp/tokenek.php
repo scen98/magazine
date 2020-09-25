@@ -16,7 +16,7 @@
         </select>
         <select class="columnselect" id="column-select">
         </select>
-        <button onclick="insertToken()" id="insert-token" class="commandBtn shine" type="button">Létrehozás</button>
+        <button id="insert-token" class="commandBtn shine" type="button">Létrehozás</button>
     </div>
     <div id="token-table">
     </div>

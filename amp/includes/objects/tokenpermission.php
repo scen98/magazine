@@ -69,4 +69,20 @@ public static function deleteByAID($mysqlidb, $authorId){
     }
     return true;
 }
+
+public static function DeleteByAIDAndColumnId($mysqlidb, $authorId, $columnId){
+    $sql = "DELETE tokenPermissions FROM tokenPermissions
+    INNER JOIN tokens ON tokens.id = tokenPermissions.tokenId
+    WHERE tokenPermissions.authorId = ? AND tokens.columnId = ?;";
+    $stmt = mysqli_stmt_init($mysqlidb->conn);
+    if(!mysqli_stmt_prepare($stmt, $sql)){
+        return false;
+    }
+    mysqli_stmt_bind_param($stmt, "ii", $authorId, $columnId);
+    if(!mysqli_stmt_execute($stmt)){
+        return false;
+    }
+    return true;
+    
+}
 }

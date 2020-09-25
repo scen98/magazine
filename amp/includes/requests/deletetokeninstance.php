@@ -1,7 +1,6 @@
 <?php
 require "../MSQDB.php";
 require "../objects/accessmanager.php";
-require "../objects/tokenpermission.php";
 require "requestutils.php";
 require "../objects/tokeninstance.php";
 require "../objects/token.php";
@@ -33,7 +32,7 @@ if(TokenInstance::delete($database, $data->id)){
 
 function cmaCheck($token){
     foreach($_SESSION["tokenPermissions"] as $tokenPermission){
-        if($token->tokenId === $tokenPermission->tokenId){
+        if($token->id === $tokenPermission->tokenId){
             return true;
         }
     }

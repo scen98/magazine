@@ -19,35 +19,26 @@
     <header>
 <ul id="main-header" class="menu">
 
-<li><a href="write.php">Új cikk</a></li>
+<li><a href="uj_cikk.php">Új cikk</a></li>
 <li><a href="#">Cikkek</a>
     <ul>
-        <li><a href="myarticles.php" ><span class="icon"><i class="fas fa-handshake"></i></span>Cikkeim</a></li>
-        <li id="awaiting-articles"><a href="awaitingarticles.php" ><span class="icon"><i class="fas fa-file-alt"></i></span>Publikáció</a></li>
-        <li id="position-page"><a href="positions.php" ><span class="icon"><i class="fas fa-file-alt"></i></span>Újság</a></li>
+        <li><a href="cikkeim.php" ><span class="icon"><i class="fas fa-handshake"></i></span>Cikkeim</a></li>
+        <li id="awaiting-articles"><a href="publikacio.php" ><span class="icon"><i class="fas fa-file-alt"></i></span>Publikáció</a></li>
+        <li id="position-page"><a href="ujsag.php" ><span class="icon"><i class="fas fa-file-alt"></i></span>Újság</a></li>
     </ul>
 </li>
 <li><a href="#">Jogosultságok</a>
     <ul>
-        <li id="tokens"><a href="tokens.php" ><span class="icon"><i class="fas fa-school"></i></span>Tokenek</a></li>
-        <li><a href="#" ><span class="icon"><i class="fas fa-flask"></i></span>Felhasználók</a></li>
-    </ul>
-</li>
-<li><a href="#">Projektek</a>
-    <ul>
-        <li><a href="#" ><span class="icon"><i class="fab fa-js"></i></span>Web</a></li>
-        <li><a href="#" ><span class="icon"><i class="fab fa-java"></i></span>Java</a></li>
-        <li><a href="#" ><span class="icon"><i class="fab fa-windows"></i></span>C#</a></li>
+        <li id="tokens"><a href="tokenek.php" ><span class="icon"><i class="fas fa-school"></i></span>Tokenek</a></li>
     </ul>
 </li>
 <li><a href="#">Kollégák</a>
     <ul>
-        <li><a href="authors.php" ><span class="icon"><i class="fas fa-address-book"></i></span>Névsor</a></li>
-        <li><a href="#" ><span class="icon"><i class="fas fa-address-card"></i></i></span>Kezelés</a></li>
-        <li id="create-user"><a href="createuser.php" ><span class="icon"><i class="fas fa-plus-circle"></i></span>Új</a></li>
+        <li><a href="szerzok.php" ><span class="icon"><i class="fas fa-address-book"></i></span>Névsor</a></li>
+        <li id="create-user"><a href="uj_szerzo.php" ><span class="icon"><i class="fas fa-plus-circle"></i></span>Új</a></li>
     </ul>
 </li>
 <li class="username"><a id="log-out"><i class="fas fa-sign-out-alt "></a></i></li>
-<li class="username"><a href="#"><?php echo $_SESSION["userName"] ?></a></li>
+<li class="username"><a href="szerzo.php?szerzo=<?php echo  $_SESSION["id"] ?>"><?php echo $_SESSION["userName"] ?></a></li>
 </ul>
     </header>

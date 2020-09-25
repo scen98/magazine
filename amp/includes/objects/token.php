@@ -79,6 +79,49 @@ class Token{
         return $token_array;
     }
 
+    public static function selectActiveByColumnId($mysqlidb, $columnId){
+        if($columnId === 0 || is_null($columnId)){
+            return Token::selectActive($mysqlidb);
+        }
+        $token_array = array();
+        $sql = "SELECT * from tokens WHERE (columnId = ? OR columnId IS NULL) AND status = 1;";
+        $stmt = mysqli_stmt_init($mysqlidb->conn);
+        if(!mysqli_stmt_prepare($stmt, $sql)){
+            return null;
+        }
+        mysqli_stmt_bind_param($stmt, "i", $columnId);
+        if(!mysqli_stmt_execute($stmt)){
+            return null;
+        }
+        $result = mysqli_stmt_get_result($stmt);
+        while($row = mysqli_fetch_assoc($result)){
+            $newToken = new Token($row["id"], $row["name"], $row["status"], $row["columnId"]);
+            array_push($token_array, $newToken);
+        }
+        return $token_array;
+    }
+
+    public static function selectActive($mysqlidb){
+        $token_array = array();
+        $sql = "SELECT * from tokens WHERE status = 1;";
+        $stmt = mysqli_stmt_init($mysqlidb->conn);
+        if(!mysqli_stmt_prepare($stmt, $sql)){
+            return null;
+        }
+        if(!mysqli_stmt_execute($stmt)){
+            return null;
+        }
+        $result = mysqli_stmt_get_result($stmt);
+        while($row = mysqli_fetch_assoc($result)){
+            $newToken = new Token($row["id"], $row["name"], $row["status"], $row["columnId"]);
+            if(!isset($newToken->columnId)){
+                $newToken->columnId = 0;
+            }
+            array_push($token_array, $newToken);
+        }
+        return $token_array;
+    }
+
     public static function selectById($mysqlidb, $id){
         $newToken;
         $sql = "SELECT * from tokens WHERE id = ?;";
@@ -102,7 +145,7 @@ class Token{
             return Token::selectTokens($mysqlidb);
         }
         $token_array = array();
-        $sql = "SELECT * from tokens WHERE (columnId = ? OR columnId IS NULL) AND status = 1;";
+        $sql = "SELECT * from tokens WHERE (columnId = ? OR columnId IS NULL);";
         $stmt = mysqli_stmt_init($mysqlidb->conn);
         if(!mysqli_stmt_prepare($stmt, $sql)){
             return null;

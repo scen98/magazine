@@ -2,7 +2,7 @@ import { Article, selectArticlesByState } from "./objects/article.js"
 import { getColumns, Column } from "./objects/column.js";
 import * as doc from "./doc.js";
 import * as utils from "./utils.js";
-import{ Token, selectAccessibleTokens, selectTokensByColumn } from "./objects/token.js";
+import{ Token, selectAccessibleTokens, selectTokensByColumn, selectActiveTokensByColumn } from "./objects/token.js";
 import { Author, getMyInfo } from "./objects/author.js";
 
 let articleTable: HTMLDivElement = doc.getDiv("article-table");
@@ -12,16 +12,18 @@ let columns: Column[] = [];
 let tokens: Token[] = [];
 let articlePerPage: number = 50;
 let searchInput: HTMLInputElement = doc.getInput("search");
-let state: HTMLSelectElement = doc.getSelect("state-select");
+let stateSelect: HTMLSelectElement = doc.getSelect("state-select");
 let tokenSelect: HTMLSelectElement = doc.getSelect("token-select");
 let excludeLocked: HTMLInputElement = doc.getInput("exclude-locked");
 let myInfo: Author;
 init();
 function init(){
-    state.value = "1";
+    stateSelect.value = "1";
     searchInput.value = "";
-    getMyInfo(loadAccessibleTokens);
-    getColumns(requestTokens);
+    getMyInfo((me: Author)=>{
+        loadAccessibleTokens(me);
+        getColumns(requestTokens);
+    });
     addListeners();
 }
 
@@ -30,24 +32,24 @@ function addListeners(){
     doc.addChange(excludeLocked, renderArticles);
     doc.addClick("search-btn", search);
     doc.addClick("expand-btn", expand);
-    doc.addClick("state-select", search);
-    doc.addClick("column-select", search);
-    doc.addClick(tokenSelect, search);
+    doc.addChange(stateSelect, search);
+    doc.addChange("column-select", search);
+    doc.addChange(tokenSelect, search);
     addSearchListener();
 }
 
 function loadAccessibleTokens(me: Author){
     myInfo = me;
     selectAccessibleTokens((tokenData)=>{
-        for (let token of tokenData) {
-            doc.renderOption(tokenSelect, token.id.toString(), token.name);
+        for (let token of tokenData.filter(t=> t.status != 0)) {
+            doc.renderOption(tokenSelect, token.id.toString(), `${token.name} / ${columns.find(c=> c.id === token.columnId).name}`);
         }
     });
 }
 
 function expand(){
     try {
-        selectArticlesByState(expandArticles, searchInput.value, articlePerPage, articles.length+1, parseInt(columnSelect.value), parseInt(state.value));
+        selectArticlesByState(expandArticles, searchInput.value, articlePerPage, articles.length, parseInt(columnSelect.value), parseInt(stateSelect.value));
     }
     catch {
         doc.get("expand-btn").style.display = "none";
@@ -56,14 +58,14 @@ function expand(){
 
 function search(){
     articles = [];
-    selectArticlesByState(loadArticles, searchInput.value, articlePerPage, 0, parseInt(columnSelect.value), parseInt(state.value));
+    selectArticlesByState(loadArticles, searchInput.value, articlePerPage, 0, parseInt(columnSelect.value), parseInt(stateSelect.value));
 }
 
 function editArticle(article: Article){
     if(article.state > 0){
-        window.open("../amp/editx.php?aid="+article.id);
+        window.location.href =  `../amp/cikk_szerk_x.php?aid=${article.id}`;
     } else {
-        window.open("../amp/edit.php?aid="+article.id);
+        window.location.href =  `../amp/cikk.php?aid=${article.id}&by=${article.authorName}`;
     }
 }
 
@@ -82,8 +84,22 @@ function changeState(article: Article){
 
 function renderArticles(){
     articleTable.innerHTML = "";
+    if(parseInt(stateSelect.value) === 0){
+        render0StateArticles();
+    } else {
+        renderHigherStateArticles();
+    }
+}
+
+function render0StateArticles(){
     for (var art of articles.filter(a=> !a.hasTokenInstance(new Token(parseInt(tokenSelect.value))))) {
-        if(isEditable(art) == excludeLocked.checked) renderRow(art);
+        renderRow(art)
+    }
+}
+
+function renderHigherStateArticles(){
+    for (var art of articles.filter(a=> !a.hasTokenInstance(new Token(parseInt(tokenSelect.value))))) {
+        if(isEditable(art) == excludeLocked.checked) renderRow(art); 
     }
 }
 
@@ -101,12 +117,13 @@ function addSearchListener(){
 
 function requestTokens(columnData: Column[]){
     columns = columnData;
-    selectTokensByColumn(requestArticles, null);
+    renderColumnSelect();
+    //console.log(columnSelect.value);
+    selectActiveTokensByColumn(requestArticles, parseInt(columnSelect.value));
 }
 
 function requestArticles(tokenData: Token[]){
     tokens = tokenData;
-    renderColumnSelect();
     selectArticlesByState(loadArticles, "", articlePerPage, 0, parseInt(columnSelect.value), 1);
 }
 
@@ -133,10 +150,10 @@ function loadArticles(articleData: Article[]){
 
 function renderRow(article: Article){
     let container = doc.createDiv(article.id.toString(), ["awaitArticleContainer"]);
-    let title = doc.createP(["awaitArticleTitle"], article.title);
+    let title = doc.createA(["awaitArticleTitle"], article.title, `../amp/cikk.php?aid=${article.id}&by=${article.authorName}`);
     let editBtn = doc.createButton(["awaitArticleButton", "blue"], '<i class="fas fa-edit"></i>', () => { editArticle(article); });
     let table = doc.createTable(["awaitArticleTable"]);
-    doc.renderTableRow(table, [doc.createP(["awaitArticleAuthorName"], article.authorName).outerHTML, getColumnNameById(article.columnId), doc.parseDateHun(article.date)]);
+    doc.renderTableRow(table, [doc.createA(["awaitArticleAuthorName"], article.authorName, `../amp/szerzo.php?szerzo=${article.authorId}`).outerHTML, getColumnNameById(article.columnId), doc.parseDateHun(article.date)]);
     let lockDiv = renderLock(article);
     if(article.state > 0){
         let changeStateBtn = doc.createButton(["awaitArticleButton", "red"], '<i class="fas fa-backspace"></i>', () => { switchChangeStateBtn(changeStateBtn, article); });

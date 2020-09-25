@@ -39,6 +39,15 @@ export function createP(classList, innerText) {
     element.innerText = innerText;
     return element;
 }
+export function createA(classList, innerText, href) {
+    let element = document.createElement("a");
+    for (let c of classList) {
+        element.classList.add(c);
+    }
+    element.innerText = innerText;
+    element.href = href;
+    return element;
+}
 export function createButton(classList, innerHTML, func) {
     let element = document.createElement("button");
     for (let c of classList) {
@@ -70,12 +79,19 @@ export function create(type, id, classList, innerHTML) {
     return element;
 }
 export function append(parent, childList) {
+    let p = checkString(parent);
     for (let e of childList) {
-        parent.appendChild(e);
+        p.appendChild(e);
     }
 }
 export function getValue(htmlId) {
-    return document.getElementById(htmlId).value;
+    return checkString(htmlId).value;
+}
+export function getUl(htmlId) {
+    return document.getElementById(htmlId);
+}
+export function getImg(htmlId) {
+    return document.getElementById(htmlId);
 }
 export function get(htmlId) {
     return document.getElementById(htmlId);
@@ -99,7 +115,7 @@ export function addClick(parent, func) {
     checkString(parent).addEventListener("click", func);
 }
 export function addChange(parent, func) {
-    checkString(parent).addEventListener("onchange", func);
+    checkString(parent).addEventListener("change", func);
 }
 export function remove(htmlId) {
     document.getElementById(htmlId).remove();
@@ -110,6 +126,14 @@ export function addEnter(element, func) {
             func();
         }
     });
+}
+export function renderLi(parent, innerHTML) {
+    let li = document.createElement("li");
+    li.innerHTML = innerHTML;
+    checkString(parent).appendChild(li);
+}
+export function setText(element, innerText) {
+    checkString(element).innerText = innerText;
 }
 export function addNonLetterKey(element, func) {
     checkString(element).addEventListener("keyup", function (event) {

@@ -53,7 +53,7 @@ function openImgPath(){
 
 function updateState(){
     article.state = parseInt(stateSelect.value);
-    article.updateState(null);
+    article.updateState(()=>{});
 }
 
 function loadPage(columns: Column[]){
@@ -81,9 +81,14 @@ function refreshArticle(){
     title.value = article.title;
     lead.value = article.lead;
     imgPath.value = article.imgPath;
-    columnSelect.value = article.columnId.toString();
     text.contentWindow.document.body.innerHTML = article.text;
     stateSelect.value = article.state.toString();
+    if(article.state > 1){
+        stateSelect.style.display = "none";
+        doc.get("change-state-button").style.display = "none";
+    } else {
+        columnSelect.value = article.columnId.toString();
+    }
     enableEditMode();
 }
 

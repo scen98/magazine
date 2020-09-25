@@ -3,8 +3,8 @@
     ?>
     <script type="module" src="js/positionsController.js"></script>
     <div class="positionPage">
-        <select onchange="articleBasedLoad()" id="column-select" class="columnselect"></select>
-        <select onchange="blockBasedLoad()" id="block-select" class="columnselect"></select>
+        <select id="column-select" class="columnselect"></select>
+        <select id="block-select" class="columnselect"></select>
         <div>
         <div class="positionsLeft">
            

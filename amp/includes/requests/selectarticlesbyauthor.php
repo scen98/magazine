@@ -10,8 +10,8 @@ if(!isset($_SESSION["id"])){
 $data = json_decode(file_get_contents("php://input"));
 RequestUtils::checkData($data);
 $database = new MSQDB;
-$articles = Article::getByAuthorId($database, $_SESSION["id"], $data->keyword, $data->orderby, $data->limit, $data->offset, $data->desc);
-if(is_null($articles[0]->id)){
+$articles = Article::selectByAuthorId($database, $data->authorId, $data->keyword, $data->state, $data->columnId, $data->limit, $data->offset);
+if(is_null($articles)){
   RequestUtils::sqlError();
 }
 RequestUtils::returnData("articles", $articles);

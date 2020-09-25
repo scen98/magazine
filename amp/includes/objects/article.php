@@ -220,36 +220,67 @@ class Article {
         return $lock;
     }
 
-    public static function getByAuthorId($mysqlidb, $authorId, $keyword, $orderby, $limit, $offset, $desc){
+    public static function selectByAuthorId($mysqlidb, $authorId, $keyword, $state, $columnId, $limit, $offset){
         $article_array = array();
         $sql;
-        if($desc == "true"){
-            $sql = "SELECT id, title, lead, imgPath, date, columnId 
+        if($columnId === 0){
+            $sql = "SELECT id, title, lead, imgPath, date, columnId, state
             FROM articles 
-            WHERE authorId = ? AND (title LIKE CONCAT('%',?,'%') OR lead LIKE CONCAT('%',?,'%')) 
-            ORDER BY {$orderby} DESC 
+            WHERE authorId = ? AND (title LIKE CONCAT('%',?,'%') OR lead LIKE CONCAT('%',?,'%')) AND state = ? 
+            ORDER BY date DESC 
             LIMIT ? OFFSET ?;";
         } else {
-            $sql = "SELECT id, title, lead, imgPath, date, columnId FROM articles
-            WHERE authorId = ? AND (title LIKE CONCAT('%',?,'%') OR lead LIKE CONCAT('%',?,'%')) 
-            ORDER BY {$orderby} 
-            LIMIT ? OFFSET ?;";
+            return Article::selectByAuthorIdAndColumn($mysqlidb, $authorId, $keyword, $state, $columnId, $limit, $offset);
         }
-        
         $stmt = mysqli_stmt_init($mysqlidb->conn);
         if(!mysqli_stmt_prepare($stmt, $sql)){
             return null;
         }        
-        mysqli_stmt_bind_param($stmt, "issii", $authorId, $keyword, $keyword, $limit, $offset);
+        mysqli_stmt_bind_param($stmt, "issiii", $authorId, $keyword, $keyword, $state, $limit, $offset);
         if(!mysqli_stmt_execute($stmt)){
             return null;
         }
         $result = mysqli_stmt_get_result($stmt);            
         while($row = mysqli_fetch_assoc($result)){
             $article = new Article($row["id"], $row["title"], $row["lead"], $authorId, $row["date"], $row["imgPath"], $row["columnId"], "");
+            $article->state = $row["state"];
+            if($article->state > 0){
+                $article->tokenInstances = TokenInstance::selectByArticleId($mysqlidb, $article->id);
+            }
             array_push($article_array, $article);
         }
         return $article_array;
+    }
+
+    public static function selectByAuthorIdAndColumn($mysqlidb, $authorId, $keyword, $state, $columnId, $limit, $offset){
+        $article_array = array();
+        $sql = "SELECT id, title, lead, imgPath, date, state
+        FROM articles 
+        WHERE authorId = ? AND (title LIKE CONCAT('%',?,'%') OR lead LIKE CONCAT('%',?,'%')) AND state = ? AND columnId = ?
+        ORDER BY date DESC 
+        LIMIT ? OFFSET ?;";
+        $stmt = mysqli_stmt_init($mysqlidb->conn);
+        if(!mysqli_stmt_prepare($stmt, $sql)){
+            return null;
+        }        
+        mysqli_stmt_bind_param($stmt, "issiiii", $authorId, $keyword, $keyword, $state, $columnId, $limit, $offset);
+        if(!mysqli_stmt_execute($stmt)){
+            return null;
+        }
+        $result = mysqli_stmt_get_result($stmt);            
+        while($row = mysqli_fetch_assoc($result)){
+            $article = new Article($row["id"], $row["title"], $row["lead"], $authorId, $row["date"], $row["imgPath"], $columnId, "");
+            $article->state = $row["state"];
+            if($article->state > 0){
+                $article->tokenInstances = TokenInstance::selectByArticleId($mysqlidb, $article->id);
+            }
+            array_push($article_array, $article);
+        }
+        return $article_array;
+    }
+
+    public static function selectStaticArticle($mysqlidb, $id){
+
     }
 
     public static function deleteArticle($mysqlidb, $articleId){

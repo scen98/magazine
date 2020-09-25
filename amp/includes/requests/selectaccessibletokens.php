@@ -7,14 +7,14 @@ if(!isset($_SESSION["permissions"][0])){
     RequestUtils::permissionDenied();
 }
 
-if($_SESSION["permissions"][0]->level <= 20){
+if($_SESSION["permissions"][0]->level < 20){
     RequestUtils::permissionDenied();
 }
 
 $database = new MSQDB;
 $token_array = $token_array = Token::selectTokens($database);
 
-if($_SESSION["permissions"][0]->level >= 30 && $_SESSION["permissions"][0]->level < 40){
+if($_SESSION["permissions"][0]->level >= 20 && $_SESSION["permissions"][0]->level < 40){
     $token_array = filterByColumn($token_array);
 }
 RequestUtils::returnData("tokens", $token_array);
@@ -22,7 +22,7 @@ RequestUtils::returnData("tokens", $token_array);
 function filterByColumn($token_array){
     $newTokens = array();
     foreach($token_array as $token){
-        if(AccessManager::isTokenAccessible($token)){
+        if(AccessManager::isTokenReadable($token)){
            array_push($newTokens, $token);
         }
     }

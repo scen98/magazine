@@ -2,9 +2,9 @@
 require "header.php";
 //require "includes/edit.inc.php";
 ?>
-<script type="module" src="js/editController.js" ></script>
+<script type="module" src="js/editxController.js"></script>
 <script type="text/javascript" src="js/textEditController.js" defer ></script>
-<div class="container">
+<div onload="init()" class="container">
     <p id="message"></p>
     <form>
         <textarea id="title" name="title" rows="2" type="text" class="titleInput" placeholder="Cím"></textarea><br><br>
@@ -13,23 +13,34 @@ require "header.php";
         <select name="column" class="columnselect" id="column-select"></select><br>
         <label>Kép:  </label>
         <input id="img-path" name="img-path" type="text" class="imgsrc">
-        <button id="open-img-path-btn" type="button"><i class="fas fa-external-link-square-alt"></i></button><br>
-        <select id="state-select" class="columnselect">
-            <option value="-1">Piszkozat</option>
-            <option value="0">Írás alatt</option>
-            <option value="1">Ellenőrzésre vár</option>
-        </select> 
-        <button id="change-state-button" type="button" class="commandBtn" >Publikáció</button>
+        <button id="open-img-path-btn" type="button"><i class="fas fa-external-link-square-alt"></i></button>
+        <br>
     </form>
+    <div>
+        <h4>Állapot: </p> <p id="state"></h4>
+        <button id="lock-btn" ></button>
+        <p id="lock-message"></p>
+    </div>
+    <h3>Tokenek: </h3>
+        <div id="token-table">
+        </div>
+    <h3>Cikk státusza: </h3>
+    <select class="columnselect" id="state-select">
+        <option value="0">Írás alatt</option>
+        <option value="1">Ellenőrzésre vár</option>
+        <option value="2">Kész</option>
+        <option value="3">Archív</option>
+    </select>
+   <button id="check-btn" class="acceptBtn"><i class="fas fa-check-square"></i></button> 
     <div id="edit-controls" class="editcontrols">
             <button class="controlbtn shine" onclick="execCmd('undo');"><i class="fas fa-undo"></i></button>
             <button class="controlbtn shine" onclick="execCmd('redo');"><i class="fas fa-redo"></i></button>
-            <button id="save-article-button" class="controlbtn shine" type="button" id="submit"><i class="fas fa-save"></i></button>
+            <button class="controlbtn shine" id="save-btn" type="button" id="submit"><i class="fas fa-save"></i></button>
             <button class="controlbtn shine" onclick="execCmd('selectAll');"><i class="fas fa-globe-europe"></i></button>
             <button class="controlbtn shine" onclick="execCommandWithArg('createLink', prompt('Enter a URL', 'http://'));"><i class="fas fa-link"></i></button>
             <button class="controlbtn shine" onclick="execCmd('unlink');"><i class="fas fa-unlink"></i></button>
             <button class="controlbtn shine" onclick="execCommandWithArg('insertImage', prompt('Enter the image URL', ''));"><i class="fa fa-file-image-o"></i></button>
-            <button id="delete-btn" class="controlbtn shine" ><i class="fas fa-trash-alt"></i></button><br>
+           <!-- <button class="controlbtn shine" onclick="displayDeleteModal()"><i class="fas fa-trash-alt"></i></button><br> -->
             <button class="controlbtn shine" onclick="execCmd('bold');"><i class="fas fa-bold"></i></button>
             <button class="controlbtn shine" onclick="execCmd('italic');"><i class="fas fa-italic"></i></button>
             <button class="controlbtn shine" onclick="execCmd('underline');"><i class="fas fa-underline"></i></button>
@@ -75,19 +86,31 @@ require "header.php";
                 <option value="7">7</option>
             </select>
             <!--<button class="controlbtn" onclick="execCommandWithArg('insertImage', prompt('Enter the image URL', ''));" ><i class="fa fa-file-image-o"></i></button> -->            
-        </div>        
+        </div> 
+       
         <iframe class="textedit" value="texts" id="txtField" name="richTextField"></iframe>
+       
     </div>
-<div id="myModal" class="modal">
-  <!-- Modal content -->
+    <!--
+<div id="delete-modal" class="modal">
   <div class="modal-content">
-    <span id="hide-modal-btn1" class="close">&times;</span>
+    <span onclick="hideDeleteModal()" class="close">&times;</span>
     <p>Biztosan törölni szeretné ezt a cikket?</p>
     <div class="center">
-        <button id="delete-article-btn" type="button">Törlés</button>
-        <button id="hide-modal-btn2" type="button">Mégse</button>
+        <button onclick="deleteArticle()" type="button">Törlés</button>
+        <button onclick="hideDeleteModal()" type="button">Mégse</button>
     </div>
-    
+  </div> -->
+</div>  
+<div id="state-modal" class="modal">
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span id="change-close-span" class="close">&times;</span>
+    <p>A cikk nem rendelkezik a szükséges tokenekkel. Biztosan szeretné folytatni?</p>
+    <div class="center">
+        <button id="save-state-btn" type="button">Megerősít</button>
+        <button id="hide-state-modal-btn" type="button">Mégse</button>
+    </div>
   </div>
 </div>  
 

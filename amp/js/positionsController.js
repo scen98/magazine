@@ -114,12 +114,12 @@ function renderArticle(article) {
     });
     container.draggable = true;
     doc.addDrag(container, article);
-    doc.renderTableRow(table, [columns.find(c => c.id === article.columnId).name, article.authorName, doc.parseDateHun(article.date)]);
+    doc.renderTableRow(table, [columns.find(c => c.id === article.columnId).name, doc.createA([], article.authorName, `../amp/szerzo.php?szerzo=${article.authorId}`).outerHTML, doc.parseDateHun(article.date)]);
     doc.append(container, [title, editBtn, archiveBtn, stateBackBtn, table]);
     doc.append(articleTable, [container]);
 }
 function openEditor(article) {
-    window.open("./editx.php?aid=" + article.id);
+    window.open(`./cikk_szerk_x.php?aid=${article.id}`);
 }
 function archiveArticle(article) {
     article.state = 3;
@@ -206,7 +206,7 @@ function renderPositionSpace(parent, article) {
     let container = doc.createDiv(null, ["innerContainer"]);
     let title = doc.createP(["positionArticleTitle"], article.title);
     let table = document.createElement("table");
-    doc.renderTableRow(table, [columns.find(c => c.id === article.columnId).name, article.authorName, doc.parseDateHun(article.date)]);
+    doc.renderTableRow(table, [columns.find(c => c.id === article.columnId).name, doc.createA([], article.authorName, `../amp/szerzo.php?szerzo=${article.authorId}`).outerHTML, doc.parseDateHun(article.date)]);
     doc.append(container, [title, table]);
     doc.append(parent, [container]);
 }

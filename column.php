@@ -14,62 +14,68 @@
 							<div class="popular-post-wrap">
 								<h4 class="title">_ROVATNÉV_</h4>
 								<div class="feature-post relative">
-									<div class="feature-img relative">
-										<div class="overlay overlay-bg"></div>
-										<img class="img-fluid" src="img/f1.jpg" alt="">
-									</div>
-									<div class="details">
-										<a href="image-post.html">
-											<h3>A Discount Toner Cartridge Is Better Than Ever.</h3>
-										</a>
-										<ul class="meta">
-											<li><a href="#"><span class="lnr lnr-user"></span>Mark wiens</a></li>
-											<li><a href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
-										</ul>
-									</div>
+									<a name="main1">
+										<div class="feature-img relative">
+											<div class="overlay overlay-bg"></div>
+											<img id="main1-img" class="img-fluid" src="img/f1.jpg" alt="">
+										</div>
+										<div class="details">
+											<a name="main1" href="image-post.html">
+												<h3 id="main1-title">A Discount Toner Cartridge Is Better Than Ever.</h3>
+											</a>
+											<ul class="meta">
+												<li><a id="main1-author" href="#"><span class="lnr lnr-user"></span>Mark wiens</a></li>
+												<li><a id="main1-date" href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
+											</ul>
+										</div>
+									</a>
 								</div>
 								<div class="row mt-20 medium-gutters">
 									<div class="col-lg-6 single-popular-post">
-										<div class="feature-img-wrap relative">
-											<div class="feature-img relative">
-												<div class="overlay overlay-bg"></div>
-												<img class="img-fluid" src="img/f2.jpg" alt="">
+										<a name="main2">
+											<div class="feature-img-wrap relative">
+												<div class="feature-img relative">
+													<div class="overlay overlay-bg"></div>
+													<img id="main2-img" class="img-fluid" src="img/f2.jpg" alt="">
+												</div>
 											</div>
-										</div>
-										<div class="details">
-											<a href="image-post.html">
-												<h4>A Discount Toner Cartridge Is
-												Better Than Ever.</h4>
-											</a>
-											<ul class="meta">
-												<li><a href="#"><span class="lnr lnr-user"></span>Mark wiens</a></li>
-												<li><a href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
-											</ul>
-											<p class="excert">
-												Lorem ipsum dolor sit amet, consecteturadip isicing elit, sed do eiusmod tempor incididunt ed do eius.
-											</p>
-										</div>
+											<div class="details">
+												<a name="main2" href="image-post.html">
+													<h4 id="main2-title" >A Discount Toner Cartridge Is
+													Better Than Ever.</h4>
+												</a>
+												<ul class="meta">
+													<li><a id="main2-author" href="#"><span class="lnr lnr-user"></span>Mark wiens</a></li>
+													<li><a id="main2-date" href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
+												</ul>
+												<p id="main2-lead" class="excert">
+													Lorem ipsum dolor sit amet, consecteturadip isicing elit, sed do eiusmod tempor incididunt ed do eius.
+												</p>
+											</div>
+										</a>
 									</div>
 									<div class="col-lg-6 single-popular-post">
-										<div class="feature-img-wrap relative">
-											<div class="feature-img relative">
-												<div class="overlay overlay-bg"></div>
-												<img class="img-fluid" src="img/f3.jpg" alt="">
+										<a name="main3">
+											<div class="feature-img-wrap relative">
+												<div class="feature-img relative">
+													<div class="overlay overlay-bg"></div>
+													<img id="main3-img" class="img-fluid" src="img/f3.jpg" alt="">
+												</div>
 											</div>
-										</div>
-										<div class="details">
-											<a href="image-post.html">
-												<h4>A Discount Toner Cartridge Is
-												Better Than Ever.</h4>
-											</a>
-											<ul class="meta">
-												<li><a href="#"><span class="lnr lnr-user"></span>Mark wiens</a></li>
-												<li><a href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
-											</ul>
-											<p class="excert">
-												Lorem ipsum dolor sit amet, consecteturadip isicing elit, sed do eiusmod tempor incididunt ed do eius.
-											</p>
-										</div>
+											<div class="details">
+												<a name="main3" href="image-post.html">
+													<h4 id="main3-title" >A Discount Toner Cartridge Is
+													Better Than Ever.</h4>
+												</a>
+												<ul class="meta">
+													<li><a id="main3-author" href="#"><span class="lnr lnr-user"></span>Mark wiens</a></li>
+													<li><a id="main3-date" href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
+												</ul>
+												<p id="main3-lead" class="excert">
+													Lorem ipsum dolor sit amet, consecteturadip isicing elit, sed do eiusmod tempor incididunt ed do eius.
+												</p>
+											</div>
+										</a>
 									</div>
 								</div>
 							</div>
@@ -79,272 +85,244 @@
 								<h4 class="title">A nap hírei</h4>
 								<div class="relavent-story-list-wrap">
 									<div class="single-relavent-post row align-items-center">
-										<div class="col-lg-5 post-left">
-											<div class="feature-img relative">
-												<div class="overlay overlay-bg"></div>
-												<img class="img-fluid" src="img/r1.jpg" alt="">
+										<a name="list1">
+											<div class="col-lg-5 post-left">
+												<div class="feature-img relative">
+													<div class="overlay overlay-bg"></div>
+													<img id="list1-img" class="img-fluid" src="img/r1.jpg" alt="">
+												</div>
 											</div>
-										</div>
-										<div class="col-lg-7 post-right">
-											<a href="image-post.html">
-												<h4>A Discount Toner Cartridge Is
-												Better Than Ever.</h4>
-											</a>
-											<ul class="meta">
-												<li><a href="#"><span class="lnr lnr-user"></span>Mark wiens</a></li>
-												<li><a href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
-											</ul>
-											<p class="excert">
-												Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.
-											</p>
-										</div>
+											<div class="col-lg-7 post-right">
+												<a name="list1" href="image-post.html">
+													<h4 id="list1-title">A Discount Toner Cartridge Is
+													Better Than Ever.</h4>
+												</a>
+												<ul class="meta">
+													<li><a id="list1-author" href="#"><span class="lnr lnr-user"></span>Mark wiens</a></li>
+													<li><a id="list1-date" href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
+												</ul>
+												<p id="list1-lead" class="excert">
+													Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.
+												</p>
+											</div>
+										</a>
 									</div>
 									<div class="single-relavent-post row align-items-center">
-										<div class="col-lg-5 post-left">
-											<div class="feature-img relative">
-												<div class="overlay overlay-bg"></div>
-												<img class="img-fluid" src="img/r2.jpg" alt="">
+										<a name="list2">
+											<div class="col-lg-5 post-left">
+												<div class="feature-img relative">
+													<div class="overlay overlay-bg"></div>
+													<img id="list2-img" class="img-fluid" src="img/r1.jpg" alt="">
+												</div>
 											</div>
-										</div>
-										<div class="col-lg-7 post-right">
-											<a href="image-post.html">
-												<h4>A Discount Toner Cartridge Is
-												Better Than Ever.</h4>
-											</a>
-											<ul class="meta">
-												<li><a href="#"><span class="lnr lnr-user"></span>Mark wiens</a></li>
-												<li><a href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
-											</ul>
-											<p class="excert">
-												Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.
-											</p>
-										</div>
+											<div class="col-lg-7 post-right">
+												<a name="list1" href="image-post.html">
+													<h4 id="list2-title">A Discount Toner Cartridge Is
+													Better Than Ever.</h4>
+												</a>
+												<ul class="meta">
+													<li><a id="list2-author" href="#"><span class="lnr lnr-user"></span>Mark wiens</a></li>
+													<li><a id="list2-date" href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
+												</ul>
+												<p id="list2-lead" class="excert">
+													Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.
+												</p>
+											</div>
+										</a>
+									</div><div class="single-relavent-post row align-items-center">
+										<a name="list3">
+											<div class="col-lg-5 post-left">
+												<div class="feature-img relative">
+													<div class="overlay overlay-bg"></div>
+													<img id="list3-img" class="img-fluid" src="img/r1.jpg" alt="">
+												</div>
+											</div>
+											<div class="col-lg-7 post-right">
+												<a name="list3" href="image-post.html">
+													<h4 id="list3-title">A Discount Toner Cartridge Is
+													Better Than Ever.</h4>
+												</a>
+												<ul class="meta">
+													<li><a id="list3-author" href="#"><span class="lnr lnr-user"></span>Mark wiens</a></li>
+													<li><a id="list3-date" href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
+												</ul>
+												<p id="list3-lead" class="excert">
+													Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.
+												</p>
+											</div>
+										</a>
 									</div>
 									<div class="single-relavent-post row align-items-center">
-										<div class="col-lg-5 post-left">
-											<div class="feature-img relative">
-												<div class="overlay overlay-bg"></div>
-												<img class="img-fluid" src="img/r3.jpg" alt="">
+										<a name="list4">
+											<div class="col-lg-5 post-left">
+												<div class="feature-img relative">
+													<div class="overlay overlay-bg"></div>
+													<img id="list4-img" class="img-fluid" src="img/r1.jpg" alt="">
+												</div>
 											</div>
-										</div>
-										<div class="col-lg-7 post-right">
-											<a href="image-post.html">
-												<h4>A Discount Toner Cartridge Is
-												Better Than Ever.</h4>
-											</a>
-											<ul class="meta">
-												<li><a href="#"><span class="lnr lnr-user"></span>Mark wiens</a></li>
-												<li><a href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
-											</ul>
-											<p class="excert">
-												Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.
-											</p>
-										</div>
+											<div class="col-lg-7 post-right">
+												<a name="list4" href="image-post.html">
+													<h4 id="list4-title">A Discount Toner Cartridge Is
+													Better Than Ever.</h4>
+												</a>
+												<ul class="meta">
+													<li><a id="list4-author" href="#"><span class="lnr lnr-user"></span>Mark wiens</a></li>
+													<li><a id="list4-date" href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
+												</ul>
+												<p id="list4-lead" class="excert">
+													Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.
+												</p>
+											</div>
+										</a>
+									</div><div class="single-relavent-post row align-items-center">
+										<a name="list5">
+											<div class="col-lg-5 post-left">
+												<div class="feature-img relative">
+													<div class="overlay overlay-bg"></div>
+													<img id="list5-img" class="img-fluid" src="img/r1.jpg" alt="">
+												</div>
+											</div>
+											<div class="col-lg-7 post-right">
+												<a name="list5" href="image-post.html">
+													<h4 id="list5-title">A Discount Toner Cartridge Is
+													Better Than Ever.</h4>
+												</a>
+												<ul class="meta">
+													<li><a id="list5-author" href="#"><span class="lnr lnr-user"></span>Mark wiens</a></li>
+													<li><a id="list5-date" href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
+												</ul>
+												<p id="list5-lead" class="excert">
+													Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.
+												</p>
+											</div>
+										</a>
+									</div>
+								
+									<div class="single-relavent-post row align-items-center">
+										<a name="list6">
+											<div class="col-lg-5 post-left">
+												<div class="feature-img relative">
+													<div class="overlay overlay-bg"></div>
+													<img id="list6-img" class="img-fluid" src="img/r1.jpg" alt="">
+												</div>
+											</div>
+											<div class="col-lg-7 post-right">
+												<a name="list6" href="image-post.html">
+													<h4 id="list6-title">A Discount Toner Cartridge Is
+													Better Than Ever.</h4>
+												</a>
+												<ul class="meta">
+													<li><a id="list6-author" href="#"><span class="lnr lnr-user"></span>Mark wiens</a></li>
+													<li><a id="list6-date" href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
+												</ul>
+												<p id="list6-lead" class="excert">
+													Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.
+												</p>
+											</div>
+										</a>
 									</div>
 									<div class="single-relavent-post row align-items-center">
-										<div class="col-lg-5 post-left">
-											<div class="feature-img relative">
-												<div class="overlay overlay-bg"></div>
-												<img class="img-fluid" src="img/r3.jpg" alt="">
+										<a name="list7">
+											<div class="col-lg-5 post-left">
+												<div class="feature-img relative">
+													<div class="overlay overlay-bg"></div>
+													<img id="list7-img" class="img-fluid" src="img/r1.jpg" alt="">
+												</div>
 											</div>
-										</div>
-										<div class="col-lg-7 post-right">
-											<a href="image-post.html">
-												<h4>A Discount Toner Cartridge Is
-												Better Than Ever.</h4>
-											</a>
-											<ul class="meta">
-												<li><a href="#"><span class="lnr lnr-user"></span>Mark wiens</a></li>
-												<li><a href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
-											</ul>
-											<p class="excert">
-												Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.
-											</p>
-										</div>
+											<div class="col-lg-7 post-right">
+												<a name="list7" href="image-post.html">
+													<h4 id="list7-title">A Discount Toner Cartridge Is
+													Better Than Ever.</h4>
+												</a>
+												<ul class="meta">
+													<li><a id="list7-author" href="#"><span class="lnr lnr-user"></span>Mark wiens</a></li>
+													<li><a id="list7-date" href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
+												</ul>
+												<p id="list7-lead" class="excert">
+													Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.
+												</p>
+											</div>
+										</a>
 									</div>
 									<div class="single-relavent-post row align-items-center">
-										<div class="col-lg-5 post-left">
-											<div class="feature-img relative">
-												<div class="overlay overlay-bg"></div>
-												<img class="img-fluid" src="img/r3.jpg" alt="">
+										<a name="list8">
+											<div class="col-lg-5 post-left">
+												<div class="feature-img relative">
+													<div class="overlay overlay-bg"></div>
+													<img id="list8-img" class="img-fluid" src="img/r1.jpg" alt="">
+												</div>
 											</div>
-										</div>
-										<div class="col-lg-7 post-right">
-											<a href="image-post.html">
-												<h4>A Discount Toner Cartridge Is
-												Better Than Ever.</h4>
-											</a>
-											<ul class="meta">
-												<li><a href="#"><span class="lnr lnr-user"></span>Mark wiens</a></li>
-												<li><a href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
-											</ul>
-											<p class="excert">
-												Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.
-											</p>
-										</div>
+											<div class="col-lg-7 post-right">
+												<a name="list8" href="image-post.html">
+													<h4 id="list8-title">A Discount Toner Cartridge Is
+													Better Than Ever.</h4>
+												</a>
+												<ul class="meta">
+													<li><a id="list8-author" href="#"><span class="lnr lnr-user"></span>Mark wiens</a></li>
+													<li><a id="list8-date" href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
+												</ul>
+												<p id="list8-lead" class="excert">
+													Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.
+												</p>
+											</div>
+										</a>
 									</div>
 									<div class="single-relavent-post row align-items-center">
-										<div class="col-lg-5 post-left">
-											<div class="feature-img relative">
-												<div class="overlay overlay-bg"></div>
-												<img class="img-fluid" src="img/r3.jpg" alt="">
+										<a name="list9">
+											<div class="col-lg-5 post-left">
+												<div class="feature-img relative">
+													<div class="overlay overlay-bg"></div>
+													<img id="list9-img" class="img-fluid" src="img/r1.jpg" alt="">
+												</div>
 											</div>
-										</div>
-										<div class="col-lg-7 post-right">
-											<a href="image-post.html">
-												<h4>A Discount Toner Cartridge Is
-												Better Than Ever.</h4>
-											</a>
-											<ul class="meta">
-												<li><a href="#"><span class="lnr lnr-user"></span>Mark wiens</a></li>
-												<li><a href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
-											</ul>
-											<p class="excert">
-												Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.
-											</p>
-										</div>
+											<div class="col-lg-7 post-right">
+												<a name="list9" href="image-post.html">
+													<h4 id="list9-title">A Discount Toner Cartridge Is
+													Better Than Ever.</h4>
+												</a>
+												<ul class="meta">
+													<li><a id="list9-author" href="#"><span class="lnr lnr-user"></span>Mark wiens</a></li>
+													<li><a id="list9-date" href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
+												</ul>
+												<p id="list9-lead" class="excert">
+													Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.
+												</p>
+											</div>
+										</a>
 									</div>
 									<div class="single-relavent-post row align-items-center">
-										<div class="col-lg-5 post-left">
-											<div class="feature-img relative">
-												<div class="overlay overlay-bg"></div>
-												<img class="img-fluid" src="img/r3.jpg" alt="">
+										<a name="list10">
+											<div class="col-lg-5 post-left">
+												<div class="feature-img relative">
+													<div class="overlay overlay-bg"></div>
+													<img id="list10-img" class="img-fluid" src="img/r1.jpg" alt="">
+												</div>
 											</div>
-										</div>
-										<div class="col-lg-7 post-right">
-											<a href="image-post.html">
-												<h4>A Discount Toner Cartridge Is
-												Better Than Ever.</h4>
-											</a>
-											<ul class="meta">
-												<li><a href="#"><span class="lnr lnr-user"></span>Mark wiens</a></li>
-												<li><a href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
-											</ul>
-											<p class="excert">
-												Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.
-											</p>
-										</div>
-									</div>
-									<div class="single-relavent-post row align-items-center">
-										<div class="col-lg-5 post-left">
-											<div class="feature-img relative">
-												<div class="overlay overlay-bg"></div>
-												<img class="img-fluid" src="img/r3.jpg" alt="">
+											<div class="col-lg-7 post-right">
+												<a name="list10" href="image-post.html">
+													<h4 id="list10-title">A Discount Toner Cartridge Is
+													Better Than Ever.</h4>
+												</a>
+												<ul class="meta">
+													<li><a id="list10-author" href="#"><span class="lnr lnr-user"></span>Mark wiens</a></li>
+													<li><a id="list10-date" href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
+												</ul>
+												<p id="list10-lead" class="excert">
+													Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.
+												</p>
 											</div>
-										</div>
-										<div class="col-lg-7 post-right">
-											<a href="image-post.html">
-												<h4>A Discount Toner Cartridge Is
-												Better Than Ever.</h4>
-											</a>
-											<ul class="meta">
-												<li><a href="#"><span class="lnr lnr-user"></span>Mark wiens</a></li>
-												<li><a href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
-											</ul>
-											<p class="excert">
-												Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.
-											</p>
-										</div>
+										</a>
 									</div>
-									<div class="single-relavent-post row align-items-center">
-										<div class="col-lg-5 post-left">
-											<div class="feature-img relative">
-												<div class="overlay overlay-bg"></div>
-												<img class="img-fluid" src="img/r3.jpg" alt="">
-											</div>
-										</div>
-										<div class="col-lg-7 post-right">
-											<a href="image-post.html">
-												<h4>A Discount Toner Cartridge Is
-												Better Than Ever.</h4>
-											</a>
-											<ul class="meta">
-												<li><a href="#"><span class="lnr lnr-user"></span>Mark wiens</a></li>
-												<li><a href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
-											</ul>
-											<p class="excert">
-												Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.
-											</p>
-										</div>
-									</div>
-									<div class="single-relavent-post row align-items-center">
-										<div class="col-lg-5 post-left">
-											<div class="feature-img relative">
-												<div class="overlay overlay-bg"></div>
-												<img class="img-fluid" src="img/r3.jpg" alt="">
-											</div>
-										</div>
-										<div class="col-lg-7 post-right">
-											<a href="image-post.html">
-												<h4>A Discount Toner Cartridge Is
-												Better Than Ever.</h4>
-											</a>
-											<ul class="meta">
-												<li><a href="#"><span class="lnr lnr-user"></span>Mark wiens</a></li>
-												<li><a href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
-											</ul>
-											<p class="excert">
-												Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.
-											</p>
-										</div>
-									</div>
+								
 								</div>
 							</div>
 							<!-- End relavent-story-post Area -->
 						</div>
 						<div class="col-lg-4">
 							<div class="sidebars-area">
-								<div class="single-sidebar-widget editors-pick-widget">
-									<h6 class="title">Ajánlott</h6>
-									<div class="editors-pick-post">
-										<div class="feature-img-wrap relative">
-											<div class="feature-img relative">
-												<div class="overlay overlay-bg"></div>
-												<img class="img-fluid" src="img/e1.jpg" alt="">
-											</div>
-										</div>
-										<div class="details">
-											<a href="image-post.html">
-												<h4 class="mt-20">A Discount Toner Cartridge Is
-												Better Than Ever.</h4>
-											</a>
-											<ul class="meta">
-												<li><a href="#"><span class="lnr lnr-user"></span>Mark wiens</a></li>
-												<li><a href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
-											</ul>
-											<p class="excert">
-												Lorem ipsum dolor sit amet, consecteturadip isicing elit, sed do eiusmod tempor incididunt ed do eius.
-											</p>
-										</div>
-										<div class="post-lists">
-											<div class="single-post d-flex flex-row">
-												<div class="thumb">
-													<img src="img/e2.jpg" alt="">
-												</div>
-												<div class="detail">
-													<a href="image-post.html"><h6>Help Finding Information
-													Online is so easy</h6></a>
-													<ul class="meta">
-														<li><a href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
-													</ul>
-												</div>
-											</div>
-									
-											<div class="single-post d-flex flex-row">
-												<div class="thumb">
-													<img src="img/e4.jpg" alt="">
-												</div>
-												<div class="detail">
-													<a href="image-post.html"><h6>5 Tips For Offshore Soft
-													Development </h6></a>
-													<ul class="meta">
-														<li><a href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
-													</ul>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
+									<?php
+									require "recommended.php"
+									?>
 								<?php
 								require "notes.php";
 								?>

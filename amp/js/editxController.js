@@ -1,5 +1,5 @@
 import { selectArticle } from "./objects/article.js";
-import { selectTokensByColumn } from "./objects/token.js";
+import { selectActiveTokensByColumn } from "./objects/token.js";
 import { getColumns } from "./objects/column.js";
 import * as doc from "./doc.js";
 import { TokenInstance } from "./objects/tokenInstance.js";
@@ -17,29 +17,31 @@ let state = document.getElementById("state");
 let lockMessage = document.getElementById("lock-message");
 let lockBtn = doc.getBtn("lock-btn");
 let necessaryTokens = [];
-let myTokenPermissions = [];
 let tokenTable = document.getElementById("token-table");
 let stateSelect = doc.getSelect("state-select");
 let stateModal = doc.getDiv("state-modal");
 let myInfo;
 init();
 function init() {
-    getMyInfo(setMyTokenPermissions);
-    getColumns(loadPage);
+    getMyInfo((me) => {
+        setMyTokenPermissions(me);
+        getColumns(loadPage);
+    });
     initListeners();
 }
 function initListeners() {
-    doc.addClick(doc.get("open-img"), openImgPath);
+    doc.addClick(doc.get("open-img-path-btn"), openImgPath);
     doc.addClick(lockBtn, switchLock);
     doc.addClick("check-btn", checkState);
-    doc.addClick("display-delete-modal", displayDeleteModal);
+    //doc.addClick("display-delete-modal", displayDeleteModal);
     doc.addClick("save-btn", saveArticle);
-    doc.addClick("delete-close-span", hideDeleteModal);
-    doc.addClick("delete-btn", deleteArticle);
-    doc.addClick("hide-delete-modal-btn", hideDeleteModal);
+    //doc.addClick("delete-close-span", hideDeleteModal);
+    //doc.addClick("delete-btn", deleteArticle);
+    //doc.addClick("hide-delete-modal-btn", hideDeleteModal);
     doc.addClick("change-close-span", hideStateModal);
     doc.addClick("save-state-btn", saveState);
     doc.addClick("hide-state-modal-btn", hideStateModal);
+    //doc.addClick("open-img-path-btn", ()=>{ window.open(imgPath.value); })
 }
 function saveArticle() {
     setArticle();
@@ -74,6 +76,8 @@ function openImgPath() {
 function switchLock() {
     article.switchLock(() => {
         setState();
+        if (!article.isLocked)
+            article.update(() => { });
     }, myInfo.permissions[0].authorId);
 }
 function checkState() {
@@ -82,11 +86,11 @@ function checkState() {
         displayStateModal();
     }
     else {
-        article.updateState(null);
+        article.updateState(() => { });
     }
 }
 function saveState() {
-    article.updateState(null);
+    article.updateState(() => { });
     hideStateModal();
 }
 function setMyTokenPermissions(me) {
@@ -102,16 +106,13 @@ function loadArticle(art) {
         window.location.href = "../amp/edit.php?aid=" + article.id;
     }
     stateSelect.value = article.state.toString();
-    selectTokensByColumn((response) => {
+    selectActiveTokensByColumn((response) => {
         if (article.state > 0) {
             renderTokens(response);
         }
     }, article.columnId);
     article.id = getId();
     refreshArticle();
-}
-function allTokensExist() {
-    return article.hasAllTokenInstances(necessaryTokens);
 }
 function renderTokens(tokens) {
     necessaryTokens = tokens;
@@ -180,7 +181,12 @@ function hasAccessToToken(token) {
     if (myInfo.permissions[0].level >= 40) {
         return true;
     }
-    for (let tokenPermission of myTokenPermissions) {
+    if (myInfo.getHighestPermission() >= 30) {
+        if (myInfo.permissions.some(p => p.columnId === token.columnId))
+            return true;
+    }
+    return myInfo.tokenPermissions.some(ti => ti.tokenId === token.id);
+    for (let tokenPermission of myInfo.tokenPermissions) {
         if (token.id === tokenPermission.tokenId)
             return true;
     }
@@ -219,6 +225,7 @@ function openState() {
     lockBtn.style.display = "block";
     lockBtn.innerHTML = "Zárolás / Szerkesztés";
     lockBtn.className = "lockBtn";
+    setArticle();
     toggleEditOff();
 }
 function closeState() {

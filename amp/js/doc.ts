@@ -43,6 +43,16 @@ export function createP(classList: string[], innerText: string): HTMLParagraphEl
     return element;
 }
 
+export function createA(classList: string[], innerText: string, href?: string): HTMLAnchorElement{
+    let element = document.createElement("a");
+    for (let c of classList) {
+        element.classList.add(c);
+    }
+    element.innerText = innerText;
+    element.href = href;
+    return element;
+}
+
 export function createButton(classList: string[], innerHTML:any, func?:any): HTMLButtonElement{
     let element = document.createElement("button");
     for (let c of classList) {
@@ -78,14 +88,23 @@ export function create(type: string, id: string, classList: string[], innerHTML:
 }
 
 
-export function append(parent:HTMLElement, childList:HTMLElement[]){
+export function append(parent:HTMLElement | string, childList:HTMLElement[]){
+    let p = checkString(parent);
     for (let e of childList) {
-        parent.appendChild(e);
+        p.appendChild(e);
     }
 }
 
-export function getValue(htmlId: string): string{
-    return (document.getElementById(htmlId) as HTMLInputElement).value;
+export function getValue(htmlId: string | HTMLInputElement): string{
+    return (checkString(htmlId) as HTMLInputElement).value;
+}
+
+export function getUl(htmlId: string): HTMLUListElement{
+    return (document.getElementById(htmlId) as HTMLUListElement);
+}
+
+export function getImg(htmlId: string): HTMLImageElement{
+    return (document.getElementById(htmlId) as HTMLImageElement);
 }
 
 export function get(htmlId: string): HTMLElement{
@@ -119,7 +138,7 @@ export function addClick(parent: string | HTMLElement, func: ()=>void){
 }
 
 export function addChange(parent: string | HTMLElement, func: ()=>void){
-    checkString(parent).addEventListener("onchange", func);
+    checkString(parent).addEventListener("change", func);
 }
 
 export function remove(htmlId: string){
@@ -132,6 +151,16 @@ export function addEnter(element: string | HTMLElement, func){
             func();
         }
         });
+}
+
+export function renderLi(parent: HTMLUListElement | HTMLOListElement | string, innerHTML: string){
+    let li = document.createElement("li");
+    li.innerHTML = innerHTML;
+    checkString(parent).appendChild(li);
+}
+
+export function setText(element: string | HTMLElement, innerText: string){
+    checkString(element).innerText = innerText;
 }
 
 export function addNonLetterKey(element: string | HTMLElement, func){
