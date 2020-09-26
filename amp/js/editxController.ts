@@ -37,7 +37,7 @@ function initListeners(){
     doc.addClick(lockBtn, switchLock);
     doc.addClick("check-btn", checkState);
     //doc.addClick("display-delete-modal", displayDeleteModal);
-    doc.addClick("save-btn", saveArticle);
+    doc.addClick("save-article-button", saveArticle);
     //doc.addClick("delete-close-span", hideDeleteModal);
     //doc.addClick("delete-btn", deleteArticle);
     //doc.addClick("hide-delete-modal-btn", hideDeleteModal);

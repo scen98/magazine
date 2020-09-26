@@ -12,4 +12,5 @@ function insertVideo(url){ //ez majd a konzolba egy tonna errort fog dobálni, d
  /*   https://www.youtube.com/embed/9YffrCViTVk
     https://www.youtube.com/watch?v=9YffrCViTVk*/
 }
+
 //# sourceMappingURL=textEditController.js.map

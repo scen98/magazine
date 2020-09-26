@@ -1016,7 +1016,7 @@ span.icon {
     border-width: 5px;
     border-top-left-radius: 2%;
     border-bottom-left-radius: 2%;
-    height: 670px;
+    height: 760px;
     overflow-y: scroll;
     padding: 1%;
   }
@@ -1025,7 +1025,7 @@ span.icon {
     float: left;
     width: 47%;
     padding: 1%;
-    height: 670px;
+    height: 760px;
     overflow-y: scroll;
     border-style: solid;
   }
@@ -1184,4 +1184,9 @@ span.icon {
     padding: 10px;
     border-radius: 5px;
     background-color: white;
+  }
+
+  .quote{
+    border-left: 2px solid #f6214b;
+    padding-left: 20px;
   }

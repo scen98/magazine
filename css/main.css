@@ -2833,6 +2833,11 @@ body {
   font-style: italic;
 }
 
+.quote{
+  border-left: 2px solid #f6214b;
+  padding-left: 20px;
+}
+
 .single-post-wrap .navigation-wrap {
   margin-top: 50px;
 }
