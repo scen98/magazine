@@ -193,6 +193,10 @@ export function parseDateHun(date: Date): string{
     return date.getFullYear() + ". " + monthNames[date.getMonth()] + ". " + date.getDate()  + ", " + date.getHours() + ":" + date.getMinutes();
 }
 
+export function parseDateYYYYMMDD(date: Date):string{
+    return `${date.getFullYear()}. ${monthNames[date.getMonth()]}. ${date.getDate()}`;
+}
+
 function checkString(s: string | HTMLElement){
     if(typeof s === "string"){
         return document.getElementById(s);

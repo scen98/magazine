@@ -31,10 +31,10 @@ h2 { font-size: 24px;}
 h3 { font-size: 18px;}
 h5 { font-size: 16px;}
 h6 { font-size: 14px;}
-
+/*
 strong {
   letter-s;;Dacing: 1px;
-}
+} */
 
 code {
   background-color: #ddd;
@@ -114,7 +114,7 @@ section p {
     padding-left: 30px;
     padding-top: 70px;
 }
-
+un
 .left-nav ul {
     margin: 0;
     padding: 0;
@@ -216,6 +216,7 @@ section p {
     margin-top: 10px;
     max-width: 100%;
 }
+
 
 
 

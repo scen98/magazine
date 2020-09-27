@@ -39,6 +39,145 @@ class Article {
         }
     }
 
+    public static function selectByBlock($mysqlidb, $blockId){
+        $article_array = array();
+        $sql = "SELECT articles.id, articles.title, articles.lead, articles.imgPath, articles.columnId, articles.date, articles.authorId, authors.name as authorName, columns.name as columnName, positions.htmlId FROM articles
+        INNER JOIN positions ON positions.articleId = articles.id
+        INNER JOIN positionBlocks ON positionBlocks.id = positions.blockId
+        INNER JOIN authors ON authors.id = articles.authorId
+        INNER JOIN columns ON columns.id = articles.columnId
+        WHERE positionBlocks.id = ?;";
+        $stmt = mysqli_stmt_init($mysqlidb->conn);
+        if(!mysqli_stmt_prepare($stmt, $sql)){
+            return null;
+        }
+        mysqli_stmt_bind_param($stmt, "i", $blockId);
+        if(!mysqli_stmt_execute($stmt)){
+            return null;
+        }
+        $result = mysqli_stmt_get_result($stmt);            
+        while($row = mysqli_fetch_assoc($result)){
+            $article = new Article($row["id"], $row["title"], $row["lead"], $row["authorId"], $row["date"], $row["imgPath"],  $row["columnId"], "");
+            $article->authorName = $row["authorName"];
+            $article->columnName = $row["columnName"];
+            $article->htmlId = $row["htmlId"];
+            array_push($article_array, $article);
+        }
+        return $article_array; 
+    }
+
+    public static function selectSideArticles($mysqlidb, $columnId){
+        if($columnId === 0 || is_null($columnId)){
+            return Article::selectMainSideArticles($mysqlidb);
+        }
+        $article_array = array();
+        $sql = "SELECT articles.id, articles.title, articles.lead, articles.date, articles.imgPath, articles.authorId, articles.columnId, authors.name as authorName, columns.name as columnName, positions.htmlId FROM articles
+        INNER JOIN positions ON positions.articleId = articles.id
+        INNER JOIN positionBlocks ON positionBlocks.id = positions.blockId
+        INNER JOIN authors ON authors.id = articles.authorId
+        INNER JOIN columns ON columns.id = articles.columnId
+        WHERE positionBlocks.main = 0 AND positionBlocks.columnId = ?;";
+        $stmt = mysqli_stmt_init($mysqlidb->conn);
+        if(!mysqli_stmt_prepare($stmt, $sql)){
+            return null;
+        }
+        mysqli_stmt_bind_param($stmt, "i", $columnId);
+        if(!mysqli_stmt_execute($stmt)){
+            return null;
+        }
+        $result = mysqli_stmt_get_result($stmt);            
+        while($row = mysqli_fetch_assoc($result)){
+            $article = new Article($row["id"], $row["title"], $row["lead"], $row["authorId"], $row["date"], $row["imgPath"],  $row["columnId"], "");
+            $article->authorName = $row["authorName"];
+            $article->columnName = $row["columnName"];
+            $article->htmlId = $row["htmlId"];
+            array_push($article_array, $article);
+        }
+        return $article_array; 
+    }
+
+    public static function selectMainSideArticles($mysqlidb){
+        $article_array = array();
+        $sql = "SELECT articles.id, articles.title, articles.lead, articles.imgPath, articles.columnId, articles.date, articles.authorId, authors.name as authorName, columns.name as columnName, positions.htmlId FROM articles
+        INNER JOIN positions ON positions.articleId = articles.id
+        INNER JOIN positionBlocks ON positionBlocks.id = positions.blockId
+        INNER JOIN authors ON authors.id = articles.authorId
+        INNER JOIN columns ON columns.id = articles.columnId
+        WHERE positionBlocks.main = 0 AND positionBlocks.columnId IS NULL;";
+        $stmt = mysqli_stmt_init($mysqlidb->conn);
+        if(!mysqli_stmt_prepare($stmt, $sql)){
+            return null;
+        }
+        if(!mysqli_stmt_execute($stmt)){
+            return null;
+        }
+        $result = mysqli_stmt_get_result($stmt);            
+        while($row = mysqli_fetch_assoc($result)){
+            $article = new Article($row["id"], $row["title"], $row["lead"], $row["authorId"], $row["date"], $row["imgPath"],  $row["columnId"], "");
+            $article->authorName = $row["authorName"];
+            $article->columnName = $row["columnName"];
+            $article->htmlId = $row["htmlId"];
+            array_push($article_array, $article);
+        }
+        return $article_array;   
+    }
+
+    public static function selectByBlockColumn($mysqlidb, $columnId){
+        if($columnId === 0 || is_null($columnId)){
+            return Article::selectMainPageArticles($mysqlidb);
+        }
+        $article_array = array();
+        $sql = "SELECT articles.id, articles.title, articles.lead, articles.date, articles.imgPath, articles.authorId, articles.columnId, authors.name as authorName, columns.name as columnName, positions.htmlId FROM articles
+        INNER JOIN positions ON positions.articleId = articles.id
+        INNER JOIN positionBlocks ON positionBlocks.id = positions.blockId
+        INNER JOIN authors ON authors.id = articles.authorId
+        INNER JOIN columns ON columns.id = articles.columnId
+        WHERE positionBlocks.main = 1 AND positionBlocks.columnId = ?;";
+        $stmt = mysqli_stmt_init($mysqlidb->conn);
+        if(!mysqli_stmt_prepare($stmt, $sql)){
+            return null;
+        }
+        mysqli_stmt_bind_param($stmt, "i", $columnId);
+        if(!mysqli_stmt_execute($stmt)){
+            return null;
+        }
+        $result = mysqli_stmt_get_result($stmt);            
+        while($row = mysqli_fetch_assoc($result)){
+            $article = new Article($row["id"], $row["title"], $row["lead"], $row["authorId"], $row["date"], $row["imgPath"],  $row["columnId"], "");
+            $article->authorName = $row["authorName"];
+            $article->columnName = $row["columnName"];
+            $article->htmlId = $row["htmlId"];
+            array_push($article_array, $article);
+        }
+        return $article_array; 
+    }
+
+    public static function selectMainPageArticles($mysqlidb){
+        $article_array = array();
+        $sql = "SELECT articles.id, articles.title, articles.lead, articles.imgPath, articles.columnId, articles.date, articles.authorId, authors.name as authorName, columns.name as columnName, positions.htmlId FROM articles
+        INNER JOIN positions ON positions.articleId = articles.id
+        INNER JOIN positionBlocks ON positionBlocks.id = positions.blockId
+        INNER JOIN authors ON authors.id = articles.authorId
+        INNER JOIN columns ON columns.id = articles.columnId
+        WHERE positionBlocks.main = 1 AND positionBlocks.columnId IS NULL;";
+        $stmt = mysqli_stmt_init($mysqlidb->conn);
+        if(!mysqli_stmt_prepare($stmt, $sql)){
+            return null;
+        }
+        if(!mysqli_stmt_execute($stmt)){
+            return null;
+        }
+        $result = mysqli_stmt_get_result($stmt);            
+        while($row = mysqli_fetch_assoc($result)){
+            $article = new Article($row["id"], $row["title"], $row["lead"], $row["authorId"], $row["date"], $row["imgPath"],  $row["columnId"], "");
+            $article->authorName = $row["authorName"];
+            $article->columnName = $row["columnName"];
+            $article->htmlId = $row["htmlId"];
+            array_push($article_array, $article);
+        }
+        return $article_array;   
+    }
+
     public static function insertLock($mysqlidb, $articleId){
         $sql = "INSERT INTO locks (isLocked, articleId) VALUES (?, ?);";
         $stmt = mysqli_stmt_init($mysqlidb->conn);
@@ -89,9 +228,10 @@ class Article {
     public static function getArticle($mysqlidb, $articleId){
         $article;
         $sql = "SELECT articles.id, articles.title, articles.lead, articles.authorId, articles.date, articles.imgPath, articles.columnId, articles.text,
-        locks.isLocked, locks.lockedBy, articles.state
+        locks.isLocked, locks.lockedBy, articles.state, authors.name
         FROM articles 
         INNER JOIN locks ON articles.id = locks.articleId
+        INNER JOIN authors ON authors.id = articles.authorId
         WHERE articles.id=?;";
         $stmt = mysqli_stmt_init($mysqlidb->conn);
         if(!mysqli_stmt_prepare($stmt, $sql)){
@@ -107,6 +247,7 @@ class Article {
             $article->isLocked = $row["isLocked"];
             $article->lockedBy = $row["lockedBy"];
             $article->state = $row["state"];
+            $article->authorName = $row["name"];
         }
         return $article;
     }

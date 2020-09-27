@@ -154,7 +154,7 @@ function parseArray(json) {
     }
     return articleArray;
 }
-function constrFromJSON(json) {
+export function constrFromJSON(json) {
     let art = JSON.parse(json).article;
     let article = new Article(art.id, art.title, art.lead, art.authorId, new Date(art.date), art.imgPath, art.columnId, art.text, art.isLocked == 1, art.lockedBy, art.state, art.authorName);
     if (art.state > 0 && art.tokenInstances != null && art.tokenInstances.length > 0) { //asd

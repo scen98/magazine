@@ -6,20 +6,20 @@
         <select id="column-select" class="columnselect"></select>
         <select id="block-select" class="columnselect"></select>
         <div>
-        <div class="positionsLeft">
-           
-            <div class="searchBar">
+        <div class="searchBar">
                 <input id="search-input" type="text" class="searchInput" placeholder="Keresés" >
                 <select id="search-select" class="columnselect"></select>
                 <button id="search-btn" class="commandBtn shine">Keresés</button>
+                <button id="save-btn" class="commandBtn shine">Mentés</button>
+            <button id="reset-btn"><i class="fas fa-undo-alt"></i></button>
             </div>
+        <div class="positionsLeft">
+           
+            
             <div id="article-table">
             </div>
         </div>
-        <div class="positionsRight">
-        <h2>Pozíciók</h2>
-            <button id="save-btn" class="commandBtn shine">Mentés</button>
-            <button id="reset-btn"><i class="fas fa-undo-alt"></i></button>
+        <div class="positionsRight">            
             <div id="position-table">
             </div>
         </div>

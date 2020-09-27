@@ -121,7 +121,7 @@ $(document).ready(function() {
     });
 
     //------- Search Form  js --------//  
-
+/*
     $(document).ready(function(){
       $('#search').on("click",(function(e){
       $(".form-group").addClass("sb-search-open");
@@ -140,7 +140,7 @@ $(document).ready(function() {
             }
         })
       })
-    })
+    }) */
 
     //------- Mobile Nav  js --------//  
 
@@ -186,9 +186,9 @@ $(document).ready(function() {
 
     //------- Sticky Main Menu js --------//  
 
-
+/*
     window.onscroll = function() {stickFunction()};
-
+ 
     var navbar = document.getElementById("main-menu");
     var sticky = navbar.offsetTop;
     function stickFunction() {
@@ -196,8 +196,8 @@ $(document).ready(function() {
         navbar.classList.add("sticky")
       } else {
         navbar.classList.remove("sticky");
-      }
-    }
+      } 
+    } */
 
 
     //------- Smooth Scroll  js --------//  
@@ -247,7 +247,7 @@ $(document).ready(function() {
 
                 $('html, body').animate({
 
-                    scrollTop: $(window.location.hash).offset().top - 108
+                  //  scrollTop: $(window.location.hash).offset().top - 108
 
                 }, 1000)
 

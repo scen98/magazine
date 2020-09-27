@@ -161,6 +161,9 @@ export function addDrop(element, func) {
 export function parseDateHun(date) {
     return date.getFullYear() + ". " + monthNames[date.getMonth()] + ". " + date.getDate() + ", " + date.getHours() + ":" + date.getMinutes();
 }
+export function parseDateYYYYMMDD(date) {
+    return `${date.getFullYear()}. ${monthNames[date.getMonth()]}. ${date.getDate()}`;
+}
 function checkString(s) {
     if (typeof s === "string") {
         return document.getElementById(s);

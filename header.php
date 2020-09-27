@@ -14,11 +14,12 @@
 		<!-- meta character set -->
 		<meta charset="UTF-8">
 		<!-- Site Title -->
-		<title>Magazine</title>
+		<title>Zavargó</title>
 		<link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet">
 		<!--
 		CSS
 		============================================= -->
+		<script type="module" src="myjs/headerController.js" ></script>
 		<link rel="stylesheet" href="css/linearicons.css">
 		<link rel="stylesheet" href="css/font-awesome.min.css">
 		<link rel="stylesheet" href="css/bootstrap.css">
@@ -31,6 +32,7 @@
 	</head>
 	<body>
 		<header>
+			<!--
 			<div class="logo-wrap">
 				<div class="container">
 					<div class="row justify-content-between align-items-center">
@@ -41,28 +43,36 @@
 						</div>
 					</div>
 				</div>
+			</div> -->
+			<div class="topnav" id="myTopnav">
+				<a id="menu-0" href="index.php">Címlap</a>
+				<a id="menu-1" href="rovat.php?cid=1&rovat=Nagyvilág">Nagyvilág</a>
+				<a id="menu-3" href="rovat.php?cid=3&rovat=Szórakozás">Szórakozás</a>
+				<a id="menu-2" href="rovat.php?cid=2&rovat=Sport">Sport</a>
+				<a id="menu-4" href="rovat.php?cid=4&rovat=Életmód">Életmód</a>
+				<a href="javascript:void(0);" class="icon" onclick="displayMenu()">
+					<i class="fa fa-bars"></i>
+				</a>
 			</div>
+			<!--
 			<div class="container main-menu" id="main-menu">
 				<div class="row align-items-center justify-content-between">
 					<nav id="nav-menu-container">
 						<ul class="nav-menu">
-							<li class="menu-active"><a href="index.html">Címlap</a></li>
-							<li><a href="archive.html">Politika</a></li>
-							<li><a href="category.html">Gazdaság</a></li>
-							<li><a href="category.html">Szórakozás</a></li>
+							<li class="menu-active"><a href="index.php">Címlap</a></li>
+							<li><a href="rovat.php?cid=1&rovat=Nagyvilág">Nagyvilág</a></li>
+							<li><a href="rovat.php?cid=3&rovat=Szórakozás">Szórakozás</a></li>
+							<li><a href="rovat.php?cid=2&rovat=Sport">Sport</a></li>	
+							<li><a href="rovat.php?cid=4&rovat=Életmód">Életmód</a></li>
 							<li class="menu-has-children"><a href="">Post Types</a>
 							<ul>
-								<li><a href="standard-post.html">Standard Post</a></li>
-								<li><a href="image-post.html">Image Post</a></li>
 								<li><a href="gallery-post.html">Gallery Post</a></li>
 								<li><a href="video-post.html">Video Post</a></li>
 								<li><a href="audio-post.html">Audio Post</a></li>
-							</ul>
+							</ul> 
 						</li>
-						<li><a href="about.html">About</a></li>
-						<li><a href="contact.html">Contact</a></li>
 					</ul>
-					</nav><!-- #nav-menu-container -->
+					</nav> #nav-menu-container 
 					<div class="navbar-right">
 						<form class="Search">
 							<input type="text" class="form-control Search-box" name="Search-box" id="Search-box" placeholder="Search">
@@ -75,5 +85,5 @@
 						</form>
 					</div>
 				</div>
-			</div>
+			</div> -->
 		</header>

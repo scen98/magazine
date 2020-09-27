@@ -1054,7 +1054,7 @@ span.icon {
     background: -webkit-linear-gradient(top, #a90329 0%,#8f0222 44%,#6d0019 100%); /* Chrome10-25,Safari5.1-6 */
     margin: auto;
     width: 95%;
-    height: 150px;
+    height: 110px;
     padding: 10px;
     border-right-style: solid;
     border-left-style: solid;
@@ -1086,8 +1086,9 @@ span.icon {
     width: 80%;
     height: 140px;
     float: right;
-    background-color: whitesmoke;
-    padding: 5px;
+    background: -moz-linear-gradient(top, rgba(30,87,153,1) 0%, rgba(41,137,216,1) 50%, rgba(32,124,202,1) 51%, rgba(125,185,232,1) 100%);
+    background: -webkit-linear-gradient(top, rgba(30,87,153,1) 0%,rgba(41,137,216,1) 50%,rgba(32,124,202,1) 51%,rgba(125,185,232,1) 100%); 
+    padding: 0px;
     border-radius: 5px;
   }
 
@@ -1162,13 +1163,16 @@ span.icon {
   }
 
   .innerContainer {
-    background: -moz-linear-gradient(top, #b4e391 0%, #61c419 50%, #b4e391 100%); /* FF3.6-15 */
-    background: -webkit-linear-gradient(top, #b4e391 0%,#61c419 50%,#b4e391 100%); /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(to bottom, #b4e391 0%,#61c419 50%,#b4e391 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    
+    background: -moz-linear-gradient(top, #b4e391 0%, #61c419 50%, #b4e391 100%); 
+    background: -webkit-linear-gradient(top, #b4e391 0%,#61c419 50%,#b4e391 100%); 
+    background: linear-gradient(to bottom, #b4e391 0%,#61c419 50%,#b4e391 100%); 
     border-radius: 5px;
     color: black;
     padding: 1px;
     height: 130px;
+    width: 100%;
+    height: 100%;
   }
 
   .standardCheckbox{
@@ -1189,4 +1193,10 @@ span.icon {
   .quote{
     border-left: 2px solid #f6214b;
     padding-left: 20px;
+  }
+
+  .filled{
+    background: -moz-linear-gradient(top, rgba(191,210,85,1) 0%, rgba(142,185,42,1) 50%, rgba(114,170,0,1) 51%, rgba(158,203,45,1) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, rgba(191,210,85,1) 0%,rgba(142,185,42,1) 50%,rgba(114,170,0,1) 51%,rgba(158,203,45,1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, rgba(191,210,85,1) 0%,rgba(142,185,42,1) 50%,rgba(114,170,0,1) 51%,rgba(158,203,45,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   }

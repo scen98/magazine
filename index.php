@@ -1,6 +1,7 @@
 <?php
 require "header.php";
 ?>
+	<script type="module" src="myjs/mainController.js"></script>
 		<div class="site-main-container">
 			<!-- Start top-post Area -->
 			<section class="top-post-area pt-10">
@@ -10,18 +11,18 @@ require "header.php";
 							<a name="main1" href="image-post.html">
 							<div class="feature-image-thumb relative">
 								<div class="overlay overlay-bg"></div>
-								<img id="main1-img" class="img-fluid" src="img/top-post1.jpg" alt="">
+								<img id="main1-img" class="img-fluid" alt="">
 							</div>
 							<div class="top-post-details">
 								<ul class="tags">
-									<li><a id="main1-column" href="#">Food Habit</a></li>
+									<li><a id="main1-column" href="#"></a></li>
 								</ul>
 								<a name="main1" href="image-post.html">
-									<h3 id="main1-title" >A Discount Toner Cartridge Is Better Than Ever.</h3>
+									<h3 id="main1-title" ></h3>
 								</a>
 								<ul class="meta">
-									<li><a id="main1-author" href="#"><span class="lnr lnr-user"></span>Mark wiens</a></li>
-									<li><a id="main1-date" href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
+									<li><a id="main1-author" href="#"><span class="lnr lnr-user"></span></a></li>
+									<li><a id="main1-date" href="#"><span class="lnr lnr-calendar-full"></span></a></li>
 								</ul>
 							</div>
 							</a>
@@ -31,18 +32,18 @@ require "header.php";
 								<a name="main2">
 								<div class="feature-image-thumb relative">
 									<div class="overlay overlay-bg"></div>
-									<img id="main2-img" class="img-fluid" src="img/top-post2.jpg" alt="">
+									<img id="main2-img" class="img-fluid"  alt="">
 								</div>
 								<div class="top-post-details">
 									<ul class="tags">
-										<li><a id="main2-column" href="#">Food Habit</a></li>
+										<li><a id="main2-column" href="#"></a></li>
 									</ul>
 									<a name="main2" href="image-post.html">
-										<h4 id="main2-title" >A Discount Toner Cartridge Is Better Than Ever.</h4>
+										<h4 id="main2-title" ></h4>
 									</a>
 									<ul class="meta">
-										<li><a id="main2-author" href="#"><span class="lnr lnr-user"></span>Mark wiens</a></li>
-										<li><a id="main2-date" href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
+										<li><a id="main2-author" href="#"><span class="lnr lnr-user"></span></a></li>
+										<li><a id="main2-date" href="#"><span class="lnr lnr-calendar-full"></span></a></li>
 									</ul>
 								</div>
 								</a>
@@ -51,26 +52,21 @@ require "header.php";
 								<a name="main3">
 								<div class="feature-image-thumb relative">
 									<div class="overlay overlay-bg"></div>
-									<img id="main3-img" class="img-fluid" src="img/top-post3.jpg" alt="">
+									<img id="main3-img" class="img-fluid"  alt="">
 								</div>
 								<div class="top-post-details">
 									<ul class="tags">
-										<li><a id="main3-column" href="#">Food Habit</a></li>
+										<li><a id="main3-column" href="#"></a></li>
 									</ul>
 									<a name="main3" href="image-post.html">
-										<h4 id="main3-title">A Discount Toner Cartridge Is Better</h4>
+										<h4 id="main3-title"></h4>
 									</a>
 									<ul class="meta">
-										<li><a id="main3-author" href="#"><span class="lnr lnr-user"></span>Mark wiens</a></li>
-										<li><a id="main3-date" href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
+										<li><a id="main3-author" href="#"><span class="lnr lnr-user"></span></a></li>
+										<li><a id="main3-date" href="#"><span class="lnr lnr-calendar-full"></span></a></li>
 									</ul>
 								</div>
 								</a>
-							</div>
-						</div>
-						<div class="col-lg-12">
-							<div class="news-tracker-wrap">
-								<h6><span>Breaking News:</span>   <a href="#">Astronomy Binoculars A Great Alternative</a></h6>
 							</div>
 						</div>
 					</div>
@@ -91,23 +87,22 @@ require "header.php";
 										<a name="fresh1">
 										<div class="feature-img relative">
 											<div class="overlay overlay-bg"></div>
-											<img id="fresh1-img" class="img-fluid" src="img/l1.jpg" alt="">
+											<img id="fresh1-img" class="img-fluid" alt="">
 										</div>
 										<ul class="tags">
-											<li><a id="fresh1-column" href="#">Lifestyle</a></li>
+											<li><a id="fresh1-column" href="#"></a></li>
 										</ul>
 									</div>
 									<div class="col-lg-7 post-right">
 										<a name="fresh1" href="image-post.html">
-											<h4 id="fresh1-title">A Discount Toner Cartridge Is
-											Better Than Ever.</h4>
+											<h4 id="fresh1-title"></h4>
 										</a>
 										<ul class="meta">
-											<li><a id="fresh1-author" href="#"><span class="lnr lnr-user"></span>Mark wiens</a></li>
-											<li><a id="fresh1-date" href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
+											<li><a id="fresh1-author" href="#"><span class="lnr lnr-user"></span></a></li>
+											<li><a id="fresh1-date" href="#"><span class="lnr lnr-calendar-full"></span></a></li>
 										</ul>
 										<p id="fresh1-lead" class="excert">
-											Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.
+										
 										</p>
 									</div>
 									</a>
@@ -117,23 +112,22 @@ require "header.php";
 										<a name="fresh2">
 										<div class="feature-img relative">
 											<div class="overlay overlay-bg"></div>
-											<img id="fresh2-img" class="img-fluid" src="img/l1.jpg" alt="">
+											<img id="fresh2-img" class="img-fluid"  alt="">
 										</div>
 										<ul class="tags">
-											<li><a id="fresh2-column" href="#">Lifestyle</a></li>
+											<li><a id="fresh2-column" href="#"></a></li>
 										</ul>
 									</div>
 									<div class="col-lg-7 post-right">
-										<a href="image-post.html">
-											<h4 name="fresh2" id="fresh2-title">A Discount Toner Cartridge Is
-											Better Than Ever.</h4>
+										<a name="fresh2">
+											<h4 name="fresh2" id="fresh2-title"></h4>
 										</a>
 										<ul class="meta">
-											<li><a id="fresh2-author" href="#"><span class="lnr lnr-user"></span>Mark wiens</a></li>
-											<li><a id="fresh2-date" href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
+											<li><a id="fresh2-author" href="#"><span class="lnr lnr-user"></span></a></li>
+											<li><a id="fresh2-date" href="#"><span class="lnr lnr-calendar-full"></span></a></li>
 										</ul>
 										<p id="fresh2-lead" class="excert">
-											Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.
+										
 										</p>
 									</div>
 									</a>
@@ -143,23 +137,22 @@ require "header.php";
 										<a name="fresh3">
 										<div class="feature-img relative">
 											<div class="overlay overlay-bg"></div>
-											<img id="fresh3-img" class="img-fluid" src="img/l1.jpg" alt="">
+											<img id="fresh3-img" class="img-fluid"  alt="">
 										</div>
 										<ul class="tags">
-											<li><a id="fresh3-column" href="#">Lifestyle</a></li>
+											<li><a id="fresh3-column" href="#"></a></li>
 										</ul>
 									</div>
 									<div class="col-lg-7 post-right">
 										<a name="fresh3" href="image-post.html">
-											<h4 id="fresh3-title">A Discount Toner Cartridge Is
-											Better Than Ever.</h4>
+											<h4 id="fresh3-title"></h4>
 										</a>
 										<ul class="meta">
-											<li><a id="fresh3-author" href="#"><span class="lnr lnr-user"></span>Mark wiens</a></li>
-											<li><a id="fresh3-date" href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
+											<li><a id="fresh3-author" href="#"><span class="lnr lnr-user"></span></a></li>
+											<li><a id="fresh3-date" href="#"><span class="lnr lnr-calendar-full"></span></a></li>
 										</ul>
 										<p id="fresh3-lead" class="excert">
-											Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.
+										
 										</p>
 									</div>
 									</a>
@@ -169,23 +162,22 @@ require "header.php";
 										<a name="fresh4">
 										<div class="feature-img relative">
 											<div class="overlay overlay-bg"></div>
-											<img id="fresh4-img" class="img-fluid" src="img/l1.jpg" alt="">
+											<img id="fresh4-img" class="img-fluid" alt="">
 										</div>
 										<ul class="tags">
-											<li><a id="fresh4-column" href="#">Lifestyle</a></li>
+											<li><a id="fresh4-column" href="#"></a></li>
 										</ul>
 									</div>
 									<div class="col-lg-7 post-right">
 										<a name="fresh4" href="image-post.html">
-											<h4 id="fresh4-title">A Discount Toner Cartridge Is
-											Better Than Ever.</h4>
+											<h4 id="fresh4-title"></h4>
 										</a>
 										<ul class="meta">
-											<li><a id="fresh4-author" href="#"><span class="lnr lnr-user"></span>Mark wiens</a></li>
-											<li><a id="fresh4-date" href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
+											<li><a id="fresh4-author" href="#"><span class="lnr lnr-user"></span></a></li>
+											<li><a id="fresh4-date" href="#"><span class="lnr lnr-calendar-full"></span></a></li>
 										</ul>
 										<p id="fresh4-lead" class="excert">
-											Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.
+										
 										</p>
 									</div>
 									</a>
@@ -199,18 +191,18 @@ require "header.php";
 									<a name="todaybig1" >
 									<div class="feature-img relative">
 										<div class="overlay overlay-bg"></div>
-										<img id="todaybig1-img" class="img-fluid" src="img/f1.jpg" alt="">
+										<img id="todaybig1-img" class="img-fluid"  alt="">
 									</div>
 									<div class="details">
 										<ul class="tags">
-											<li><a id="todaybig1-column" href="#">Food Habit</a></li>
+											<li><a id="todaybig1-column" href="#"></a></li>
 										</ul>
 										<a name="todaybig1" href="image-post.html">
-											<h3 id="todaybig1-title" >A Discount Toner Cartridge Is Better Than Ever.</h3>
+											<h3 id="todaybig1-title" ></h3>
 										</a>
 										<ul class="meta">
-											<li><a id="todaybig1-author" href="#"><span class="lnr lnr-user"></span>Mark wiens</a></li>
-											<li><a id="todaybig1-date" href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
+											<li><a id="todaybig1-author" href="#"><span class="lnr lnr-user"></span></a></li>
+											<li><a id="todaybig1-date" href="#"><span class="lnr lnr-calendar-full"></span></a></li>
 										</ul>
 									</div>
 									</a>
@@ -221,23 +213,22 @@ require "header.php";
 										<div class="feature-img-wrap relative">
 											<div class="feature-img relative">
 												<div class="overlay overlay-bg"></div>
-												<img id="todaybig2-img" class="img-fluid" src="img/f2.jpg" alt="">
+												<img id="todaybig2-img" class="img-fluid" alt="">
 											</div>
 											<ul class="tags">
-												<li><a id="todaybig2-column" href="#">Travel</a></li>
+												<li><a id="todaybig2-column" href="#"></a></li>
 											</ul>
 										</div>
 										<div class="details">
 											<a name="todaybig2" href="image-post.html">
-												<h4 id="todaybig2-title">A Discount Toner Cartridge Is
-												Better Than Ever.</h4>
+												<h4 id="todaybig2-title"></h4>
 											</a>
 											<ul class="meta">
-												<li><a id="todaybig2-author" href="#"><span class="lnr lnr-user"></span>Mark wiens</a></li>
-												<li><a id="todaybig2-date" href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
+												<li><a id="todaybig2-author" href="#"><span class="lnr lnr-user"></span></a></li>
+												<li><a id="todaybig2-date" href="#"><span class="lnr lnr-calendar-full"></span></a></li>
 											</ul>
 											<p id="todaybig2-lead" class="excert">
-												Lorem ipsum dolor sit amet, consecteturadip isicing elit, sed do eiusmod tempor incididunt ed do eius.
+										
 											</p>
 										</div>
 										</a>
@@ -247,23 +238,22 @@ require "header.php";
 										<div class="feature-img-wrap relative">
 											<div class="feature-img relative">
 												<div class="overlay overlay-bg"></div>
-												<img id="todaybig3-img" class="img-fluid" src="img/f2.jpg" alt="">
+												<img id="todaybig3-img" class="img-fluid" alt="">
 											</div>
 											<ul class="tags">
-												<li><a id="todaybig3-column" href="#">Travel</a></li>
+												<li><a id="todaybig3-column" href="#"></a></li>
 											</ul>
 										</div>
 										<div class="details">
 											<a name="todaybig3" href="image-post.html">
-												<h4 id="todaybig3-title">A Discount Toner Cartridge Is
-												Better Than Ever.</h4>
+												<h4 id="todaybig3-title"></h4>
 											</a>
 											<ul class="meta">
-												<li><a id="todaybig3-author" href="#"><span class="lnr lnr-user"></span>Mark wiens</a></li>
-												<li><a id="todaybig3-date" href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
+												<li><a id="todaybig3-author" href="#"><span class="lnr lnr-user"></span></a></li>
+												<li><a id="todaybig3-date" href="#"><span class="lnr lnr-calendar-full"></span></a></li>
 											</ul>
 											<p id="todaybig3-lead" class="excert">
-												Lorem ipsum dolor sit amet, consecteturadip isicing elit, sed do eiusmod tempor incididunt ed do eius.
+												
 											</p>
 										</div>
 										</a>
@@ -280,23 +270,22 @@ require "header.php";
 											<div class="col-lg-5 post-left">
 												<div class="feature-img relative">
 													<div class="overlay overlay-bg"></div>
-													<img id="today1-img" class="img-fluid" src="img/r1.jpg" alt="">
+													<img id="today1-img" class="img-fluid"  alt="">
 												</div>
 												<ul class="tags">
-													<li><a id="today1-column" href="#">Lifestyle</a></li>
+													<li><a id="today1-column" href="#"></a></li>
 												</ul>
 											</div>
 											<div class="col-lg-7 post-right">
 												<a name="today1" href="image-post.html">
-													<h4 id="today1-title">A Discount Toner Cartridge Is
-													Better Than Ever.</h4>
+													<h4 id="today1-title"></h4>
 												</a>
 												<ul class="meta">
-													<li><a id="today1-author" href="#"><span class="lnr lnr-user"></span>Mark wiens</a></li>
-													<li><a id="today1-date" href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
+													<li><a id="today1-author" href="#"><span class="lnr lnr-user"></span></a></li>
+													<li><a id="today1-date" href="#"><span class="lnr lnr-calendar-full"></span></a></li>
 												</ul>
 												<p id="today1-lead" class="excert">
-													Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.
+													
 												</p>
 											</div>
 										</a>
@@ -306,23 +295,22 @@ require "header.php";
 											<div class="col-lg-5 post-left">
 												<div class="feature-img relative">
 													<div class="overlay overlay-bg"></div>
-													<img id="today2-img" class="img-fluid" src="img/r1.jpg" alt="">
+													<img id="today2-img" class="img-fluid" alt="">
 												</div>
 												<ul class="tags">
-													<li><a id="today2-column" href="#">Lifestyle</a></li>
+													<li><a id="today2-column" href="#"></a></li>
 												</ul>
 											</div>
 											<div class="col-lg-7 post-right">
 												<a name="today2" href="image-post.html">
-													<h4 id="today2-title">A Discount Toner Cartridge Is
-													Better Than Ever.</h4>
+													<h4 id="today2-title"></h4>
 												</a>
 												<ul class="meta">
-													<li><a id="today2-author" href="#"><span class="lnr lnr-user"></span>Mark wiens</a></li>
-													<li><a id="today2-date" href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
+													<li><a id="today2-author" href="#"><span class="lnr lnr-user"></span></a></li>
+													<li><a id="today2-date" href="#"><span class="lnr lnr-calendar-full"></span></a></li>
 												</ul>
 												<p id="today2-lead" class="excert">
-													Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.
+													
 												</p>
 											</div>
 										</a>
@@ -332,23 +320,22 @@ require "header.php";
 											<div class="col-lg-5 post-left">
 												<div class="feature-img relative">
 													<div class="overlay overlay-bg"></div>
-													<img id="today3-img" class="img-fluid" src="img/r1.jpg" alt="">
+													<img id="today3-img" class="img-fluid"  alt="">
 												</div>
 												<ul class="tags">
-													<li><a id="today3-column" href="#">Lifestyle</a></li>
+													<li><a id="today3-column" href="#"></a></li>
 												</ul>
 											</div>
 											<div class="col-lg-7 post-right">
 												<a name="today3" href="image-post.html">
-													<h4 id="today3-title">A Discount Toner Cartridge Is
-													Better Than Ever.</h4>
+													<h4 id="today3-title"></h4>
 												</a>
 												<ul class="meta">
-													<li><a id="today3-author" href="#"><span class="lnr lnr-user"></span>Mark wiens</a></li>
-													<li><a id="today3-date" href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
+													<li><a id="today3-author" href="#"><span class="lnr lnr-user"></span></a></li>
+													<li><a id="today3-date" href="#"><span class="lnr lnr-calendar-full"></span></a></li>
 												</ul>
 												<p id="today3-lead" class="excert">
-													Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.
+													
 												</p>
 											</div>
 										</a>
@@ -358,23 +345,22 @@ require "header.php";
 											<div class="col-lg-5 post-left">
 												<div class="feature-img relative">
 													<div class="overlay overlay-bg"></div>
-													<img id="today4-img" class="img-fluid" src="img/r1.jpg" alt="">
+													<img id="today4-img" class="img-fluid"alt="">
 												</div>
 												<ul class="tags">
-													<li><a id="today4-column" href="#">Lifestyle</a></li>
+													<li><a id="today4-column" href="#"></a></li>
 												</ul>
 											</div>
 											<div class="col-lg-7 post-right">
 												<a name="today4" href="image-post.html">
-													<h4 id="today4-title">A Discount Toner Cartridge Is
-													Better Than Ever.</h4>
+													<h4 id="today4-title"></h4>
 												</a>
 												<ul class="meta">
-													<li><a id="today4-author" href="#"><span class="lnr lnr-user"></span>Mark wiens</a></li>
-													<li><a id="today4-date" href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
+													<li><a id="today4-author" href="#"><span class="lnr lnr-user"></span></a></li>
+													<li><a id="today4-date" href="#"><span class="lnr lnr-calendar-full"></span></a></li>
 												</ul>
 												<p id="today4-lead" class="excert">
-													Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.
+													
 												</p>
 											</div>
 										</a>
@@ -384,20 +370,19 @@ require "header.php";
 											<div class="col-lg-5 post-left">
 												<div class="feature-img relative">
 													<div class="overlay overlay-bg"></div>
-													<img id="today5-img" class="img-fluid" src="img/r1.jpg" alt="">
+													<img id="today5-img" class="img-fluid" alt="">
 												</div>
 												<ul class="tags">
-													<li><a id="today5-column" href="#">Lifestyle</a></li>
+													<li><a id="today5-column" href="#"></a></li>
 												</ul>
 											</div>
 											<div class="col-lg-7 post-right">
 												<a name="today5" href="image-post.html">
-													<h4 id="today5-title">A Discount Toner Cartridge Is
-													Better Than Ever.</h4>
+													<h4 id="today5-title"></h4>
 												</a>
 												<ul class="meta">
-													<li><a id="today5-author" href="#"><span class="lnr lnr-user"></span>Mark wiens</a></li>
-													<li><a id="today5-date" href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
+													<li><a id="today5-author" href="#"><span class="lnr lnr-user"></span></a></li>
+													<li><a id="today5-date" href="#"><span class="lnr lnr-calendar-full"></span></a></li>
 												</ul>
 												<p id="today5-lead" class="excert">
 													Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.

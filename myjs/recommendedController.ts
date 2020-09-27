@@ -1,11 +1,10 @@
 import * as doc from "../amp/js/doc.js";
 import * as utils from "../amp/js/utils.js";
-import { PositionedArticle, selectPositionedArticles } from "./positionedArticle.js";
+import { PositionedArticle, selectPositionedArticles, selectSideArticles } from "./positionedArticle.js";
 let articles: PositionedArticle[] = [];
 init();
 function init(){
-    selectPositionedArticles(setArticles, getColumnId());
-    setColumnName();
+    selectSideArticles(setArticles, getColumnId());
 }
 
 function setArticles(articleData: PositionedArticle[]){
@@ -17,13 +16,6 @@ function renderArticles(){
     for (let article of articles) {
         article.render();
     }
-}
-
-function setColumnName(){
-    let columnName = utils.getUrlParameter("rovat");
-    let columnNameElement = doc.get("column-name");
-    if(columnName == null || columnNameElement == null) return;
-    columnNameElement.innerText = columnName;
 }
 
 function getColumnId(): number{
